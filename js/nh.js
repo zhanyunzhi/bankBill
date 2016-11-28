@@ -1,6 +1,6 @@
 /**
  * Created by user on 2016/11/28.
- * ≈©“µ“¯––÷ß≥ˆµƒ“≥√Ê
+ * ÂÜú‰∏öÈì∂Ë°åÊîØÂá∫ÁöÑÈ°µÈù¢
  */
 /**
  * Sample React Native App
@@ -14,37 +14,47 @@ import {
     StyleSheet,
     Text,
     View,
-    Image
+    Image,
+    TouchableHighlight
     } from 'react-native';
 
 export default class NH extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.welcome}>
-                    Welcome to ≈©––
-                </Text>
+                <TouchableHighlight
+                    style={styles.button}
+                    onPress={this.toMain}
+                    underlayColor="green">
+                    <Text style={styles.blackText}>{'‰∏ªÈ°µ<='}</Text>
+                </TouchableHighlight>
             </View>
         );
+    }
+    toMain = () => {
+        this.props.navigator.pop();
     }
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    button: {
+        padding: 15,
+    },
+    containView:{
+        flex: 1,
         justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
     },
-    welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
+    detailContainView:{
+        flex:1,
+        justifyContent: 'center',
+        backgroundColor:'green',
     },
-    instructions: {
-        textAlign: 'center',
-        color: '#333333',
-        marginBottom: 5,
+    blackText:{
+        fontSize:20,
+        textAlign:'center',
     },
 });
 

@@ -13,15 +13,16 @@ import {
     Navigator
     } from 'react-native';
 import MyScene from './js/MyScene';   //导航菜单
-import NH from './js/NH';             //农行
-import JH from './js/JH';             //建行
+/*import NH from './js/NH';             //农行
+import JH from './js/JH';             //建行*/
 
 export default class bankBill extends Component {
   render() {
-    var JH = JH;
+    //var JHP = JH;
     return (
-        <Navigator
-            initialRoute={{ name: 'My Initial Scene', component: JH }}
+        <MyScene />
+        /*<Navigator
+            initialRoute={{ name: 'My Initial Scene', component: JHP }}
             configureScene={(route) => {
               //跳转的动画
               return Navigator.SceneConfigs.FadeAndroid;
@@ -32,7 +33,7 @@ export default class bankBill extends Component {
                   return <Component navigator={navigator} />
               }
             }}
-            />
+            />*/
     )
   }
 }

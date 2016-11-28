@@ -6,26 +6,51 @@ import React, { Component, PropTypes } from 'react';
 import {
     View,
     Text,
-    TouchableHighlight
-    } from 'react-native';
+    StyleSheet,
+    TouchableHighlight,
+    Navigator
+} from 'react-native';
+
+import NH from './NH';             //农行
+import JH from './JH';             //建行
 
 export default class MyScene extends Component {
-    static propTypes = {
-        title: PropTypes.string.isRequired,
-        onForward: PropTypes.func.isRequired,
-        onBack: PropTypes.func.isRequired,
+    renderNav(route,nav){
+        switch (route.id) {
+            case 'main':
+                return <JH navigator={nav} title="建行" />;
+            case 'detail':
+                return (<NH navigator={nav} title="农行" />);
+        }
     }
     render() {
         return (
-            <View>
-                <Text>Current Scene: { this.props.title }</Text>
-                <TouchableHighlight onPress={this.props.onForward}>
-                    <Text>点我进入农行</Text>
-                </TouchableHighlight>
-                <TouchableHighlight onPress={this.props.onBack}>
-                    <Text>点我进入建行</Text>
-                </TouchableHighlight>
-            </View>
+            <Navigator
+                style = {styles.container}
+                initialRoute={{id:"main"}}
+                renderScene={this.renderNav}
+            />
         )
     }
 }
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    button: {
+        padding: 15,
+    },
+    containView:{
+        flex: 1,
+        justifyContent: 'center',
+    },
+    detailContainView:{
+        flex:1,
+        justifyContent: 'center',
+        backgroundColor:'green',
+    },
+    blackText:{
+        fontSize:20,
+        textAlign:'center',
+    },
+});

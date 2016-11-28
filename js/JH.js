@@ -1,6 +1,6 @@
 /**
  * Created by user on 2016/11/28.
- * Å©ÒµÒøĞĞÖ§³öµÄÒ³Ãæ
+ * å»ºè¡Œ
  */
 /**
  * Sample React Native App
@@ -8,47 +8,53 @@
  * @flow
  */
 
-import React, { Component } from 'react';
+import React, { Component, PropTypes  } from 'react';
 import {
     AppRegistry,
     StyleSheet,
     Text,
     View,
-    Image
-    } from 'react-native';
+    Image,
+    TouchableHighlight,
+    TouchableOpacity
+} from 'react-native';
 
 export default class NH extends Component {
-    constructor(props){
-        super(props);
-        this.state = {};
-    }
-    render() {
+    render(){
         return (
             <View style={styles.container}>
-                <Text style={styles.welcome}>
-                    Welcome to JH
-                </Text>
+                <TouchableHighlight
+                    style={styles.button}
+                    onPress={this.toDetail}
+                    underlayColor="#B5B5B5">
+                    <Text style={styles.blackText}>=>è¯¦æƒ…é¡µ</Text>
+                </TouchableHighlight>
             </View>
         );
+    }
+    toDetail = () => {          //å¿…é¡»è¿™æ ·å†™å¦åˆ™å‡ºé”™
+        this.props.navigator.push({id:"detail"});
     }
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    button: {
+        padding: 15,
+    },
+    containView:{
+        flex: 1,
         justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
     },
-    welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
+    detailContainView:{
+        flex:1,
+        justifyContent: 'center',
+        backgroundColor:'green',
     },
-    instructions: {
-        textAlign: 'center',
-        color: '#333333',
-        marginBottom: 5,
+    blackText:{
+        fontSize:20,
+        textAlign:'center',
     },
 });
-
