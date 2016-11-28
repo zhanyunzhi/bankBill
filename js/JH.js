@@ -16,24 +16,31 @@ import {
     View,
     Image,
     TouchableHighlight,
-    TouchableOpacity
 } from 'react-native';
 
 export default class NH extends Component {
+    clickJump(){
+        const{navigator} = this.props;
+        if(navigator){
+            //把当前页面pop掉 回到上一个页面
+            navigator.pop();
+        }
+    }
+
     render(){
-        return (
+        return(
             <View style={styles.container}>
+                <Text>我是建行</Text>
                 <TouchableHighlight
-                    style={styles.button}
-                    onPress={this.toDetail}
-                    underlayColor="#B5B5B5">
-                    <Text style={styles.blackText}>=>详情页</Text>
+                    underlayColor="rgb(181, 136, 254)"
+                    activeOpacity={0.5}
+                    style={{ borderRadius: 8,padding: 8,marginTop:5,backgroundColor:"#0588fe"}}
+                    onPress={this.clickJump.bind(this)}
+                    >
+                    <Text>点击返回菜单</Text>
                 </TouchableHighlight>
             </View>
-        );
-    }
-    toDetail = () => {          //必须这样写否则出错
-        this.props.navigator.push({id:"detail"});
+        )
     }
 }
 

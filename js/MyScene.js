@@ -2,7 +2,7 @@
  * Created by user on 2016/11/28.
  * 导航菜单
  */
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import {
     View,
     Text,
@@ -11,31 +11,36 @@ import {
     Navigator
 } from 'react-native';
 
-import NH from './NH';             //农行
-import JH from './JH';             //建行
+import Menu from './Menu';         //菜单
 
 export default class MyScene extends Component {
-    renderNav(route,nav){
-        switch (route.id) {
-            case 'main':
-                return <JH navigator={nav} title="建行" />;
-            case 'detail':
-                return (<NH navigator={nav} title="农行" />);
-        }
-    }
     render() {
+        let defaultName = '菜单';
+        let defaultComponent = Menu;
+
         return (
             <Navigator
-                style = {styles.container}
-                initialRoute={{id:"main"}}
-                renderScene={this.renderNav}
-            />
+                styles = {styles.container}
+                initialRoute = {{name: defaultName,component : defaultComponent}}
+                configureScene = {
+                    (route)=>{
+                      return Navigator.SceneConfigs.FloatFromRight
+                    }
+                }
+                renderScene = {(route,navigator)=>{
+                  let Component = route.component;
+                  return <Component {...route.params} navigator={navigator}/>
+                }}
+                />
         )
     }
 }
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#ffffff',
     },
     button: {
         padding: 15,
