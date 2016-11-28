@@ -6,28 +6,34 @@
 
 import React, { Component } from 'react';
 import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+    AppRegistry,
+    StyleSheet,
+    Text,
+    View,
+    Navigator
+    } from 'react-native';
+import MyScene from './js/MyScene';   //导航菜单
+import NH from './js/NH';             //农行
+import JH from './js/JH';             //建行
 
 export default class bankBill extends Component {
   render() {
+    var JH = JH;
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
-      </View>
-    );
+        <Navigator
+            initialRoute={{ name: 'My Initial Scene', component: JH }}
+            configureScene={(route) => {
+              //跳转的动画
+              return Navigator.SceneConfigs.FadeAndroid;
+            }}
+            renderScene={(route, navigator) =>{
+              let Component = route.component;
+              if(route.component){
+                  return <Component navigator={navigator} />
+              }
+            }}
+            />
+    )
   }
 }
 
