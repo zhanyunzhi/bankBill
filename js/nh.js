@@ -52,30 +52,30 @@ export default class NH extends Component {
                     <View style={styles.border_b}></View>
                     <View style={[styles.inputRow,styles.center]}>
                         <Text style={[styles.text]}>付款账户：</Text>
-                        <TextInput style={styles.input} underlineColorAndroid='transparent' placeholder="请输入付款账户" value='45122'/>
+                        <TextInput style={styles.input} underlineColorAndroid='transparent' placeholder="请输入付款账户" defaultValue='6228****1234' keyboardType='numeric'/>
                     </View>
                     <View style={[styles.inputRow,styles.center]}>
                         <Text style={[styles.text]}>收款账户：</Text>
-                        <TextInput style={styles.input} underlineColorAndroid='transparent' placeholder="请输入收款账户" />
+                        <TextInput style={styles.input} underlineColorAndroid='transparent' placeholder="请输入收款账户" defaultValue='6222****5678' keyboardType='numeric'/>
                     </View>
                     <View style={[styles.inputRow,styles.center]}>
                         <Text style={[styles.text]}>收款人：</Text>
-                        <TextInput style={styles.input} underlineColorAndroid='transparent' placeholder="请输入收款人" />
+                        <TextInput style={styles.input} underlineColorAndroid='transparent' placeholder="请输入收款人" defaultValue='张三' />
                     </View>
                     <View style={[styles.inputRow,styles.center]}>
                         <Text style={[styles.text]}>收款银行：</Text>
-                        <TextInput style={styles.input} underlineColorAndroid='transparent' placeholder="请输入收款银行" />
+                        <TextInput style={styles.input} underlineColorAndroid='transparent' placeholder="请输入收款银行" defaultValue='平安银行' />
                     </View>
                     <View style={[styles.inputRow,styles.center,{borderBottomColor:'transparent'}]}>
                         <Text style={[styles.text]}>转账金额：</Text>
-                        <TextInput style={styles.input} underlineColorAndroid='transparent' placeholder="请输入转账金额" />
+                        <TextInput style={[styles.input,{color:'#ff6549'}]} underlineColorAndroid='transparent' placeholder="请输入转账金额" defaultValue='1,000.00元' />
                     </View>
                     <View style={styles.border_b}></View>
                 </View>
                 <View>
-                    <Text style={{color:'#ff6549',marginLeft:17,marginRight:17,marginTop:13,marginBottom:16,fontSize:13}}>您的资金已汇出，实际到账时间取决于收款行系统</Text>
+                    <Text style={{color:'#ff6549',marginHorizontal:17,marginTop:13,marginBottom:16,fontSize:13}}>您的资金已汇出，实际到账时间取决于收款行系统</Text>
                 </View>
-                <View style={{flex:1,flexDirection:'row', marginLeft:17,marginRight:17}}>
+                <View style={{flex:1,flexDirection:'row',marginHorizontal:17}}>
                     <TouchableHighlight underlayColor="#38adff" style={{flex:1}}>
                         <View style={[styles.btn,styles.center,{backgroundColor: '#dddddd'}]}>
                             <Text style={{color:'#fff',fontSize:16}}>继续转账</Text>
