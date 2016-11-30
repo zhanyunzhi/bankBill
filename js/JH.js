@@ -16,6 +16,7 @@ import {
     View,
     Image,
     TouchableHighlight,
+    AsyncStorage
 } from 'react-native';
 
 export default class NH extends Component {
@@ -26,25 +27,80 @@ export default class NH extends Component {
             navigator.pop();
         }
     }
-
-    render(){
-        return(
+    render() {
+        return (
             <View style={styles.container}>
-                <Text>我是建行</Text>
-                <TouchableHighlight
-                    underlayColor="rgb(181, 136, 254)"
-                    activeOpacity={0.5}
-                    style={{ borderRadius: 8,padding: 8,marginTop:5,backgroundColor:"#0588fe"}}
-                    onPress={this.clickJump.bind(this)}
-                    >
-                    <Text>点击返回菜单</Text>
-                </TouchableHighlight>
+                <Text onPress={this.saveData} style={styles.welcome}>
+                    存值:key='key',存shaoting
+                </Text>
+                <Text onPress={this.getValue} style={styles.welcome}>
+                    取值
+                </Text>
+                <Text onPress={this.removeData} style={styles.welcome}>
+                    删除数据
+                </Text>
             </View>
-        )
+        );
     }
-}
+    saveData(){
+        try {
+            AsyncStorage.setItem(
+                'key',
+                'shaoting',
+                (error)=>{
+                    if (error){
+                        alert('存值失败:',error);
+                    }else{
+                        alert('存值成功!');
+                    }
+                }
+            );
+        } catch (error){
+            alert('失败'+error);
+        }
+    }
+    getValue(){
+        try {
+            AsyncStorage.getItem(
+                'key',
+                (error,result)=>{
+                    if (error){
+                        alert('取值失败:'+error);
+                    }else{
+                        alert('取值成功:'+result);
+                    }
+                }
+            )
+        }catch(error){
+            alert('失败'+error);
+        }
+    }
+    removeData(){
+        try {
+            AsyncStorage.removeItem(
+                'key',
+                (error)=>{
+                    if(!error){
+                        alert('移除成功');
+                    }
+                }
+            )
+        }catch (error){
+            alert('失败',+error);
+        }
+    }
+};
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor:'white',
+    },
+    welcome: {
+        fontSize: 20,
+        textAlign: 'center',
+        margin: 10,
+    },
     container: {
         flex: 1,
     },

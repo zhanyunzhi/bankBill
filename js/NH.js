@@ -17,27 +17,88 @@ import {
     Image,
     TouchableHighlight,
     ScrollView,
-    TextInput
+    TextInput,
+    AsyncStorage
     } from 'react-native';
 
 export default class NH extends Component {
     constructor(props) {
         super(props);
         this.state={
-        }
-    }
-    clickJump(){
-        console.log(1)
-        const{navigator} = this.props;
-        if(navigator){
-            //把当前页面pop掉 回到上一个页面
-            navigator.pop();
+            nhfkzh:'6228****1234',
+            nhskzh:'6222****5678',
+            nhskr:'张三',
+            nhskyh:'平安银行',
+            nhzzje:'1,000.00元',
         }
     }
     componentDidMount(){
-        this.setState({
-            title:this.props.title
-        })
+        this.getValue('nhfkzh');
+        this.getValue('nhskzh');
+        this.getValue('nhskr');
+        this.getValue('nhskyh');
+        this.getValue('nhzzje');
+    }
+    clickJump(){
+        const{navigator} = this.props;
+        if(navigator){
+            navigator.pop();    //把当前页面pop掉 回到上一个页面
+        }
+    }
+    saveDataToLocal(index){
+        let k = index;
+        let v = this.state[index];
+        //let v = this.refs[index]._lastNativeText||this.refs[index].props.defaultValue;
+        this.saveData(k, v);
+    }
+    saveData(k, v){
+        try {
+            AsyncStorage.setItem(k, v,
+                (error)=>{
+                    if (error){
+                        console.log('存值失败:',error);
+                    }else{
+                        console.log('存值成功!');
+                    }
+                }
+            );
+        } catch (error){
+            console.log('失败'+error);
+        }
+    }
+    getValue(k){
+        try {
+            AsyncStorage.getItem(k,
+                (error,result)=>{
+                    if (error){
+                        console.log('取值失败:'+error);
+                    }else{
+                        console.log('取值成功:'+result);
+                        if(result){
+                            switch (k) {
+                                case 'nhfkzh':
+                                    this.setState({nhfkzh:result})
+                                    break;
+                                case 'nhskzh':
+                                    this.setState({nhskzh:result})
+                                    break;
+                                case 'nhskr':
+                                    this.setState({nhskr:result})
+                                    break;
+                                case 'nhskyh':
+                                    this.setState({nhskyh:result})
+                                    break;
+                                case 'nhzzje':
+                                    this.setState({nhzzje:result})
+                                    break;
+                            }
+                        }
+                    }
+                }
+            )
+        }catch(error){
+            console.log('失败'+error);
+        }
     }
 
     render(){
@@ -52,29 +113,29 @@ export default class NH extends Component {
                     <View style={styles.border_b}></View>
                     <View style={[styles.inputRow,styles.center]}>
                         <Text style={[styles.text]}>付款账户：</Text>
-                        <TextInput style={styles.input} underlineColorAndroid='transparent' placeholder="请输入付款账户" defaultValue='6228****1234' keyboardType='numeric'/>
+                        <TextInput style={styles.input} ref='nhfkzh' onBlur={()=>this.saveDataToLocal('nhfkzh')} onChangeText={(nhfkzh)=>this.setState({nhfkzh})} value={this.state.nhfkzh} underlineColorAndroid='transparent' placeholder="格式:6228****1234" keyboardType='numeric'/>
                     </View>
                     <View style={[styles.inputRow,styles.center]}>
                         <Text style={[styles.text]}>收款账户：</Text>
-                        <TextInput style={styles.input} underlineColorAndroid='transparent' placeholder="请输入收款账户" defaultValue='6222****5678' keyboardType='numeric'/>
+                        <TextInput style={styles.input} ref='nhskzh' onBlur={()=>this.saveDataToLocal('nhskzh')} onChangeText={(nhskzh)=>this.setState({nhskzh})} value={this.state.nhskzh} underlineColorAndroid='transparent' placeholder="格式:6222****5678" keyboardType='numeric'/>
                     </View>
                     <View style={[styles.inputRow,styles.center]}>
                         <Text style={[styles.text]}>收款人：</Text>
-                        <TextInput style={styles.input} underlineColorAndroid='transparent' placeholder="请输入收款人" defaultValue='张三' />
+                        <TextInput style={styles.input} ref='nhskr' onBlur={()=>this.saveDataToLocal('nhskr')} onChangeText={(nhskr)=>this.setState({nhskr})} value={this.state.nhskr} underlineColorAndroid='transparent' placeholder="如:张三" />
                     </View>
                     <View style={[styles.inputRow,styles.center]}>
                         <Text style={[styles.text]}>收款银行：</Text>
-                        <TextInput style={styles.input} underlineColorAndroid='transparent' placeholder="请输入收款银行" defaultValue='平安银行' />
+                        <TextInput style={styles.input} ref='nhskyh' onBlur={()=>this.saveDataToLocal('nhskyh')} onChangeText={(nhskyh)=>this.setState({nhskyh})} value={this.state.nhskyh} underlineColorAndroid='transparent' placeholder="如:平安银行"/>
                     </View>
                     <View style={[styles.inputRow,styles.center,{borderBottomColor:'transparent'}]}>
                         <Text style={[styles.text]}>转账金额：</Text>
-                        <TextInput style={[styles.input,{color:'#ff6549'}]} underlineColorAndroid='transparent' placeholder="请输入转账金额" defaultValue='1,000.00元' />
+                        <TextInput style={[styles.input,{color:'#ff6549'}]} ref='nhzzje' onBlur={()=>this.saveDataToLocal('nhzzje')} onChangeText={(nhzzje)=>this.setState({nhzzje})} value={this.state.nhzzje} underlineColorAndroid='transparent' placeholder="格式:1,000.00元" />
                     </View>
                     <View style={styles.border_b}></View>
                 </View>
-                <View>
+                <TouchableHighlight underlayColor="#ffffff" >
                     <Text style={{color:'#ff6549',marginHorizontal:17,marginTop:13,marginBottom:16,fontSize:13}}>您的资金已汇出，实际到账时间取决于收款行系统</Text>
-                </View>
+                </TouchableHighlight>
                 <View style={{flex:1,flexDirection:'row',marginHorizontal:17}}>
                     <TouchableHighlight underlayColor="#38adff" style={{flex:1}}>
                         <View style={[styles.btn,styles.center,{backgroundColor: '#dddddd'}]}>
@@ -104,7 +165,7 @@ const styles = StyleSheet.create({
         height:586*width/1080,
     },
     inputRow:{
-        height:50,
+        height:51,
         flexDirection:'row',
         borderWidth:1,
         borderColor: 'transparent',
@@ -115,14 +176,15 @@ const styles = StyleSheet.create({
     text:{
         width:80,
         textAlign:'left',
-        color: '#535353'
+        color: '#535353',
+        fontSize:16
     },
     input:{
         flex:1,
         alignItems:'flex-start',
         marginRight: 17,
         color: '#535353',
-        fontSize:14
+        fontSize:16
     },
     border_b:{
         borderBottomColor:'#e5e5e5',
