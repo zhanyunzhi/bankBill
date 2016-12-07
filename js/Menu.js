@@ -28,6 +28,9 @@ export default class Menu extends Component {
             title :"title哈哈"
         }
     }*/
+    componentDidMount(){
+        this.clickJump('gf');
+    }
     clickJump(index){
         //因为Navigator <Component {...route.params} navigator={navigator} />传入了navigator 所以这里能取到navigator
         const{navigator} = this.props;

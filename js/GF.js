@@ -113,52 +113,54 @@ export default class GF extends Component {
                     <View>
                         <Text style={[styles.top_text]}>第1/1页，共1条符合条件的记录</Text>
                     </View>
-                    <View style={[styles.inputRow,styles.center]}>
-                        <Text style={[styles.text]}>账户：</Text>
+                    <View style={[styles.inputRow,styles.center,{marginBottom:13,borderRadius:5,height:56}]} >
+                        <Text style={[styles.text]}>账户</Text>
                         <TextInput style={styles.input} ref='jhzh' onBlur={()=>this.saveDataToLocal('jhzh')} onChangeText={(jhzh)=>this.setState({jhzh})} value={this.state.jhzh} underlineColorAndroid='transparent' placeholder="格式:6228****1234" keyboardType='numeric'/>
                     </View>
-                    <View style={[styles.inputRow,styles.center]}>
-                        <Text style={[styles.text]}>交易日期：</Text>
+                    <View style={[styles.inputRow,styles.center,{borderTopLeftRadius:5,borderTopRightRadius:5}]}>
+                        <Text style={[styles.text]}>交易日期</Text>
                         <TextInput style={styles.input}  underlineColorAndroid='transparent' />
                     </View>
                     <View style={[styles.inputRow,styles.center]}>
-                        <Text style={[styles.text]}>币种：</Text>
+                        <Text style={[styles.text]}>币种</Text>
                         <TextInput style={styles.input}  underlineColorAndroid='transparent' value={'人民币'} />
                     </View>
                     <View style={[styles.inputRow,styles.center]}>
-                        <Text style={[styles.text]}>收入：</Text>
-                        <TextInput style={styles.input} ref='jhsr' onBlur={()=>this.saveDataToLocal('jhsr')} onChangeText={(jhsr)=>this.setState({jhsr})} value={this.state.jhsr} underlineColorAndroid='transparent' placeholder="格式:6222****5678" keyboardType='numeric'/>
+                        <Text style={[styles.text]}>收入</Text>
+                        <TextInput style={[styles.input,{color:'#ff0000'}]} ref='jhsr' onBlur={()=>this.saveDataToLocal('jhsr')} onChangeText={(jhsr)=>this.setState({jhsr})} value={this.state.jhsr} underlineColorAndroid='transparent' placeholder="格式:6222****5678" keyboardType='numeric'/>
                     </View>
                     <View style={[styles.inputRow,styles.center]}>
-                        <Text style={[styles.text]}>支出：</Text>
-                        <TextInput style={styles.input} ref='jhzc' onBlur={()=>this.saveDataToLocal('jhzc')} onChangeText={(jhzc)=>this.setState({jhzc})} value={this.state.jhzc} underlineColorAndroid='transparent' placeholder="如:张三" />
+                        <Text style={[styles.text]}>支出</Text>
+                        <TextInput style={[styles.input,{color:'#80c797'}]} ref='jhzc' onBlur={()=>this.saveDataToLocal('jhzc')} onChangeText={(jhzc)=>this.setState({jhzc})} value={this.state.jhzc} underlineColorAndroid='transparent' placeholder="如:张三" />
                     </View>
                     <View style={[styles.inputRow,styles.center]}>
-                        <Text style={[styles.text]}>交易渠道：</Text>
+                        <Text style={[styles.text]}>交易渠道</Text>
                         <TextInput style={styles.input}  underlineColorAndroid='transparent' value={'网上支付跨行清算'} />
                     </View>
                     <View style={[styles.inputRow,styles.center]}>
-                        <Text style={[styles.text]}>交易渠道：</Text>
+                        <Text style={[styles.text]}>交易渠道</Text>
                         <TextInput style={styles.input}  underlineColorAndroid='transparent' value={'客户端手机银行渠道'} />
                     </View>
                     <View style={[styles.inputRow,styles.center]}>
-                        <Text style={[styles.text]}>交易说明：</Text>
+                        <Text style={[styles.text]}>交易说明</Text>
                         <TextInput style={styles.input}  underlineColorAndroid='transparent' value={'网银入账'} />
                     </View>
                     <View style={[styles.inputRow,styles.center]}>
-                        <Text style={[styles.text]}>交易渠道：</Text>
+                        <Text style={[styles.text]}>交易渠道</Text>
                         <TextInput style={styles.input}  underlineColorAndroid='transparent' value={'网上扣款'} />
                     </View>
                     <View style={[styles.inputRow,styles.center]}>
-                        <Text style={[styles.text]}>对方户名：</Text>
+                        <Text style={[styles.text]}>对方户名</Text>
                         <TextInput style={styles.input} ref='jhdfhm' onBlur={()=>this.saveDataToLocal('jhdfhm')} onChangeText={(jhdfhm)=>this.setState({jhdfhm})} value={this.state.jhdfhm} underlineColorAndroid='transparent' placeholder="如:平安银行"/>
                     </View>
-                    <View style={[styles.inputRow,styles.center,{borderBottomColor:'transparent'}]}>
-                        <Text style={[styles.text]}>对方账号：</Text>
-                        <TextInput style={[styles.input,{color:'#ff6549'}]} ref='jhdfzh' onBlur={()=>this.saveDataToLocal('jhdfzh')} onChangeText={(jhdfzh)=>this.setState({jhdfzh})} value={this.state.jhdfzh} underlineColorAndroid='transparent' placeholder="格式:1,000.00元" />
+                    <View style={[styles.inputRow,styles.center,{borderBottomLeftRadius:5,borderBottomRightRadius:5,marginBottom:80}]}>
+                        <Text style={[styles.text]}>对方账号</Text>
+                        <TextInput style={[styles.input]} ref='jhdfzh' onBlur={()=>this.saveDataToLocal('jhdfzh')} onChangeText={(jhdfzh)=>this.setState({jhdfzh})} value={this.state.jhdfzh} underlineColorAndroid='transparent' placeholder="格式:1,000.00元" />
                     </View>
-                    <View style={styles.border_b}></View>
-                    <Image style={[styles.image_bottom]} source={require('../images/gf-bottom.png')}></Image>
+                    <View>
+                        <Text style={[styles.top_text,{marginBottom:88}]}>第1/1页，共1条符合条件的记录</Text>
+                    </View>
+                    <Image style={[styles.image_bottom,{position:'absolute',bottom:0,left:0}]} source={require('../images/gf-bottom.png')}></Image>
                 </View>
             </ScrollView>
         )
@@ -182,25 +184,25 @@ const styles = StyleSheet.create({
         height:180*width/baseWidth,
     },
     inputRow:{
-        height:51,
+        height:45,
         flexDirection:'row',
-        borderWidth:1,
-        borderColor: 'transparent',
-        borderBottomColor:'#e5e5e5',
-        marginLeft: 17,
+        backgroundColor:'#ffffff',
+        marginHorizontal:10,
         //backgroundColor: '#ffffff'
     },
     text:{
-        width:80,
+        width:100,
         textAlign:'left',
-        color: '#535353',
-        fontSize:16
+        color: '#0d0d0d',
+        fontSize:16,
+        paddingLeft:10,
     },
     input:{
         flex:1,
+        textAlign:'right',
         alignItems:'flex-start',
-        marginRight: 17,
-        color: '#535353',
+        color: '#848484',
+        paddingRight:10,
         fontSize:16
     },
     top_text:{
