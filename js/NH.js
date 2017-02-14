@@ -154,6 +154,7 @@ export default class NH extends Component {
 }
 var Dimensions = require('Dimensions');
 var { width, height } = Dimensions.get('window');
+var baseWidth = 1080;
 
 const styles = StyleSheet.create({
     center:{
@@ -162,7 +163,7 @@ const styles = StyleSheet.create({
     },
     image:{
         width:width,
-        height:586*width/1080,
+        height:586*width/baseWidth,
     },
     inputRow:{
         height:51,

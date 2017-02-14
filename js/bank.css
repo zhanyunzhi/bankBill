@@ -1,0 +1,287 @@
+body{
+    background-color: #F1F1F1;
+}
+.container {
+    padding: 0;
+    padding-bottom: 30px;
+}
+.title-img{
+    width: 100%;
+    vertical-align: bottom;
+}
+.bottom-img{
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    vertical-align: bottom;
+}
+.weui_btn_primary{
+    width: 85%;
+}
+/*平安银行*/
+.pa-content ul{
+    background-color:#F8F8F8;
+    margin:4px 10px 0;
+    list-style:none;
+    border:1px solid #C6C6C6;
+    color: #4F5257;
+}
+.pa-content ul li{
+    line-height:40px;
+    border-bottom:1px solid #E0E3E4;
+    padding:0 9px;
+}
+.pa-content ul li:last-child{
+    border-bottom:none;
+}
+.pa-content ul li input{
+    width:20%;
+}
+.pa-out-font{
+    color: #2C934E;
+}
+.pa-in-font{
+    color: #DD5522;
+}
+.pa-color-money{
+    color: #DD5522;
+}
+/*广发银行*/
+.gf-content{
+    color: #0d0d0d;
+}
+.gf-content .page{
+    margin: 28px 20px;
+}
+.gf-content ul{
+    background-color: #ffffff;
+    padding:20px 10px;
+    margin-bottom: 13px;
+    margin-left: 10px;
+    margin-right: 10px;
+    list-style: none;
+    border-radius: 5px;
+}
+.gf-content ul li{
+}
+.gf-content .pull-right{
+    float:right;
+    color: #848484;
+}
+.gf-content .list{
+    margin-bottom: 80px;
+}
+.gf-content .list li{
+    margin-bottom: 29px;
+}
+.gf-content .list li:last-child{
+    margin-bottom: 0;
+}
+.gf-content .gf-out-font{
+    color: #80c797;
+}
+.gf-content .gf-in-font{
+    color: #ff0000;
+}
+/*农业银行--付款*/
+.ny-color-money{
+    color: #ff6549;
+}
+.ny-content ul{
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+    color: #535353;
+    background-color: #ffffff;
+    padding: 0 17px;
+    list-style: none;
+}
+.ny-content ul li{
+    border-bottom: 1px solid #e5e5e5;
+    line-height: 50px;
+}
+.ny-content ul li:last-child{
+    border-bottom: none;
+}
+.ny-content p{
+    line-height: 45px;
+    color: #ff6549;
+    font-size: 13px;
+    margin: 0 17px;
+}
+.ny-content .buttons{
+    margin: 0 17px;
+}
+.ny-content .buttons button{
+    background-color: #ffa900;
+    border: 1px solid #ffa900;
+    border-radius: 5px;
+    line-height: 45px;
+    width: 48%;
+    color: #ffffff;
+    font-size: 16px;
+    float: right;
+}
+.ny-content .buttons .button-gray{
+    background-color: #dddddd;
+    border: 1px solid #dddddd;
+    float: left;
+}
+/*农业银行--交易列表*/
+.nyl-number{
+    position: fixed;
+    top: 69px;
+    left: 17px;
+}
+.nyl-money-in{
+    color: #ff6549;
+}
+.nyl-money-out{
+    color: #00aa91;
+}
+.nyl-content ul{
+    margin-top: 11px;
+    color: #535353;
+    background-color: #ffffff;
+    padding: 8px 17px 0;
+    list-style: none;
+}
+.nyl-content ul li{
+    line-height: 22px;
+}
+.nyl-content ul li:last-child{
+    border-bottom: none;
+}
+/*工商银行App*/
+.gs-content ul{
+    margin-top: 5px;
+    background-color: #ffffff;
+    border-top: 1px solid #E3E3E5;
+    border-bottom: 1px solid #E3E3E5;
+    padding: 11px 20px;
+    list-style: none;
+}
+.gs-content ul li{
+    line-height: 21px;
+}
+.gs-content ul li span{
+    color: #607483;
+}
+.gs-content .left-font{
+    color: #95ADB7;
+    width: 120px;
+    text-align: right;
+    display: inline-block;
+}
+.gs-content .left-font span{
+    color: #95ADB7;
+}
+.gs-content .left-font:after{
+    content: '：';
+}
+.gs-content .left-font-jydu{
+    color: #95ADB7;
+    width: 120px;
+    text-align: right;
+    display: inline-block;
+}
+.gs-content .left-font-jydu span{
+    margin-right:14px;
+    color: #95ADB7;
+}
+/*建设银行APP*/
+.js-body{
+}
+.js-content img{
+    height: 100%;
+    float: left;
+}
+.js-content .js-content-right{
+    background: -webkit-linear-gradient(left, #72a2b0 , #dfe2e1); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(right, #72a2b0 , #dfe2e1); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(right, #72a2b0 , #dfe2e1); /* Firefox 3.6 - 15 */
+    background: linear-gradient(to right, #72a2b0 , #dfe2e1); /* 标准的语法 */
+    height: 100%;
+}
+.js-content .js-content-wrap{
+    /*border-left: 1px solid #6d97a3;*/
+    /*border-right: 1px solid #d0d2d2;*/
+    border-bottom: 1px solid transparent ;
+    border-top: 1px solid transparent ;
+    background: -webkit-linear-gradient(left, #aac7d0 , #eceeed); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(right, #aac7d0 , #eceeed); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(right, #aac7d0 , #eceeed); /* Firefox 3.6 - 15 */
+    background: linear-gradient(to right, #aac7d0  , #eceeed); /* 标准的语法 */
+    height: 97.5%;
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    left: 46px;
+    border-radius: 5px;
+}
+.js-content .js-ul-t{
+    list-style: none;
+    background-color: #ffffff;
+    margin: 9px 5px;
+    border-radius: 5px;
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    padding:21px 9px 17px;
+    color: #555555;
+ }
+.js-content .js-ul-t .ul-t-ze-l{
+    float: left;
+    font-size: 28px;
+    color: #be0000;
+    margin-bottom: 15px;
+ }
+.js-content .js-ul-t .ul-t-ze-r{
+    float: right;
+ }
+.js-content .js-ul-t .ul-t-ze-r span{
+    display: block;
+    font-size: 12px;
+    line-height: 18px;
+    text-align: right;
+ }
+.js-content .js-ul-t li{
+    line-height: 26px;
+    margin-left: 6px;
+}
+.js-content .js-ul-t li:first-child{
+    margin-left: 0;
+}
+.js-content .js-ul-t .pull-right{
+    float:right;
+    color: #6395e2;
+    margin-right: 6px;
+}
+.js-content .js-ul-c{
+    list-style: none;
+    margin: 9px 5px;
+    color: #ffffff;
+    border-radius: 5px;
+    padding: 14px 2px 4px;
+    background: -webkit-linear-gradient(left, #576468 , #787979); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(right, #576468 , #787979); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(right, #576468 , #787979); /* Firefox 3.6 - 15 */
+    background: linear-gradient(to right, #576468   , #787979); /* 标准的语法 */
+}
+.js-content .js-ul-c .ul-c-t{
+    border-bottom: 1px dashed #d6d8d9;
+    padding-bottom: 11px;
+    margin-bottom: 6px;
+    line-height: 20px;
+}
+.js-content .js-ul-c li{
+    line-height: 29px;
+    padding-left: 7px;
+}
+.js-content .js-ul-c li:last-child{
+    margin-top: 5px;
+}
+.js-content .color-green{
+    color: #3bb63a;
+}
+.js-content .color-red{
+    color: #be0000;
+}
