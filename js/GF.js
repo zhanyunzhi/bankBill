@@ -115,7 +115,7 @@ export default class GF extends Component {
                     </View>
                     <View style={[styles.inputRow,styles.center,{marginBottom:13,borderRadius:5,height:56}]} >
                         <Text style={[styles.text]}>账户</Text>
-                        <TextInput style={styles.input} ref='jhzh' onBlur={()=>this.saveDataToLocal('jhzh')} onChangeText={(jhzh)=>this.setState({jhzh})} value={this.state.jhzh} underlineColorAndroid='transparent' placeholder="格式:6228****1234" keyboardType='numeric'/>
+                        <TextInput style={styles.input} ref='jhzh' onEndEditing={()=>this.saveDataToLocal('jhzh')} onChangeText={(jhzh)=>this.setState({jhzh})} value={this.state.jhzh} underlineColorAndroid='transparent' placeholder="格式:6228****1234" keyboardType='numeric'/>
                     </View>
                     <View style={[styles.inputRow,styles.center,{borderTopLeftRadius:5,borderTopRightRadius:5}]}>
                         <Text style={[styles.text]}>交易日期</Text>
@@ -127,13 +127,14 @@ export default class GF extends Component {
                     </View>
                     <View style={[styles.inputRow,styles.center]}>
                         <Text style={[styles.text]}>收入</Text>
-                        <TextInput style={[styles.input,{color:'#ff0000'}]} ref='jhsr' onBlur={()=>this.saveDataToLocal('jhsr')} onChangeText={(jhsr)=>this.setState({jhsr})} value={this.state.jhsr} underlineColorAndroid='transparent' placeholder="格式:6222****5678" keyboardType='numeric'/>
+                        <TextInput style={[styles.input,{color:'#ff0000'}]} ref='jhsr' onEndEditing={()=>this.saveDataToLocal('jhsr')} onChangeText={(jhsr)=>this.setState({jhsr})} value={this.state.jhsr} underlineColorAndroid='transparent' placeholder="格式:6222****5678" keyboardType='numeric'/>
                     </View>
                     <View style={[styles.inputRow,styles.center]}>
                         <Text style={[styles.text]}>支出</Text>
-                        <TextInput style={[styles.input,{color:'#80c797'}]} ref='jhzc' onBlur={()=>this.saveDataToLocal('jhzc')} onChangeText={(jhzc)=>this.setState({jhzc})} value={this.state.jhzc} underlineColorAndroid='transparent' placeholder="如:张三" />
+                        <TextInput style={[styles.input,{color:'#80c797'}]} ref='jhzc' onEndEditing={()=>this.saveDataToLocal('jhzc')} onChangeText={(jhzc)=>this.setState({jhzc})} value={this.state.jhzc} underlineColorAndroid='transparent' placeholder="如:张三" />
                     </View>
                     <View style={[styles.inputRow,styles.center]}>
+                        <Text style={[styles.text]}>交易渠道</Text>
                         <Text style={[styles.text]}>交易渠道</Text>
                         <TextInput style={styles.input}  underlineColorAndroid='transparent' value={'网上支付跨行清算'} />
                     </View>
@@ -151,11 +152,11 @@ export default class GF extends Component {
                     </View>
                     <View style={[styles.inputRow,styles.center]}>
                         <Text style={[styles.text]}>对方户名</Text>
-                        <TextInput style={styles.input} ref='jhdfhm' onBlur={()=>this.saveDataToLocal('jhdfhm')} onChangeText={(jhdfhm)=>this.setState({jhdfhm})} value={this.state.jhdfhm} underlineColorAndroid='transparent' placeholder="如:平安银行"/>
+                        <TextInput style={styles.input} ref='jhdfhm' onEndEditing={()=>this.saveDataToLocal('jhdfhm')} onChangeText={(jhdfhm)=>this.setState({jhdfhm})} value={this.state.jhdfhm} underlineColorAndroid='transparent' placeholder="如:平安银行"/>
                     </View>
                     <View style={[styles.inputRow,styles.center,{borderBottomLeftRadius:5,borderBottomRightRadius:5,marginBottom:80}]}>
                         <Text style={[styles.text]}>对方账号</Text>
-                        <TextInput style={[styles.input]} ref='jhdfzh' onBlur={()=>this.saveDataToLocal('jhdfzh')} onChangeText={(jhdfzh)=>this.setState({jhdfzh})} value={this.state.jhdfzh} underlineColorAndroid='transparent' placeholder="格式:1,000.00元" />
+                        <TextInput style={[styles.input]} ref='jhdfzh' onEndEditing={()=>this.saveDataToLocal('jhdfzh')} onChangeText={(jhdfzh)=>this.setState({jhdfzh})} value={this.state.jhdfzh} underlineColorAndroid='transparent' placeholder="格式:1,000.00元" />
                     </View>
                     <View>
                         <Text style={[styles.top_text,{marginBottom:88}]}>第1/1页，共1条符合条件的记录</Text>
@@ -202,8 +203,12 @@ const styles = StyleSheet.create({
         textAlign:'right',
         alignItems:'flex-start',
         color: '#848484',
+        //backgroundColor: '#656478',
         paddingRight:10,
-        fontSize:16
+        fontSize:16,
+        borderStyle:'solid',
+        borderColor:'red',
+        borderWidth:1,
     },
     top_text:{
         fontSize:16,
