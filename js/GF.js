@@ -18,18 +18,23 @@ import {
     TouchableHighlight,
     ScrollView,
     TextInput,
-    AsyncStorage
+    AsyncStorage,
+    TouchableOpacity
     } from 'react-native';
+
+import Common from './common.js';
 
 export default class GF extends Component {
     constructor(props) {
         super(props);
+        let today = Common.formatDateOne(new Date().getTime());         //获取当天的时间，并格式化为yyyy-mm-dd
         this.state={
-            jhzh:'6214****1234',
-            jhsr:'1,000.00',
-            jhzc:'1,000.00',
-            jhdfhm:'张三',
-            jhdfzh:'6214850285268888',
+            jhzh: '6214****1234',
+            jhsr: '1,000.00',
+            jhzc: '1,000.00',
+            jhdfhm: '张三',
+            jhdfzh: '6214850285268888',
+            today: today
         }
     }
     componentDidMount(){
@@ -119,7 +124,7 @@ export default class GF extends Component {
                     </View>
                     <View style={[styles.inputRow,styles.center,{borderTopLeftRadius:5,borderTopRightRadius:5}]}>
                         <Text style={[styles.text]}>交易日期</Text>
-                        <TextInput style={styles.input}  underlineColorAndroid='transparent' />
+                        <Text style={[styles.text_right]}>{this.state.today}</Text>
                     </View>
                     <View style={[styles.inputRow,styles.center]}>
                         <Text style={[styles.text]}>币种</Text>
@@ -135,8 +140,7 @@ export default class GF extends Component {
                     </View>
                     <View style={[styles.inputRow,styles.center]}>
                         <Text style={[styles.text]}>交易渠道</Text>
-                        <Text style={[styles.text]}>交易渠道</Text>
-                        <TextInput style={styles.input}  underlineColorAndroid='transparent' value={'网上支付跨行清算'} />
+                        <Text style={[styles.text_right]}>网上支付跨行清算</Text>
                     </View>
                     <View style={[styles.inputRow,styles.center]}>
                         <Text style={[styles.text]}>交易渠道</Text>
@@ -198,17 +202,26 @@ const styles = StyleSheet.create({
         fontSize:16,
         paddingLeft:10,
     },
+    text_right:{
+        flex:1,
+        textAlign:'right',
+        color: '#848484',
+        fontSize:16,
+        paddingRight:10,
+    },
     input:{
         flex:1,
         textAlign:'right',
         alignItems:'flex-start',
         color: '#848484',
-        //backgroundColor: '#656478',
         paddingRight:10,
         fontSize:16,
         borderStyle:'solid',
         borderColor:'red',
         borderWidth:1,
+        height:18,
+        paddingVertical:0,
+        //paddingBottom:0,
     },
     top_text:{
         fontSize:16,
