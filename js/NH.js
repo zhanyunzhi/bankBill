@@ -21,6 +21,8 @@ import {
     AsyncStorage
     } from 'react-native';
 
+import Constants from './public/Constants.js';
+
 export default class NH extends Component {
     constructor(props) {
         super(props);
@@ -33,6 +35,7 @@ export default class NH extends Component {
         }
     }
     componentDidMount(){
+        console.log(Constants.bankInputTextFlag);
         this.getValue('nhfkzh');
         this.getValue('nhskzh');
         this.getValue('nhskr');

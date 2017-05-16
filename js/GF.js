@@ -22,7 +22,9 @@ import {
     TouchableOpacity
     } from 'react-native';
 
-import Common from './common.js';
+import Common from './public/Common.js';
+import EditView from './public/EditView.js';
+import Constants from './public/Constants.js';
 
 export default class GF extends Component {
     constructor(props) {
@@ -34,7 +36,9 @@ export default class GF extends Component {
             jhzc: '1,000.00',
             jhdfhm: '张三',
             jhdfzh: '6214850285268888',
-            today: today
+            today: today,
+            popValue: '',                                          //弹出框的输入内容
+            popTitle: '请输入账号格式为：1234****5678'                      //弹出框的title
         }
     }
     componentDidMount(){
@@ -63,7 +67,7 @@ export default class GF extends Component {
                     if (error){
                         console.log('存值失败:',error);
                     }else{
-                        console.log('存值成功!');
+                        console.log('存值成功!'+v);
                     }
                 }
             );
@@ -105,6 +109,52 @@ export default class GF extends Component {
             console.log('失败'+error);
         }
     }
+    openPop(title, value, flag){
+        this.setState({popTitle:title});            //设置弹出框的title
+        //if(flag != Constants.bankInputTextFlag){
+            this.setState({popValue:value},function(){      //setState是异步的
+                Constants.bankInputTextFlag = flag;
+                this.editView.show();
+            });            //设置弹出框的内容
+/*        }else{
+            Constants.bankInputTextFlag = flag;
+            this.editView.show();
+        }*/
+    }
+    setPopValue(v){
+        v = v || '您没有输入任何内容';
+        this.setState({popValue:v});        //保存输入的内容
+        let flag = Constants.bankInputTextFlag;         //获取修改的是那个输入框
+        switch (flag) {
+            case 'jhzh':
+                this.setState({jhzh:v},function(){
+                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
+                });
+                break;
+            case 'jhsr':
+                v = Common.formatBankNum(v) || this.state.jhsr;         //将输入的数字格式化
+                this.setState({jhsr:v},function(){
+                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
+                })
+                break;
+            case 'jhzc':
+                v = Common.formatBankNum(v) || this.state.jhzc;          //将输入的数字格式化
+                this.setState({jhzc:v},function(){
+                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
+                })
+                break;
+            case 'jhdfhm':
+                this.setState({jhdfhm:v},function(){
+                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
+                })
+                break;
+            case 'jhdfzh':
+                this.setState({jhdfzh:v},function(){
+                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
+                })
+                break;
+        }
+    }
 
     render(){
         return(
@@ -120,7 +170,9 @@ export default class GF extends Component {
                     </View>
                     <View style={[styles.inputRow,styles.center,{marginBottom:13,borderRadius:5,height:56}]} >
                         <Text style={[styles.text]}>账户</Text>
-                        <TextInput style={styles.input} ref='jhzh' onEndEditing={()=>this.saveDataToLocal('jhzh')} onChangeText={(jhzh)=>this.setState({jhzh})} value={this.state.jhzh} underlineColorAndroid='transparent' placeholder="格式:6228****1234" keyboardType='numeric'/>
+                        <TouchableOpacity onPress={()=>this.openPop('格式：6214****1234',this.state.jhzh,'jhzh')} style={[styles.text_touch]}>
+                            <Text style={[styles.text_touch_text]}>{this.state.jhzh}</Text>
+                        </TouchableOpacity>
                     </View>
                     <View style={[styles.inputRow,styles.center,{borderTopLeftRadius:5,borderTopRightRadius:5}]}>
                         <Text style={[styles.text]}>交易日期</Text>
@@ -128,15 +180,19 @@ export default class GF extends Component {
                     </View>
                     <View style={[styles.inputRow,styles.center]}>
                         <Text style={[styles.text]}>币种</Text>
-                        <TextInput style={styles.input}  underlineColorAndroid='transparent' value={'人民币'} />
+                        <Text style={[styles.text_right]}>人民币</Text>
                     </View>
                     <View style={[styles.inputRow,styles.center]}>
                         <Text style={[styles.text]}>收入</Text>
-                        <TextInput style={[styles.input,{color:'#ff0000'}]} ref='jhsr' onEndEditing={()=>this.saveDataToLocal('jhsr')} onChangeText={(jhsr)=>this.setState({jhsr})} value={this.state.jhsr} underlineColorAndroid='transparent' placeholder="格式:6222****5678" keyboardType='numeric'/>
+                        <TouchableOpacity onPress={()=>this.openPop('格式：1,000,000.00',this.state.jhsr,'jhsr')} style={[styles.text_touch]}>
+                            <Text style={[styles.text_touch_text,{color:'#ff0000'}]}>{this.state.jhsr}</Text>
+                        </TouchableOpacity>
                     </View>
                     <View style={[styles.inputRow,styles.center]}>
                         <Text style={[styles.text]}>支出</Text>
-                        <TextInput style={[styles.input,{color:'#80c797'}]} ref='jhzc' onEndEditing={()=>this.saveDataToLocal('jhzc')} onChangeText={(jhzc)=>this.setState({jhzc})} value={this.state.jhzc} underlineColorAndroid='transparent' placeholder="如:张三" />
+                        <TouchableOpacity onPress={()=>this.openPop('格式：1,000,000.00',this.state.jhzc,'jhzc')} style={[styles.text_touch]}>
+                            <Text style={[styles.text_touch_text,{color:'#80c797'}]}>{this.state.jhzc}</Text>
+                        </TouchableOpacity>
                     </View>
                     <View style={[styles.inputRow,styles.center]}>
                         <Text style={[styles.text]}>交易渠道</Text>
@@ -144,28 +200,40 @@ export default class GF extends Component {
                     </View>
                     <View style={[styles.inputRow,styles.center]}>
                         <Text style={[styles.text]}>交易渠道</Text>
-                        <TextInput style={styles.input}  underlineColorAndroid='transparent' value={'客户端手机银行渠道'} />
+                        <Text style={[styles.text_right]}>客户端手机银行渠道</Text>
                     </View>
                     <View style={[styles.inputRow,styles.center]}>
                         <Text style={[styles.text]}>交易说明</Text>
-                        <TextInput style={styles.input}  underlineColorAndroid='transparent' value={'网银入账'} />
+                        <Text style={[styles.text_right]}>网银入账</Text>
                     </View>
                     <View style={[styles.inputRow,styles.center]}>
-                        <Text style={[styles.text]}>交易渠道</Text>
-                        <TextInput style={styles.input}  underlineColorAndroid='transparent' value={'网上扣款'} />
+                        <Text style={[styles.text]}>交易说明</Text>
+                        <Text style={[styles.text_right]}>网上扣款</Text>
                     </View>
                     <View style={[styles.inputRow,styles.center]}>
                         <Text style={[styles.text]}>对方户名</Text>
-                        <TextInput style={styles.input} ref='jhdfhm' onEndEditing={()=>this.saveDataToLocal('jhdfhm')} onChangeText={(jhdfhm)=>this.setState({jhdfhm})} value={this.state.jhdfhm} underlineColorAndroid='transparent' placeholder="如:平安银行"/>
+                        <TouchableOpacity onPress={()=>this.openPop('格式：张三',this.state.jhdfhm,'jhdfhm')} style={[styles.text_touch]}>
+                            <Text style={[styles.text_touch_text]}>{this.state.jhdfhm}</Text>
+                        </TouchableOpacity>
                     </View>
                     <View style={[styles.inputRow,styles.center,{borderBottomLeftRadius:5,borderBottomRightRadius:5,marginBottom:80}]}>
                         <Text style={[styles.text]}>对方账号</Text>
-                        <TextInput style={[styles.input]} ref='jhdfzh' onEndEditing={()=>this.saveDataToLocal('jhdfzh')} onChangeText={(jhdfzh)=>this.setState({jhdfzh})} value={this.state.jhdfzh} underlineColorAndroid='transparent' placeholder="格式:1,000.00元" />
+                        <TouchableOpacity onPress={()=>this.openPop('格式：6214850285268888',this.state.jhdfzh,'jhdfzh')} style={[styles.text_touch]}>
+                            <Text style={[styles.text_touch_text]}>{this.state.jhdfzh}</Text>
+                        </TouchableOpacity>
                     </View>
                     <View>
                         <Text style={[styles.top_text,{marginBottom:88}]}>第1/1页，共1条符合条件的记录</Text>
                     </View>
                     <Image style={[styles.image_bottom,{position:'absolute',bottom:0,left:0}]} source={require('../images/gf-bottom.png')}></Image>
+
+                    <EditView
+                        // 在组件中使用this.editView即可访拿到EditView组件
+                        ref={editView => this.editView = editView}
+                        inputText={this.state.popValue}
+                        titleTxt={this.state.popTitle}
+                        ensureCallback={popValue => this.setPopValue(popValue)}
+                        />
                 </View>
             </ScrollView>
         )
@@ -202,26 +270,20 @@ const styles = StyleSheet.create({
         fontSize:16,
         paddingLeft:10,
     },
-    text_right:{
+    text_touch:{
         flex:1,
-        textAlign:'right',
-        color: '#848484',
-        fontSize:16,
+        justifyContent: 'flex-end',
+        alignItems:'flex-end',
         paddingRight:10,
     },
-    input:{
-        flex:1,
-        textAlign:'right',
-        alignItems:'flex-start',
+    text_touch_text:{
         color: '#848484',
-        paddingRight:10,
         fontSize:16,
-        borderStyle:'solid',
-        borderColor:'red',
-        borderWidth:1,
-        height:18,
-        paddingVertical:0,
-        //paddingBottom:0,
+    },
+    text_right:{
+        color: '#848484',
+        fontSize:16,
+        paddingRight:10,
     },
     top_text:{
         fontSize:16,
