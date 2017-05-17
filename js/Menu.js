@@ -14,37 +14,49 @@ import {
     StyleSheet,
     Text,
     View,
+    ListView,
+    Image,
     TouchableHighlight
     } from 'react-native';
 
-import NH from './NH';             //农行
+import NY from './NY';             //农行
 import GF from './GF';             //农行
-import JH from './JH';             //建行
+import JS from './JS';             //建行
+import GS from './GS';             //工行
 
 export default class Menu extends Component {
-    /*constructor(props){
+    constructor(props){
         super(props);
+        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state={
-            title :"title哈哈"
+            dataSource: ds.cloneWithRows([
+                {name: '农业银行', shortName: 'ny', img: require('../images/ny-logo.jpg'), dec: '我是描述不可描述我是描述不可描述我是描述不可描述我是描述不可描述'},
+                {name: '广发银行', shortName: 'gf', img: require('../images/gf-logo.jpg'), dec: '我是描述不可可描述我是描述不可描述'},
+                {name: '工商银行', shortName: 'gs', img: require('../images/gs-logo.jpg'), dec: '我是描述不可描述我是描述不可描述我是描述不可描述我是描述不可描述我是描述不可描述我是描述不可描述我是描述不可描述我是描述不可描述'},
+                {name: '建设银行', shortName: 'js', img: require('../images/js-logo.jpg'), dec: '我是描述不可描述我是描述'}
+            ])
         }
-    }*/
+    }
     componentDidMount(){
-        this.clickJump('nh');
+        //this.clickJump('ny');
     }
     clickJump(index){
         //因为Navigator <Component {...route.params} navigator={navigator} />传入了navigator 所以这里能取到navigator
         const{navigator} = this.props;
-        let jumpComponent = NH;
+        let jumpComponent = NY;
         if(navigator){
             switch(index) {
-                case 'nh':
-                    jumpComponent = NH;
+                case 'ny':
+                    jumpComponent = NY;
                     break;
                 case 'gf':
                     jumpComponent = GF;
                     break;
-                case 'jh':
-                    jumpComponent = JH;
+                case 'js':
+                    jumpComponent = JS;
+                    break;
+                case 'gs':
+                    jumpComponent = GS;
                     break;
             }
             navigator.push({
@@ -58,58 +70,95 @@ export default class Menu extends Component {
     }
     render(){
         return(
-            <View style={styles.container}>
-                <TouchableHighlight
-                    underlayColor="rgb(181, 136, 254)"
-                    activeOpacity={0.5}
-                    style={{ borderRadius: 8,padding: 8,marginTop:5,backgroundColor:"#0588fe"}}
-                    onPress={this.clickJump.bind(this,'nh')}
-                    >
-                    <Text>点击进入农行</Text>
-                </TouchableHighlight>
-                <TouchableHighlight
-                    underlayColor="rgb(181, 136, 254)"
-                    activeOpacity={0.5}
-                    style={{ borderRadius: 8,padding: 8,marginTop:5,backgroundColor:"#0588fe"}}
-                    onPress={this.clickJump.bind(this,'gf')}
-                    >
-                    <Text>点击进入广发银行</Text>
-                </TouchableHighlight>
-                <TouchableHighlight
-                    underlayColor="rgb(181, 136, 254)"
-                    activeOpacity={0.5}
-                    style={{ borderRadius: 8,padding: 8,marginTop:5,backgroundColor:"#0588fe"}}
-                    onPress={this.clickJump.bind(this,'jh')}
-                    >
-                    <Text>点击进入建行</Text>
-                </TouchableHighlight>
+            <View style={styles.wrap}>
+                <Text style={styles.title}>银行账单生成</Text>
+                <ListView style={styles.container}
+                    dataSource={this.state.dataSource}
+                    renderRow={(rowData) => <CELL   name={rowData.name}
+                                                    dec={rowData.dec}
+                                                    img={rowData.img}
+                                                    jumpCallback={this.clickJump.bind(this,rowData.shortName)}>
+                                            </CELL>
+                                        }
+                    />
             </View>
         )
     }
 }
 
+class CELL extends Component{
+    constructor(props){
+        super(props);
+    }
+    render(){
+        const {jumpCallback, name, shortName, dec, img} = this.props;
+        return(
+                <TouchableHighlight
+                    underlayColor="rgb(181, 136, 254)"
+                    activeOpacity={0.5}
+                    onPress={() => {jumpCallback(shortName)}}
+                    >
+                    <View  style={styles.list}>
+                        <Image style={styles.list_image} source={img}></Image>
+                        <View style={styles.list_view}>
+                            <Text style={styles.list_title}>{name}</Text>
+                            <Text style={styles.list_dec} numberOfLines={2}>{dec}</Text>
+                        </View>
+                    </View>
+                </TouchableHighlight>
+        );
+    }
+}
+var Dimensions = require('Dimensions');
+var { width, height } = Dimensions.get('window');
 const styles = StyleSheet.create({
-    container: {
+    wrap: {
         flex: 1,
-        justifyContent: 'center',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
         alignItems: 'center',
         backgroundColor: '#ffffff',
     },
-    button: {
-        padding: 85,
+    title: {
+        height: 30,
+        color: '#ff6549',
+        marginTop: 14,
+        fontSize: 16,
     },
-    containView:{
+    container: {
         flex: 1,
-        justifyContent: 'center',
+        flexDirection: 'row',
     },
-    detailContainView:{
+    list: {
+        flexDirection: 'row',
+        borderBottomWidth: 1,
+        borderColor: '#eeeeee',
+        //backgroundColor: '#ffff00',
+        marginHorizontal: 10,
+        paddingVertical: 10,
+        //height: 56,
+    },
+    list_image: {
+        width: 50,
+        height: 50,
+    },
+    list_view: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+        paddingLeft: 10,
+    },
+    list_title: {
         flex:1,
-        justifyContent: 'center',
-        backgroundColor:'green',
+        color: '#ff6549',
+        fontSize: 14,
     },
-    blackText:{
-        fontSize:20,
-        textAlign:'center',
-    },
+    list_dec: {
+        flex:1,
+        color: '#38adff',
+        fontSize: 10,
+        width:width - 78,
+    }
 });
 
