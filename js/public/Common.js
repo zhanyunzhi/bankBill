@@ -9,8 +9,7 @@ module.exports =  {
         let day = date.getDate();
         return year + "-" + month + "-" + day;
     },
-    formatBankNum: function (str) {
-        //let strF = 0;
+    formatBankMoney: function (str) {     //格式化输入的金额，格式为：100,000.00
         str += '';
         str = str.replace(/,/g, "");
         let patrn = /^\d+(\.\d+)?$/;
@@ -18,11 +17,6 @@ module.exports =  {
             alert("金额必须为数字！");
             return;
         }
-/*        strF = parseFloat(str);
-        if (isNaN(strF)) {
-            alert('您的输入有误！');
-            return str;
-        }*/
         var newStr = "";
         var count = 0;
         if (str.indexOf(".") == -1) {
@@ -50,5 +44,31 @@ module.exports =  {
             console.log(str)
         }
         return str;
+    },
+    formatBankNum: function (str){          //格式化银行账号：1234****6789
+        str += '';
+        str = str.replace(/\*/g, "");
+        let patrn = /^\d+(\d+)?$/;
+        let len = str.length;
+        if (!patrn.exec(str)) {
+            alert("银行账号必须为数字！");
+            return;
+        }
+        if(len<8){
+            alert("银行账号必须大于8位数！");
+            return;
+        }
+        str = str.substr(0,4) + "****" + str.substr(len-4,len-1);
+        return str;
+    },
+    checkBankNum: function(str) {
+        str += '';
+        let patrn = /^\d{16,19}$/;          //验证16-19位数字
+        if (!patrn.exec(str)) {
+            alert("银行账号必须是数字且在16-19位之间！");
+            return;
+        }
+        return str;
     }
+
 }

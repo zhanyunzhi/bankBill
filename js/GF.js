@@ -38,7 +38,8 @@ export default class GF extends Component {
             jhdfzh: '6214850285268888',
             today: today,
             popValue: '',                                          //弹出框的输入内容
-            popTitle: '请输入账号格式为：1234****5678'                      //弹出框的title
+            popTitle: '请输入账号格式为：1234****5678',                      //弹出框的title
+            isIncome: true                                          //收入与支出切换
         }
     }
     componentDidMount(){
@@ -127,18 +128,19 @@ export default class GF extends Component {
         let flag = Constants.bankInputTextFlag;         //获取修改的是那个输入框
         switch (flag) {
             case 'jhzh':
+                v = Common.formatBankNum(v) || this.state.jhzh;
                 this.setState({jhzh:v},function(){
                     this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
                 });
                 break;
             case 'jhsr':
-                v = Common.formatBankNum(v) || this.state.jhsr;         //将输入的数字格式化
+                v = Common.formatBankMoney(v) || this.state.jhsr;         //将输入的数字格式化
                 this.setState({jhsr:v},function(){
                     this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
                 })
                 break;
             case 'jhzc':
-                v = Common.formatBankNum(v) || this.state.jhzc;          //将输入的数字格式化
+                v = Common.formatBankMoney(v) || this.state.jhzc;          //将输入的数字格式化
                 this.setState({jhzc:v},function(){
                     this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
                 })
@@ -149,11 +151,15 @@ export default class GF extends Component {
                 })
                 break;
             case 'jhdfzh':
+                v = Common.checkBankNum(v) || this.state.jhdfzh;
                 this.setState({jhdfzh:v},function(){
                     this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
                 })
                 break;
         }
+    }
+    switch(){               //改变收入或者支出
+        this.setState({isIncome:!this.state.isIncome});
     }
 
     render(){
@@ -166,7 +172,7 @@ export default class GF extends Component {
                         <Image style={[styles.image_top]} source={require('../images/gf-title.png')}></Image>
                     </TouchableHighlight>
                     <View>
-                        <Text style={[styles.top_text]}>第1/1页，共1条符合条件的记录</Text>
+                        <Text style={[styles.top_text]}>第1/1页，共1条符合条件的记录。</Text>
                     </View>
                     <View style={[styles.inputRow,styles.center,{marginBottom:13,borderRadius:5,height:56}]} >
                         <Text style={[styles.text]}>账户</Text>
@@ -182,34 +188,47 @@ export default class GF extends Component {
                         <Text style={[styles.text]}>币种</Text>
                         <Text style={[styles.text_right]}>人民币</Text>
                     </View>
-                    <View style={[styles.inputRow,styles.center]}>
-                        <Text style={[styles.text]}>收入</Text>
-                        <TouchableOpacity onPress={()=>this.openPop('格式：1,000,000.00',this.state.jhsr,'jhsr')} style={[styles.text_touch]}>
-                            <Text style={[styles.text_touch_text,{color:'#ff0000'}]}>{this.state.jhsr}</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={[styles.inputRow,styles.center]}>
-                        <Text style={[styles.text]}>支出</Text>
-                        <TouchableOpacity onPress={()=>this.openPop('格式：1,000,000.00',this.state.jhzc,'jhzc')} style={[styles.text_touch]}>
-                            <Text style={[styles.text_touch_text,{color:'#80c797'}]}>{this.state.jhzc}</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={[styles.inputRow,styles.center]}>
-                        <Text style={[styles.text]}>交易渠道</Text>
-                        <Text style={[styles.text_right]}>网上支付跨行清算</Text>
-                    </View>
-                    <View style={[styles.inputRow,styles.center]}>
-                        <Text style={[styles.text]}>交易渠道</Text>
-                        <Text style={[styles.text_right]}>客户端手机银行渠道</Text>
-                    </View>
-                    <View style={[styles.inputRow,styles.center]}>
-                        <Text style={[styles.text]}>交易说明</Text>
-                        <Text style={[styles.text_right]}>网银入账</Text>
-                    </View>
-                    <View style={[styles.inputRow,styles.center]}>
-                        <Text style={[styles.text]}>交易说明</Text>
-                        <Text style={[styles.text_right]}>网上扣款</Text>
-                    </View>
+                    {this.state.isIncome == true ? (
+                        <View style={[styles.inputRow,styles.center]}>
+                            <TouchableOpacity onPress={()=>this.switch()}>
+                                <Text style={[styles.text]}>收入</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={()=>this.openPop('格式：1,000,000.00',this.state.jhsr,'jhsr')} style={[styles.text_touch]}>
+                                <Text style={[styles.text_touch_text,{color:'#ff0000'}]}>{this.state.jhsr}</Text>
+                            </TouchableOpacity>
+                        </View>
+                    ) : (
+                        <View style={[styles.inputRow,styles.center]}>
+                            <TouchableOpacity onPress={()=>this.switch()}>
+                                <Text style={[styles.text]}>支出</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={()=>this.openPop('格式：1,000,000.00',this.state.jhzc,'jhzc')} style={[styles.text_touch]}>
+                                <Text style={[styles.text_touch_text,{color:'#80c797'}]}>{this.state.jhzc}</Text>
+                            </TouchableOpacity>
+                        </View>
+                    )}
+                    {this.state.isIncome == true ? (
+                        <View style={[styles.inputRow,styles.center]}>
+                            <Text style={[styles.text]}>交易渠道</Text>
+                            <Text style={[styles.text_right]}>网上支付跨行清算系统</Text>
+                        </View>
+                    ) : (
+                        <View style={[styles.inputRow,styles.center]}>
+                            <Text style={[styles.text]}>交易渠道</Text>
+                            <Text style={[styles.text_right]}>客户端手机银行渠道</Text>
+                        </View>
+                    )}
+                    {this.state.isIncome == true ? (
+                        <View style={[styles.inputRow,styles.center]}>
+                            <Text style={[styles.text]}>交易说明</Text>
+                            <Text style={[styles.text_right]}>网银入账</Text>
+                        </View>
+                    ) : (
+                        <View style={[styles.inputRow,styles.center]}>
+                            <Text style={[styles.text]}>交易说明</Text>
+                            <Text style={[styles.text_right]}>网上扣款</Text>
+                        </View>
+                    )}
                     <View style={[styles.inputRow,styles.center]}>
                         <Text style={[styles.text]}>对方户名</Text>
                         <TouchableOpacity onPress={()=>this.openPop('格式：张三',this.state.jhdfhm,'jhdfhm')} style={[styles.text_touch]}>
@@ -223,7 +242,7 @@ export default class GF extends Component {
                         </TouchableOpacity>
                     </View>
                     <View>
-                        <Text style={[styles.top_text,{marginBottom:88}]}>第1/1页，共1条符合条件的记录</Text>
+                        <Text style={[styles.top_text,{marginBottom:88}]}>第1/1页，共1条符合条件的记录。</Text>
                     </View>
                     <Image style={[styles.image_bottom,{position:'absolute',bottom:0,left:0}]} source={require('../images/gf-bottom.png')}></Image>
 
@@ -267,6 +286,7 @@ const styles = StyleSheet.create({
         width:100,
         textAlign:'left',
         color: '#0d0d0d',
+        //backgroundColor: '#eee',
         fontSize:16,
         paddingLeft:10,
     },
