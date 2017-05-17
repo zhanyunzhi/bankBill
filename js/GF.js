@@ -112,15 +112,10 @@ export default class GF extends Component {
     }
     openPop(title, value, flag){
         this.setState({popTitle:title});            //设置弹出框的title
-        //if(flag != Constants.bankInputTextFlag){
-            this.setState({popValue:value},function(){      //setState是异步的
-                Constants.bankInputTextFlag = flag;
-                this.editView.show();
-            });            //设置弹出框的内容
-/*        }else{
+        this.setState({popValue:value},function(){      //setState是异步的
             Constants.bankInputTextFlag = flag;
             this.editView.show();
-        }*/
+        });            //设置弹出框的内容
     }
     setPopValue(v){
         v = v || '您没有输入任何内容';

@@ -18,9 +18,12 @@ import {
     TouchableHighlight,
     ScrollView,
     TextInput,
-    AsyncStorage
+    AsyncStorage,
+    TouchableOpacity
     } from 'react-native';
 
+import Common from './public/Common.js';
+import EditView from './public/EditView.js';
 import Constants from './public/Constants.js';
 
 export default class NH extends Component {
@@ -32,10 +35,11 @@ export default class NH extends Component {
             nhskr:'张三',
             nhskyh:'平安银行',
             nhzzje:'1,000.00元',
+            popValue: '',                                          //弹出框的输入内容
+            popTitle: '请输入账号格式为：1234****5678',                      //弹出框的title
         }
     }
     componentDidMount(){
-        console.log(Constants.bankInputTextFlag);
         this.getValue('nhfkzh');
         this.getValue('nhskzh');
         this.getValue('nhskr');
@@ -103,6 +107,48 @@ export default class NH extends Component {
             console.log('失败'+error);
         }
     }
+    openPop(title, value, flag){
+        this.setState({popTitle:title});            //设置弹出框的title
+        this.setState({popValue:value},function(){      //setState是异步的
+            Constants.bankInputTextFlag = flag;
+            this.editView.show();
+        });            //设置弹出框的内容
+    }
+    setPopValue(v){
+        v = v || '您没有输入任何内容';
+        this.setState({popValue:v});        //保存输入的内容
+        let flag = Constants.bankInputTextFlag;         //获取修改的是那个输入框
+        switch (flag) {
+            case 'nhfkzh':
+                v = Common.formatBankNum(v) || this.state.nhfkzh;
+                this.setState({nhfkzh:v},function(){
+                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
+                });
+                break;
+            case 'nhskzh':
+                v = Common.formatBankNum(v) || this.state.nhskzh;         //将输入的数字格式化
+                this.setState({nhskzh:v},function(){
+                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
+                })
+                break;
+            case 'nhskr':
+                this.setState({nhskr:v},function(){
+                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
+                })
+                break;
+            case 'nhskyh':
+                this.setState({nhskyh:v},function(){
+                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
+                })
+                break;
+            case 'nhzzje':
+                v = Common.formatBankMoney(v) || this.state.nhzzje;
+                this.setState({nhzzje:v},function(){
+                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
+                })
+                break;
+        }
+    }
 
     render(){
         return(
@@ -116,29 +162,43 @@ export default class NH extends Component {
                     <View style={styles.border_b}></View>
                     <View style={[styles.inputRow,styles.center]}>
                         <Text style={[styles.text]}>付款账户：</Text>
-                        <TextInput style={styles.input} ref='nhfkzh' onBlur={()=>this.saveDataToLocal('nhfkzh')} onChangeText={(nhfkzh)=>this.setState({nhfkzh})} value={this.state.nhfkzh} underlineColorAndroid='transparent' placeholder="格式:6228****1234" keyboardType='numeric'/>
+                        <TouchableOpacity onPress={()=>this.openPop('格式：1234****1234',this.state.nhfkzh,'nhfkzh')} style={[styles.text_touch]}>
+                            <Text style={[styles.text_touch_text]}>{this.state.nhfkzh}</Text>
+                        </TouchableOpacity>
                     </View>
                     <View style={[styles.inputRow,styles.center]}>
                         <Text style={[styles.text]}>收款账户：</Text>
-                        <TextInput style={styles.input} ref='nhskzh' onBlur={()=>this.saveDataToLocal('nhskzh')} onChangeText={(nhskzh)=>this.setState({nhskzh})} value={this.state.nhskzh} underlineColorAndroid='transparent' placeholder="格式:6222****5678" keyboardType='numeric'/>
+                        <TouchableOpacity onPress={()=>this.openPop('格式：1234****5678',this.state.nhskzh,'nhskzh')} style={[styles.text_touch]}>
+                            <Text style={[styles.text_touch_text]}>{this.state.nhskzh}</Text>
+                        </TouchableOpacity>
                     </View>
                     <View style={[styles.inputRow,styles.center]}>
                         <Text style={[styles.text]}>收款人：</Text>
-                        <TextInput style={styles.input} ref='nhskr' onBlur={()=>this.saveDataToLocal('nhskr')} onChangeText={(nhskr)=>this.setState({nhskr})} value={this.state.nhskr} underlineColorAndroid='transparent' placeholder="如:张三" />
+                        <TouchableOpacity onPress={()=>this.openPop('格式：张三',this.state.nhskr,'nhskr')} style={[styles.text_touch]}>
+                            <Text style={[styles.text_touch_text]}>{this.state.nhskr}</Text>
+                        </TouchableOpacity>
                     </View>
                     <View style={[styles.inputRow,styles.center]}>
                         <Text style={[styles.text]}>收款银行：</Text>
-                        <TextInput style={styles.input} ref='nhskyh' onBlur={()=>this.saveDataToLocal('nhskyh')} onChangeText={(nhskyh)=>this.setState({nhskyh})} value={this.state.nhskyh} underlineColorAndroid='transparent' placeholder="如:平安银行"/>
+                        <TouchableOpacity onPress={()=>this.openPop('格式：平安银行',this.state.nhskyh,'nhskyh')} style={[styles.text_touch]}>
+                            <Text style={[styles.text_touch_text]}>{this.state.nhskyh}</Text>
+                        </TouchableOpacity>
                     </View>
                     <View style={[styles.inputRow,styles.center,{borderBottomColor:'transparent'}]}>
                         <Text style={[styles.text]}>转账金额：</Text>
-                        <TextInput style={[styles.input,{color:'#ff6549'}]} ref='nhzzje' onBlur={()=>this.saveDataToLocal('nhzzje')} onChangeText={(nhzzje)=>this.setState({nhzzje})} value={this.state.nhzzje} underlineColorAndroid='transparent' placeholder="格式:1,000.00元" />
+                        <TouchableOpacity onPress={()=>this.openPop('格式：1,000,000.00',this.state.nhzzje,'nhzzje')} style={[styles.text_touch]}>
+                            <Text style={[styles.text_touch_text,{color:'#ff6549'}]}>{this.state.nhzzje}元</Text>
+                        </TouchableOpacity>
                     </View>
                     <View style={styles.border_b}></View>
                 </View>
+                {Constants.platform.OS == 'android' ? (
                 <TouchableHighlight underlayColor="#ffffff" >
                     <Text style={{color:'#ff6549',marginHorizontal:17,marginTop:13,marginBottom:16,fontSize:13}}>您的资金已汇出，实际到账时间取决于收款行系统</Text>
                 </TouchableHighlight>
+                ) : (
+                    <Text style={{color:'#ff6549',marginHorizontal:17,marginTop:39}}></Text>
+                )}
                 <View style={{flex:1,flexDirection:'row',marginHorizontal:17}}>
                     <TouchableHighlight underlayColor="#38adff" style={{flex:1}}>
                         <View style={[styles.btn,styles.center,{backgroundColor: '#dddddd'}]}>
@@ -151,6 +211,14 @@ export default class NH extends Component {
                         </View>
                     </TouchableHighlight>
                 </View>
+
+                <EditView
+                    // 在组件中使用this.editView即可访拿到EditView组件
+                    ref={editView => this.editView = editView}
+                    inputText={this.state.popValue}
+                    titleTxt={this.state.popTitle}
+                    ensureCallback={popValue => this.setPopValue(popValue)}
+                    />
             </ScrollView>
         )
     }
@@ -183,12 +251,15 @@ const styles = StyleSheet.create({
         color: '#535353',
         fontSize:16
     },
-    input:{
+    text_touch:{
         flex:1,
         alignItems:'flex-start',
         marginRight: 17,
+        marginLeft: 4,
+    },
+    text_touch_text:{
+        fontSize:16,
         color: '#535353',
-        fontSize:16
     },
     border_b:{
         borderBottomColor:'#e5e5e5',

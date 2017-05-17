@@ -29,7 +29,7 @@ export default class Menu extends Component {
         }
     }*/
     componentDidMount(){
-        this.clickJump('gf');
+        this.clickJump('nh');
     }
     clickJump(index){
         //因为Navigator <Component {...route.params} navigator={navigator} />传入了navigator 所以这里能取到navigator
