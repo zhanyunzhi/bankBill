@@ -267,9 +267,9 @@ const styles = StyleSheet.create({
     },
     account_t: {
         textAlign: 'center',
-        fontSize: 20,
+        fontSize: 22,
         color: blue,
-        marginTop: 20,
+        marginTop: 22,
         letterSpacing: 5,
     },
     account_c: {
@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         borderBottomWidth: 1,
         borderColor: borderColor,
-        paddingVertical:10,
+        paddingVertical:11,
     },
     input_row_text: {
         color: gray3,

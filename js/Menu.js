@@ -20,9 +20,10 @@ import {
     } from 'react-native';
 
 import NY from './NY';             //农行
-import GF from './GF';             //农行
-import JSOut from './JSOut';             //建行
+import GF from './GF';             //广发
+import JSOut from './JSOut';             //建行转出
 import GS from './GS';             //工行
+import PA from './PA';             //平安
 
 export default class Menu extends Component {
     constructor(props){
@@ -39,7 +40,7 @@ export default class Menu extends Component {
         }
     }
     componentDidMount(){
-        this.clickJump('jsOut');
+        this.clickJump('pa');
     }
     clickJump(index){
         //因为Navigator <Component {...route.params} navigator={navigator} />传入了navigator 所以这里能取到navigator
@@ -58,6 +59,9 @@ export default class Menu extends Component {
                     break;
                 case 'gs':
                     jumpComponent = GS;
+                    break;
+                case 'pa':
+                    jumpComponent = PA;
                     break;
             }
             navigator.push({
