@@ -188,7 +188,7 @@ export default class GF extends Component {
                             <TouchableOpacity onPress={()=>this.switch()}>
                                 <Text style={[styles.text]}>收入</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={()=>this.openPop('格式：1,000,000.00',this.state.jhsr,'jhsr')} style={[styles.text_touch]}>
+                            <TouchableOpacity onPress={()=>this.openPop('格式：1,000.00您可直接输入1000',this.state.jhsr,'jhsr')} style={[styles.text_touch]}>
                                 <Text style={[styles.text_touch_text,{color:'#ff0000'}]}>{this.state.jhsr}</Text>
                             </TouchableOpacity>
                         </View>
@@ -197,7 +197,7 @@ export default class GF extends Component {
                             <TouchableOpacity onPress={()=>this.switch()}>
                                 <Text style={[styles.text]}>支出</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={()=>this.openPop('格式：1,000,000.00',this.state.jhzc,'jhzc')} style={[styles.text_touch]}>
+                            <TouchableOpacity onPress={()=>this.openPop('格式：1,000.00您可直接输入1000',this.state.jhzc,'jhzc')} style={[styles.text_touch]}>
                                 <Text style={[styles.text_touch_text,{color:'#80c797'}]}>{this.state.jhzc}</Text>
                             </TouchableOpacity>
                         </View>

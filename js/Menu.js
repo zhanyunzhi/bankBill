@@ -21,7 +21,7 @@ import {
 
 import NY from './NY';             //农行
 import GF from './GF';             //农行
-import JS from './JS';             //建行
+import JSOut from './JSOut';             //建行
 import GS from './GS';             //工行
 
 export default class Menu extends Component {
@@ -30,15 +30,16 @@ export default class Menu extends Component {
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state={
             dataSource: ds.cloneWithRows([
-                {name: '农业银行', shortName: 'ny', img: require('../images/ny-logo.jpg'), dec: '我是描述不可描述我是描述不可描述我是描述不可描述我是描述不可描述'},
-                {name: '广发银行', shortName: 'gf', img: require('../images/gf-logo.jpg'), dec: '我是描述不可可描述我是描述不可描述'},
-                {name: '工商银行', shortName: 'gs', img: require('../images/gs-logo.jpg'), dec: '我是描述不可描述我是描述不可描述我是描述不可描述我是描述不可描述我是描述不可描述我是描述不可描述我是描述不可描述我是描述不可描述'},
-                {name: '建设银行', shortName: 'js', img: require('../images/js-logo.jpg'), dec: '我是描述不可描述我是描述'}
+                {name: '农业银行', shortName: 'ny', img: require('../images/ny-logo.jpg'), dec: '农业银行转账给他人的结果页'},
+                {name: '广发银行', shortName: 'gf', img: require('../images/gf-logo.jpg'), dec: '广发银行转账记录，可以切换收入和支出'},
+                {name: '工商银行', shortName: 'gs', img: require('../images/gs-logo.jpg'), dec: '工商银行的转账结果页，可以切换收入和支出'},
+                {name: '建设银行', shortName: 'jsOut', img: require('../images/js-logo.jpg'), dec: '建设银行转账给他人的页面'},
+                {name: '平安银行', shortName: 'pa', img: require('../images/pa-logo.jpg'), dec: '平安银行交易详情，可以切换转入和转出'},
             ])
         }
     }
     componentDidMount(){
-        //this.clickJump('ny');
+        this.clickJump('jsOut');
     }
     clickJump(index){
         //因为Navigator <Component {...route.params} navigator={navigator} />传入了navigator 所以这里能取到navigator
@@ -52,8 +53,8 @@ export default class Menu extends Component {
                 case 'gf':
                     jumpComponent = GF;
                     break;
-                case 'js':
-                    jumpComponent = JS;
+                case 'jsOut':
+                    jumpComponent = JSOut;
                     break;
                 case 'gs':
                     jumpComponent = GS;
@@ -94,7 +95,7 @@ class CELL extends Component{
         const {jumpCallback, name, shortName, dec, img} = this.props;
         return(
                 <TouchableHighlight
-                    underlayColor="rgb(181, 136, 254)"
+                    underlayColor="rgb(238, 238, 238)"
                     activeOpacity={0.5}
                     onPress={() => {jumpCallback(shortName)}}
                     >
@@ -151,12 +152,12 @@ const styles = StyleSheet.create({
     },
     list_title: {
         flex:1,
-        color: '#ff6549',
+        color: '#666666',
         fontSize: 14,
     },
     list_dec: {
         flex:1,
-        color: '#38adff',
+        color: '#999999',
         fontSize: 10,
         width:width - 78,
     }

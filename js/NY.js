@@ -186,7 +186,7 @@ export default class NH extends Component {
                     </View>
                     <View style={[styles.inputRow,styles.center,{borderBottomColor:'transparent'}]}>
                         <Text style={[styles.text]}>转账金额：</Text>
-                        <TouchableOpacity onPress={()=>this.openPop('格式：1,000,000.00',this.state.nhzzje,'nhzzje')} style={[styles.text_touch]}>
+                        <TouchableOpacity onPress={()=>this.openPop('格式：1,000.00您可直接输入1000',this.state.nhzzje,'nhzzje')} style={[styles.text_touch]}>
                             <Text style={[styles.text_touch_text,{color:'#ff6549'}]}>{this.state.nhzzje}元</Text>
                         </TouchableOpacity>
                     </View>
