@@ -82,23 +82,7 @@ export default class NH extends Component {
                     }else{
                         console.log('取值成功:'+result);
                         if(result){
-                            switch (k) {
-                                case 'nhfkzh':
-                                    this.setState({nhfkzh:result})
-                                    break;
-                                case 'nhskzh':
-                                    this.setState({nhskzh:result})
-                                    break;
-                                case 'nhskr':
-                                    this.setState({nhskr:result})
-                                    break;
-                                case 'nhskyh':
-                                    this.setState({nhskyh:result})
-                                    break;
-                                case 'nhzzje':
-                                    this.setState({nhzzje:result})
-                                    break;
-                            }
+                            this.setState({[k]:result});
                         }
                     }
                 }

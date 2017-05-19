@@ -85,26 +85,7 @@ export default class JSOut extends Component {
                     }else{
                         console.log('取值成功:'+result);
                         if(result){
-                            switch (k) {
-                                case 'jsoutzzje':
-                                    this.setState({jsoutzzje:result})
-                                    break;
-                                case 'jsoutskzh':
-                                    this.setState({jsoutskzh:result})
-                                    break;
-                                case 'jsoutskzhxm':
-                                    this.setState({jsoutskzhxm:result})
-                                    break;
-                                case 'jsoutskyh':
-                                    this.setState({jsoutskyh:result})
-                                    break;
-                                case 'jsoutfkzh':
-                                    this.setState({jsoutfkzh:result})
-                                    break;
-                                case 'jsoutfkzhye':
-                                    this.setState({jsoutfkzhye:result})
-                                    break;
-                            }
+                            this.setState({[k]:result});
                         }
                     }
                 }

@@ -85,23 +85,7 @@ export default class GF extends Component {
                     }else{
                         console.log('取值成功:'+result);
                         if(result){
-                            switch (k) {
-                                case 'jhzh':
-                                    this.setState({jhzh:result})
-                                    break;
-                                case 'jhsr':
-                                    this.setState({jhsr:result})
-                                    break;
-                                case 'jhzc':
-                                    this.setState({jhzc:result})
-                                    break;
-                                case 'jhdfhm':
-                                    this.setState({jhdfhm:result})
-                                    break;
-                                case 'jhdfzh':
-                                    this.setState({jhdfzh:result})
-                                    break;
-                            }
+                            this.setState({[k]:result});
                         }
                     }
                 }

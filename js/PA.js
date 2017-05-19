@@ -33,7 +33,7 @@ export default class JSOut extends Component {
         this.state={
             painfkr:'王老五',               //平安转入开始
             painfkzh:'6214850285268888',
-            painfkh:'农业银行',
+            painfkh:'中国农业银行股份有限公司',
             painskr:'张三',
             painskzh:'6222****1234',
             painskh:'平安银行深圳布吉支行',
@@ -41,7 +41,18 @@ export default class JSOut extends Component {
             painzhye:'10,000.00',
             painzy:'跨行转账',
             painly:'跨行转出',              //平安转入结束
-            jsoutfkzhye:'平安银行深圳布吉支行',
+
+            paoutfkr:'张三',               //平安转出开始
+            paoutfkzh:'6222****1234',
+            paoutfkh:'平安银行深圳布吉支行',
+            paoutskr:'王老五',
+            paoutskzh:'6214850285268888',
+            paoutskh:'中国农业银行股份有限公司',
+            paoutje:'1,000.00',
+            paoutzhye:'10,000.00',
+            paoutzy:'网银转账',
+            paoutly:'网银贷记',              //平安转出结束
+
             today: today,
             popValue: '',                                          //弹出框的输入内容
             popTitle: '请输入账号格式为：1234****5678',                      //弹出框的title
@@ -59,7 +70,17 @@ export default class JSOut extends Component {
         this.getValue('painzhye');
         this.getValue('painzy');
         this.getValue('painly');            //平安转入结束
-        this.getValue('jsoutfkzhye');
+        
+        this.getValue('paoutfkr');           //平安转出开始
+        this.getValue('paoutfkzh');
+        this.getValue('paoutfkh');
+        this.getValue('paoutskr');
+        this.getValue('paoutskzh');
+        this.getValue('paoutskh');
+        this.getValue('paoutje');
+        this.getValue('paoutzhye');
+        this.getValue('paoutzy');
+        this.getValue('paoutly');            //平安转出结束
     }
     clickJump(){
         const{navigator} = this.props;
@@ -97,41 +118,7 @@ export default class JSOut extends Component {
                     }else{
                         console.log('取值成功:'+result);
                         if(result){
-                            switch (k) {
-                                case 'painfkr':         //平安转入开始
-                                    this.setState({painfkr:result})
-                                    break;
-                                case 'painfkzh':
-                                    this.setState({painfkzh:result})
-                                    break;
-                                case 'painfkh':
-                                    this.setState({painfkh:result})
-                                    break;
-                                case 'painskr':
-                                    this.setState({painskr:result})
-                                    break;
-                                case 'painskzh':
-                                    this.setState({painskzh:result})
-                                    break;
-                                case 'painskh':
-                                    this.setState({painskh:result})
-                                    break;
-                                case 'painje':
-                                    this.setState({painje:result})
-                                    break;
-                                case 'painzhye':
-                                    this.setState({painzhye:result})
-                                    break;
-                                case 'painzy':
-                                    this.setState({painzy:result})
-                                    break;
-                                case 'painly':
-                                    this.setState({painly:result})
-                                    break;              //平安转入结束
-                                case 'jsoutfkzhye':
-                                    this.setState({jsoutfkzhye:result})
-                                    break;
-                            }
+                            this.setState({[k]:result});
                         }
                     }
                 }
@@ -207,12 +194,62 @@ export default class JSOut extends Component {
                     this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
                 });
                 break;              //平安转入结束
-            case 'jsoutfkzhye':
-                v = Common.formatBankMoney(v) || this.state.jsoutfkzhye;
-                this.setState({jsoutfkzhye:v},function(){
+
+            case 'paoutfkr':           //付款人   平安转出开始
+                this.setState({paoutfkr:v},function(){
                     this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
                 });
                 break;
+            case 'paoutfkzh':
+                v = Common.formatBankNum(v) || this.state.paoutfkzh;
+                this.setState({paoutfkzh:v},function(){
+                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
+                });
+                break;
+            case 'paoutfkh':
+                this.setState({paoutfkh:v},function(){
+                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
+                });
+                break;
+            case 'paoutskr':
+                this.setState({paoutskr:v},function(){
+                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
+                });
+                break;
+            case 'paoutskzh':
+                v = Common.checkBankNum(v) || this.state.paoutskzh;
+                this.setState({paoutskzh:v},function(){
+                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
+                });
+                break;
+            case 'paoutskh':
+                this.setState({paoutskh:v},function(){
+                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
+                });
+                break;
+            case 'paoutje':
+                v = Common.formatBankMoney(v) || this.state.paoutje;
+                this.setState({paoutje:v},function(){
+                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
+                    alert('请修改您的余额，确保您的余额大于本次转入的金额');
+                });
+                break;
+            case 'paoutzhye':
+                v = Common.formatBankMoney(v) || this.state.paoutzhye;
+                this.setState({paoutzhye:v},function(){
+                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
+                });
+                break;
+            case 'paoutzy':
+                this.setState({paoutzy:v},function(){
+                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
+                });
+                break;
+            case 'paoutly':
+                this.setState({paoutly:v},function(){
+                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
+                });
+                break;              //平安转出结束
         }
     }
     switch(){               //改变收入或者支出
@@ -227,66 +264,125 @@ export default class JSOut extends Component {
                     >
                     <Image source={require('../images/pa-title.png')} style={styles.img_title}/>
                 </TouchableHighlight>
+                {this.state.isIncome == true ? (                //转入开始
                 <ScrollView>
                     <View style={styles.wrap}>
-                    <View style={[styles.wrap_row]}>
-                        <Text style={[styles.row_text, styles.row_text_l]}>交易时间：</Text>
-                        <Text style={[styles.row_text, styles.row_text_r]}>{this.state.today}</Text>
-                    </View>
-                    <TouchableOpacity onPress={this.switch.bind(this)} style={[styles.wrap_row]}>
-                        <Text style={[styles.row_text, styles.row_text_l]}>交易类型：</Text>
-                        {this.state.isIncome == true ? (
-                        <Text style={[styles.row_text, styles.row_text_r, {color:'#DD5522'}]}>转入</Text>
-                        ) : (
-                        <Text style={[styles.row_text, styles.row_text_r, {color:'#2C934E'}]}>转出</Text>
-                        )}
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>this.openPop('格式：王老五',this.state.painfkr,'painfkr')} style={[styles.wrap_row]}>
-                        <Text style={[styles.row_text, styles.row_text_l]}>付  款  人：</Text>
-                        <Text style={[styles.row_text, styles.row_text_r]}>{this.state.painfkr}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>this.openPop('格式：6214850285268888',this.state.painfkzh,'painfkzh')} style={[styles.wrap_row]}>
-                        <Text style={[styles.row_text, styles.row_text_l]}>付款账号：</Text>
-                        <Text style={[styles.row_text, styles.row_text_r]}>{this.state.painfkzh}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>this.openPop('格式：农业银行',this.state.painfkh,'painfkh')} style={[styles.wrap_row]}>
-                        <Text style={[styles.row_text, styles.row_text_l]}>付  款  行：</Text>
-                        <Text style={[styles.row_text, styles.row_text_r]}>{this.state.painfkh}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>this.openPop('格式：张三',this.state.painskr,'painskr')} style={[styles.wrap_row]}>
-                        <Text style={[styles.row_text, styles.row_text_l]}>收  款  人：</Text>
-                        <Text style={[styles.row_text, styles.row_text_r]}>{this.state.painskr}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>this.openPop('格式：6222****1234',this.state.painskzh,'painskzh')} style={[styles.wrap_row]}>
-                        <Text style={[styles.row_text, styles.row_text_l]}>收款账号：</Text>
-                        <Text style={[styles.row_text, styles.row_text_r]}>{this.state.painskzh}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>this.openPop('格式：平安银行深圳布吉支行',this.state.painskh,'painskh')} style={[styles.wrap_row]}>
-                        <Text style={[styles.row_text, styles.row_text_l]}>收  款  行：</Text>
-                        <Text style={[styles.row_text, styles.row_text_r]}>{this.state.painskh}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>this.openPop('格式：1,000.00',this.state.painje,'painje')} style={[styles.wrap_row]}>
-                        <Text style={[styles.row_text, styles.row_text_l]}>金        额：</Text>
-                        <Text style={[styles.row_text, styles.row_text_r, {color:'#DD5522'}]}>{this.state.painje}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>this.openPop('格式：10,000.00',this.state.painzhye,'painzhye')} style={[styles.wrap_row]}>
-                        <Text style={[styles.row_text, styles.row_text_l]}>账户余额：</Text>
-                        <Text style={[styles.row_text, styles.row_text_r]}>{this.state.painzhye}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>this.openPop('格式：跨行转账',this.state.painzy,'painzy')} style={[styles.wrap_row]}>
-                        <Text style={[styles.row_text, styles.row_text_l]}>摘        要：</Text>
-                        <Text style={[styles.row_text, styles.row_text_r]}>{this.state.painzy}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>this.openPop('格式：跨行转出',this.state.painly,'painly')} style={[styles.wrap_row]}>
-                        <Text style={[styles.row_text, styles.row_text_l]}>留        言：</Text>
-                        <Text style={[styles.row_text, styles.row_text_r]}>{this.state.painly}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>this.openPop('格式：1234****1234',this.state.jsoutfkzh,'jsoutfkzh')} style={[styles.wrap_row,{borderBottomWidth:0}]}>
-                        <Text style={[styles.row_text, styles.row_text_l]}>流水号：</Text>
-                        <Text style={[styles.row_text, styles.row_text_r]}>{this.state.jsoutfkzh}</Text>
-                    </TouchableOpacity>
+                        <View style={[styles.wrap_row]}>
+                            <Text style={[styles.row_text, styles.row_text_l]}>交易时间：</Text>
+                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.today}</Text>
+                        </View>
+                        <TouchableOpacity onPress={this.switch.bind(this)} style={[styles.wrap_row]}>
+                            <Text style={[styles.row_text, styles.row_text_l]}>交易类型：</Text>
+                            <Text style={[styles.row_text, styles.row_text_r, {color:'#DD5522'}]}>转入</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=>this.openPop('格式：王老五',this.state.painfkr,'painfkr')} style={[styles.wrap_row]}>
+                            <Text style={[styles.row_text, styles.row_text_l]}>付  款  人：</Text>
+                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.painfkr}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=>this.openPop('格式：6214850285268888',this.state.painfkzh,'painfkzh')} style={[styles.wrap_row]}>
+                            <Text style={[styles.row_text, styles.row_text_l]}>付款账号：</Text>
+                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.painfkzh}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=>this.openPop('格式：中国农业银行股份有限公司',this.state.painfkh,'painfkh')} style={[styles.wrap_row]}>
+                            <Text style={[styles.row_text, styles.row_text_l]}>付  款  行：</Text>
+                            <Text style={[styles.row_text, styles.row_text_r, styles.add_ellipsis]} numberOfLines={1}>{this.state.painfkh}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=>this.openPop('格式：张三',this.state.painskr,'painskr')} style={[styles.wrap_row]}>
+                            <Text style={[styles.row_text, styles.row_text_l]}>收  款  人：</Text>
+                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.painskr}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=>this.openPop('格式：6222****1234',this.state.painskzh,'painskzh')} style={[styles.wrap_row]}>
+                            <Text style={[styles.row_text, styles.row_text_l]}>收款账号：</Text>
+                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.painskzh}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=>this.openPop('格式：平安银行深圳布吉支行',this.state.painskh,'painskh')} style={[styles.wrap_row]}>
+                            <Text style={[styles.row_text, styles.row_text_l]}>收  款  行：</Text>
+                            <Text style={[styles.row_text, styles.row_text_r, styles.add_ellipsis]} numberOfLines={1}>{this.state.painskh}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=>this.openPop('格式：1,000.00',this.state.painje,'painje')} style={[styles.wrap_row]}>
+                            <Text style={[styles.row_text, styles.row_text_l]}>金        额：</Text>
+                            <Text style={[styles.row_text, styles.row_text_r, {color:'#DD5522'}]}>{this.state.painje}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=>this.openPop('格式：10,000.00',this.state.painzhye,'painzhye')} style={[styles.wrap_row]}>
+                            <Text style={[styles.row_text, styles.row_text_l]}>账户余额：</Text>
+                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.painzhye}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=>this.openPop('格式：跨行转账',this.state.painzy,'painzy')} style={[styles.wrap_row]}>
+                            <Text style={[styles.row_text, styles.row_text_l]}>摘        要：</Text>
+                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.painzy}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=>this.openPop('格式：跨行转出',this.state.painly,'painly')} style={[styles.wrap_row]}>
+                            <Text style={[styles.row_text, styles.row_text_l]}>留        言：</Text>
+                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.painly}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=>this.openPop('格式：1234****1234',this.state.jsoutfkzh,'jsoutfkzh')} style={[styles.wrap_row,{borderBottomWidth:0}]}>
+                            <Text style={[styles.row_text, styles.row_text_l]}>流水号：</Text>
+                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.jsoutfkzh}</Text>
+                        </TouchableOpacity>
                     </View>
                 </ScrollView>
+                ) : (               //转出开始
+                <ScrollView>
+                    <View style={styles.wrap}>
+                        <View style={[styles.wrap_row]}>
+                            <Text style={[styles.row_text, styles.row_text_l]}>交易时间：</Text>
+                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.today}</Text>
+                        </View>
+                        <TouchableOpacity onPress={this.switch.bind(this)} style={[styles.wrap_row]}>
+                            <Text style={[styles.row_text, styles.row_text_l]}>交易类型：</Text>
+                            <Text style={[styles.row_text, styles.row_text_r, {color:'#2C934E'}]}>转出</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=>this.openPop('格式：张三',this.state.paoutfkr,'paoutfkr')} style={[styles.wrap_row]}>
+                            <Text style={[styles.row_text, styles.row_text_l]}>付  款  人：</Text>
+                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.paoutfkr}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=>this.openPop('格式：6222****1234',this.state.paoutfkzh,'paoutfkzh')} style={[styles.wrap_row]}>
+                            <Text style={[styles.row_text, styles.row_text_l]}>付款账号：</Text>
+                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.paoutfkzh}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=>this.openPop('格式：平安银行深圳布吉支行',this.state.paoutfkh,'paoutfkh')} style={[styles.wrap_row]}>
+                            <Text style={[styles.row_text, styles.row_text_l]}>付  款  行：</Text>
+                            <Text style={[styles.row_text, styles.row_text_r, styles.add_ellipsis]} numberOfLines={1}>{this.state.paoutfkh}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=>this.openPop('格式：王老五',this.state.paoutskr,'paoutskr')} style={[styles.wrap_row]}>
+                            <Text style={[styles.row_text, styles.row_text_l]}>收  款  人：</Text>
+                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.paoutskr}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=>this.openPop('格式：6214850285268888',this.state.paoutskzh,'paoutskzh')} style={[styles.wrap_row]}>
+                            <Text style={[styles.row_text, styles.row_text_l]}>收款账号：</Text>
+                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.paoutskzh}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=>this.openPop('格式：中国农业银行股份有限公司',this.state.paoutskh,'paoutskh')} style={[styles.wrap_row]}>
+                            <Text style={[styles.row_text, styles.row_text_l]}>收  款  行：</Text>
+                            <Text style={[styles.row_text, styles.row_text_r, styles.add_ellipsis]} numberOfLines={1}>{this.state.paoutskh}</Text>
+                        </TouchableOpacity>
+                        <View style={[styles.wrap_row]}>
+                            <Text style={[styles.row_text, styles.row_text_l]}>币        种：</Text>
+                            <Text style={[styles.row_text, styles.row_text_r]}>人民币</Text>
+                        </View>
+                        <TouchableOpacity onPress={()=>this.openPop('格式：1,000.00',this.state.paoutje,'paoutje')} style={[styles.wrap_row]}>
+                            <Text style={[styles.row_text, styles.row_text_l]}>金        额：</Text>
+                            <Text style={[styles.row_text, styles.row_text_r, {color:'#DD5522'}]}>{this.state.paoutje}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=>this.openPop('格式：10,000.00',this.state.paoutzhye,'paoutzhye')} style={[styles.wrap_row]}>
+                            <Text style={[styles.row_text, styles.row_text_l]}>账户余额：</Text>
+                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.paoutzhye}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=>this.openPop('格式：跨行转账',this.state.paoutzy,'paoutzy')} style={[styles.wrap_row]}>
+                            <Text style={[styles.row_text, styles.row_text_l]}>摘        要：</Text>
+                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.paoutzy}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=>this.openPop('格式：跨行转出',this.state.paoutly,'paoutly')} style={[styles.wrap_row]}>
+                            <Text style={[styles.row_text, styles.row_text_l]}>留        言：</Text>
+                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.paoutly}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=>this.openPop('格式：1234****1234',this.state.jsoutfkzh,'jsoutfkzh')} style={[styles.wrap_row,{borderBottomWidth:0}]}>
+                            <Text style={[styles.row_text, styles.row_text_l]}>流水号：</Text>
+                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.jsoutfkzh}</Text>
+                        </TouchableOpacity>
+                    </View>
+                </ScrollView>
+                )}
                 <EditView
                     // 在组件中使用this.editView即可访拿到EditView组件
                     ref={editView => this.editView = editView}
@@ -301,10 +397,7 @@ export default class JSOut extends Component {
 var Dimensions = require('Dimensions');
 var { width, height } = Dimensions.get('window');
 var baseWidth = 1080;
-var blue = '#09b6f2';
-var gray6 = '#666666';
-var gray3 = '#333333';
-var borderColor = '#dddddd';
+
 
 const styles = StyleSheet.create({
     img_title: {
@@ -337,6 +430,9 @@ const styles = StyleSheet.create({
     row_text_r: {
         color: '#5F6267',
         marginLeft: 3,
+    },
+    add_ellipsis: {
+        width:width - 140,
     }
 
 });
