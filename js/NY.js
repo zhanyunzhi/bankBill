@@ -102,36 +102,17 @@ export default class NH extends Component {
         v = v || '您没有输入任何内容';
         this.setState({popValue:v});        //保存输入的内容
         let flag = Constants.bankInputTextFlag;         //获取修改的是那个输入框
-        switch (flag) {
-            case 'nhfkzh':
-                v = Common.formatBankNum(v) || this.state.nhfkzh;
-                this.setState({nhfkzh:v},function(){
-                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
-                });
-                break;
-            case 'nhskzh':
-                v = Common.formatBankNum(v) || this.state.nhskzh;         //将输入的数字格式化
-                this.setState({nhskzh:v},function(){
-                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
-                })
-                break;
-            case 'nhskr':
-                this.setState({nhskr:v},function(){
-                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
-                })
-                break;
-            case 'nhskyh':
-                this.setState({nhskyh:v},function(){
-                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
-                })
-                break;
-            case 'nhzzje':
-                v = Common.formatBankMoney(v) || this.state.nhzzje;
-                this.setState({nhzzje:v},function(){
-                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
-                })
-                break;
+        let aFormatBankNum = ['nhfkzh','nhskzh'];           //需要格式化银行账号的
+        let aFormatBankMoney = ['nhzzje'];           //需要验证银行账号位数的
+        if(aFormatBankNum.indexOf(flag) > -1){
+            v = Common.formatBankNum(v) || this.state[flag];
         }
+        if(aFormatBankMoney.indexOf(flag) > -1){
+            v = Common.formatBankMoney(v) || this.state[flag];
+        }
+        this.setState({[flag]:v},function(){
+            this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
+        });
     }
 
     render(){

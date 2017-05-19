@@ -105,42 +105,17 @@ export default class JSOut extends Component {
         v = v || '您没有输入任何内容';
         this.setState({popValue:v});        //保存输入的内容
         let flag = Constants.bankInputTextFlag;         //获取修改的是那个输入框
-        switch (flag) {
-            case 'jsoutzzje':
-                v = Common.formatBankMoney(v) || this.state.jsoutzzje;
-                this.setState({jsoutzzje:v},function(){
-                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
-                });
-                break;
-            case 'jsoutskzh':
-                v = Common.formatBankNum(v) || this.state.jsoutskzh;
-                this.setState({jsoutskzh:v},function(){
-                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
-                });
-                break;
-            case 'jsoutskzhxm':
-                this.setState({jsoutskzhxm:v},function(){
-                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
-                });
-                break;
-            case 'jsoutskyh':
-                this.setState({jsoutskyh:v},function(){
-                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
-                });
-                break;
-            case 'jsoutfkzh':
-                v = Common.formatBankNum(v) || this.state.jsoutfkzh;
-                this.setState({jsoutfkzh:v},function(){
-                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
-                });
-                break;
-            case 'jsoutfkzhye':
-                v = Common.formatBankMoney(v) || this.state.jsoutfkzhye;
-                this.setState({jsoutfkzhye:v},function(){
-                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
-                });
-                break;
+        let aFormatBankNum = ['jsoutskzh','jsoutfkzh'];           //需要格式化银行账号的
+        let aFormatBankMoney = ['jsoutzzje','jsoutfkzhye'];           //需要验证银行账号位数的
+        if(aFormatBankNum.indexOf(flag) > -1){
+            v = Common.formatBankNum(v) || this.state[flag];
         }
+        if(aFormatBankMoney.indexOf(flag) > -1){
+            v = Common.formatBankMoney(v) || this.state[flag];
+        }
+        this.setState({[flag]:v},function(){
+            this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
+        });
     }
     openMore(){               //改变收入或者支出
         this.setState({seeMore:!this.state.seeMore});

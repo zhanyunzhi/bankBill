@@ -138,119 +138,21 @@ export default class JSOut extends Component {
         v = v || '您没有输入任何内容';
         this.setState({popValue:v});        //保存输入的内容
         let flag = Constants.bankInputTextFlag;         //获取修改的是那个输入框
-        switch (flag) {
-            case 'painfkr':           //付款人   平安转入开始
-                this.setState({painfkr:v},function(){
-                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
-                });
-                break;
-            case 'painfkzh':
-                v = Common.checkBankNum(v) || this.state.painfkzh;
-                this.setState({painfkzh:v},function(){
-                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
-                });
-                break;
-            case 'painfkh':
-                this.setState({painfkh:v},function(){
-                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
-                });
-                break;
-            case 'painskr':
-                this.setState({painskr:v},function(){
-                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
-                });
-                break;
-            case 'painskzh':
-                v = Common.formatBankNum(v) || this.state.painskzh;
-                this.setState({painskzh:v},function(){
-                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
-                });
-                break;
-            case 'painskh':
-                this.setState({painskh:v},function(){
-                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
-                });
-                break;
-            case 'painje':
-                v = Common.formatBankMoney(v) || this.state.painje;
-                this.setState({painje:v},function(){
-                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
-                    alert('请修改您的余额，确保您的余额大于本次转入的金额');
-                });
-                break;
-            case 'painzhye':
-                v = Common.formatBankMoney(v) || this.state.painzhye;
-                this.setState({painzhye:v},function(){
-                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
-                });
-                break;
-            case 'painzy':
-                this.setState({painzy:v},function(){
-                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
-                });
-                break;
-            case 'painly':
-                this.setState({painly:v},function(){
-                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
-                });
-                break;              //平安转入结束
-
-            case 'paoutfkr':           //付款人   平安转出开始
-                this.setState({paoutfkr:v},function(){
-                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
-                });
-                break;
-            case 'paoutfkzh':
-                v = Common.formatBankNum(v) || this.state.paoutfkzh;
-                this.setState({paoutfkzh:v},function(){
-                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
-                });
-                break;
-            case 'paoutfkh':
-                this.setState({paoutfkh:v},function(){
-                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
-                });
-                break;
-            case 'paoutskr':
-                this.setState({paoutskr:v},function(){
-                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
-                });
-                break;
-            case 'paoutskzh':
-                v = Common.checkBankNum(v) || this.state.paoutskzh;
-                this.setState({paoutskzh:v},function(){
-                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
-                });
-                break;
-            case 'paoutskh':
-                this.setState({paoutskh:v},function(){
-                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
-                });
-                break;
-            case 'paoutje':
-                v = Common.formatBankMoney(v) || this.state.paoutje;
-                this.setState({paoutje:v},function(){
-                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
-                    alert('请修改您的余额，确保您的余额大于本次转入的金额');
-                });
-                break;
-            case 'paoutzhye':
-                v = Common.formatBankMoney(v) || this.state.paoutzhye;
-                this.setState({paoutzhye:v},function(){
-                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
-                });
-                break;
-            case 'paoutzy':
-                this.setState({paoutzy:v},function(){
-                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
-                });
-                break;
-            case 'paoutly':
-                this.setState({paoutly:v},function(){
-                    this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
-                });
-                break;              //平安转出结束
+        let aCheckBankNum = ['painfkzh','paoutskzh'];           //需要验证银行账号位数的
+        let aFormatBankNum = ['painskzh','paoutfkzh'];           //需要格式化银行账号的
+        let aFormatBankMoney = ['painje','painzhye','paoutje','paoutzhye'];           //需要验证银行账号位数的
+        if(aCheckBankNum.indexOf(flag) > -1){
+            v = Common.checkBankNum(v) || this.state[flag];
         }
+        if(aFormatBankNum.indexOf(flag) > -1){
+            v = Common.formatBankNum(v) || this.state[flag];
+        }
+        if(aFormatBankMoney.indexOf(flag) > -1){
+            v = Common.formatBankMoney(v) || this.state[flag];
+        }
+        this.setState({[flag]:v},function(){
+            this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
+        });
     }
     switch(){               //改变收入或者支出
         this.setState({isIncome:!this.state.isIncome});
