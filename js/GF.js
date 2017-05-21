@@ -43,11 +43,10 @@ export default class GF extends Component {
         }
     }
     componentDidMount(){
-        this.getValue('jhzh');
-        this.getValue('jhsr');
-        this.getValue('jhzc');
-        this.getValue('jhdfhm');
-        this.getValue('jhdfzh');
+        let aList = ['jhzh','jhsr','jhzc','jhdfhm','jhdfzh'];
+        for(let i=0; i<aList.length; i++){
+            this.getValue(aList[i]);
+        }
     }
     clickJump(){
         const{navigator} = this.props;

@@ -42,12 +42,10 @@ export default class JSOut extends Component {
         }
     }
     componentDidMount(){
-        this.getValue('jsoutzzje');
-        this.getValue('jsoutskzh');
-        this.getValue('jsoutskzhxm');
-        this.getValue('jsoutskyh');
-        this.getValue('jsoutfkzh');
-        this.getValue('jsoutfkzhye');
+        let aList = ['jsoutzzje','jsoutskzh','jsoutskzhxm','jsoutskyh','jsoutfkzh','jsoutfkzhye'];
+        for(let i=0; i<aList.length; i++){
+            this.getValue(aList[i]);
+        }
     }
     clickJump(){
         const{navigator} = this.props;

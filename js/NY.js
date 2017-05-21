@@ -40,11 +40,10 @@ export default class NH extends Component {
         }
     }
     componentDidMount(){
-        this.getValue('nhfkzh');
-        this.getValue('nhskzh');
-        this.getValue('nhskr');
-        this.getValue('nhskyh');
-        this.getValue('nhzzje');
+        let aList = ['nhfkzh','nhskzh','nhskr','nhskyh','nhzzje'];
+        for(let i=0; i<aList.length; i++){
+            this.getValue(aList[i]);
+        }
     }
     clickJump(){
         const{navigator} = this.props;

@@ -69,6 +69,14 @@ module.exports =  {
             return;
         }
         return str;
-    }
+    },
+    getPAFlowNum: function(){               //生成平安银行的流水号
+        let date = new Date();
+        let year = date.getFullYear().toString().substr(2, 2);      //获取年份的后两位
+        let month = date.getMonth()+1 >= 10 ? date.getMonth()+1 : '0'+(date.getMonth()+1);
+        let day = date.getDate();
+        let last = date.getTime().toString().substr(1,10);       //截取时间戳的前11位为流水号的后11位
+        return '896789' + year + month + day + last;
+    },
 
 }

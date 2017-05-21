@@ -30,6 +30,7 @@ export default class JSOut extends Component {
     constructor(props) {
         super(props);
         let today = Common.formatDateOne(new Date().getTime());         //获取当天的时间，并格式化为yyyy-mm-dd
+        let palsh = Common.getPAFlowNum();
         this.state={
             painfkr:'王老五',               //平安转入开始
             painfkzh:'6214850285268888',
@@ -53,6 +54,8 @@ export default class JSOut extends Component {
             paoutzy:'网银转账',
             paoutly:'网银贷记',              //平安转出结束
 
+            palsh: palsh,
+
             today: today,
             popValue: '',                                          //弹出框的输入内容
             popTitle: '请输入账号格式为：1234****5678',                      //弹出框的title
@@ -60,27 +63,11 @@ export default class JSOut extends Component {
         }
     }
     componentDidMount(){
-        this.getValue('painfkr');           //平安转入开始
-        this.getValue('painfkzh');
-        this.getValue('painfkh');
-        this.getValue('painskr');
-        this.getValue('painskzh');
-        this.getValue('painskh');
-        this.getValue('painje');
-        this.getValue('painzhye');
-        this.getValue('painzy');
-        this.getValue('painly');            //平安转入结束
-        
-        this.getValue('paoutfkr');           //平安转出开始
-        this.getValue('paoutfkzh');
-        this.getValue('paoutfkh');
-        this.getValue('paoutskr');
-        this.getValue('paoutskzh');
-        this.getValue('paoutskh');
-        this.getValue('paoutje');
-        this.getValue('paoutzhye');
-        this.getValue('paoutzy');
-        this.getValue('paoutly');            //平安转出结束
+        let aList = ['painfkr','painfkzh','painfkh','painskr','painskzh','painskh','painje','painzhye','painzy','painly',           //平安转入
+            'paoutfkr', 'paoutfkzh','paoutfkh','paoutskr','paoutskzh','paoutskh','paoutje','paoutzhye','paoutzy','paoutly'];        //平安转出
+        for(let i=0; i<aList.length; i++){
+            this.getValue(aList[i]);
+        }
     }
     clickJump(){
         const{navigator} = this.props;
@@ -219,7 +206,7 @@ export default class JSOut extends Component {
                         </TouchableOpacity>
                         <TouchableOpacity onPress={()=>this.openPop('格式：1234****1234',this.state.jsoutfkzh,'jsoutfkzh')} style={[styles.wrap_row,{borderBottomWidth:0}]}>
                             <Text style={[styles.row_text, styles.row_text_l]}>流水号：</Text>
-                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.jsoutfkzh}</Text>
+                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.palsh}</Text>
                         </TouchableOpacity>
                     </View>
                 </ScrollView>
@@ -280,7 +267,7 @@ export default class JSOut extends Component {
                         </TouchableOpacity>
                         <TouchableOpacity onPress={()=>this.openPop('格式：1234****1234',this.state.jsoutfkzh,'jsoutfkzh')} style={[styles.wrap_row,{borderBottomWidth:0}]}>
                             <Text style={[styles.row_text, styles.row_text_l]}>流水号：</Text>
-                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.jsoutfkzh}</Text>
+                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.palsh}</Text>
                         </TouchableOpacity>
                     </View>
                 </ScrollView>
