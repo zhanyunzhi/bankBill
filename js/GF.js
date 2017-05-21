@@ -106,7 +106,7 @@ export default class GF extends Component {
         let flag = Constants.bankInputTextFlag;         //获取修改的是那个输入框
         let aCheckBankNum = ['jhdfzh'];           //需要验证银行账号位数的
         let aFormatBankNum = ['jhzh'];           //需要格式化银行账号的
-        let aFormatBankMoney = ['jhsr','jhzc'];           //需要验证银行账号位数的
+        let aFormatBankMoney = ['jhsr','jhzc'];           //需要格式化的金额
         if(aCheckBankNum.indexOf(flag) > -1){
             v = Common.checkBankNum(v) || this.state[flag];
         }

@@ -59,15 +59,23 @@ export default class JSOut extends Component {
             today: today,
             popValue: '',                                          //弹出框的输入内容
             popTitle: '请输入账号格式为：1234****5678',                      //弹出框的title
-            isIncome: true       //转出和转入切换开关
+            isIncome: true,       //转出和转入切换开关
+            isJEBigYE: false,       //转入的时候金额是否大于余额
         }
     }
     componentDidMount(){
         let aList = ['painfkr','painfkzh','painfkh','painskr','painskzh','painskh','painje','painzhye','painzy','painly',           //平安转入
             'paoutfkr', 'paoutfkzh','paoutfkh','paoutskr','paoutskzh','paoutskh','paoutje','paoutzhye','paoutzy','paoutly'];        //平安转出
         for(let i=0; i<aList.length; i++){
-            this.getValue(aList[i]);
-        }
+            this.getValue(aList[i],function(){
+                //转入的时候，检查转入的时候，余额是否大于转入金额
+                if(this.state.isIncome && parseFloat(this.state.painzhye.toString().replace(/,/g, '')) < parseFloat(this.state.painje.toString().replace(/,/g, ''))){
+                    this.setState({isJEBigYE:true});        //转入的时候交易金额大于余额，要求用户修改余额
+                }else{
+                    this.setState({isJEBigYE:false});
+                };
+            });
+        };
     }
     clickJump(){
         const{navigator} = this.props;
@@ -96,7 +104,7 @@ export default class JSOut extends Component {
             console.log('失败'+error);
         }
     }
-    getValue(k){
+    getValue(k,callback){
         try {
             AsyncStorage.getItem(k,
                 (error,result)=>{
@@ -105,7 +113,7 @@ export default class JSOut extends Component {
                     }else{
                         console.log('取值成功:'+result);
                         if(result){
-                            this.setState({[k]:result});
+                            this.setState({[k]:result},callback);
                         }
                     }
                 }
@@ -127,7 +135,7 @@ export default class JSOut extends Component {
         let flag = Constants.bankInputTextFlag;         //获取修改的是那个输入框
         let aCheckBankNum = ['painfkzh','paoutskzh'];           //需要验证银行账号位数的
         let aFormatBankNum = ['painskzh','paoutfkzh'];           //需要格式化银行账号的
-        let aFormatBankMoney = ['painje','painzhye','paoutje','paoutzhye'];           //需要验证银行账号位数的
+        let aFormatBankMoney = ['painje','painzhye','paoutje','paoutzhye'];           //需要格式化的金额
         if(aCheckBankNum.indexOf(flag) > -1){
             v = Common.checkBankNum(v) || this.state[flag];
         }
@@ -139,6 +147,12 @@ export default class JSOut extends Component {
         }
         this.setState({[flag]:v},function(){
             this.saveDataToLocal(flag);             //设置值成功后，保存到AsyncStorage
+            //转入的时候，检查转入的时候，余额是否大于转入金额
+            if(this.state.isIncome && parseFloat(this.state.painzhye.toString().replace(/,/g, '')) < parseFloat(this.state.painje.toString().replace(/,/g, ''))){
+                this.setState({isJEBigYE:true});        //转入的时候交易金额大于余额，要求用户修改余额
+            }else{
+                this.setState({isJEBigYE:false});
+            };
         });
     }
     switch(){               //改变收入或者支出
@@ -194,7 +208,12 @@ export default class JSOut extends Component {
                         </TouchableOpacity>
                         <TouchableOpacity onPress={()=>this.openPop('格式：10,000.00',this.state.painzhye,'painzhye')} style={[styles.wrap_row]}>
                             <Text style={[styles.row_text, styles.row_text_l]}>账户余额：</Text>
-                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.painzhye}</Text>
+                            <Text style={[styles.row_text, styles.row_text_r]}>
+                                {this.state.painzhye}
+                                {this.state.isJEBigYE == true ? (
+                                    <Text style={[{color:'red'}]}>“账户余额”必须大于“金额”，请修改“账户余额”！</Text>
+                                ) : (null)}
+                            </Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={()=>this.openPop('格式：跨行转账',this.state.painzy,'painzy')} style={[styles.wrap_row]}>
                             <Text style={[styles.row_text, styles.row_text_l]}>摘        要：</Text>

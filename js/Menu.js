@@ -40,7 +40,7 @@ export default class Menu extends Component {
         }
     }
     componentDidMount(){
-        this.clickJump('pa');
+        this.clickJump('gs');
     }
     clickJump(index){
         //因为Navigator <Component {...route.params} navigator={navigator} />传入了navigator 所以这里能取到navigator

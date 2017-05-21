@@ -104,7 +104,7 @@ export default class JSOut extends Component {
         this.setState({popValue:v});        //保存输入的内容
         let flag = Constants.bankInputTextFlag;         //获取修改的是那个输入框
         let aFormatBankNum = ['jsoutskzh','jsoutfkzh'];           //需要格式化银行账号的
-        let aFormatBankMoney = ['jsoutzzje','jsoutfkzhye'];           //需要验证银行账号位数的
+        let aFormatBankMoney = ['jsoutzzje','jsoutfkzhye'];           //需要格式化的金额
         if(aFormatBankNum.indexOf(flag) > -1){
             v = Common.formatBankNum(v) || this.state[flag];
         }

@@ -11,6 +11,7 @@ module.exports =  {
     },
     formatBankMoney: function (str) {     //格式化输入的金额，格式为：100,000.00
         str += '';
+        str = str.replace(/\s/g, "");      //去除所有空格
         str = str.replace(/,/g, "");
         let patrn = /^\d+(\.\d+)?$/;
         if (!patrn.exec(str)) {
@@ -41,12 +42,12 @@ module.exports =  {
                 count++;
             }
             str = newStr + (str + "00").substr((str + "00").indexOf("."), 3);
-            console.log(str)
         }
         return str;
     },
     formatBankNum: function (str){          //格式化银行账号：1234****6789
         str += '';
+        str = str.replace(/\s/g, "");      //去除所有空格
         str = str.replace(/\*/g, "");
         let patrn = /^\d+(\d+)?$/;
         let len = str.length;
@@ -61,8 +62,20 @@ module.exports =  {
         str = str.substr(0,4) + "****" + str.substr(len-4,len-1);
         return str;
     },
+    formatBankNumForSpace: function (str){  //格式化银行账号：1234 6789 1234 4567 123
+        str += '';
+        str = str.replace(/\s/g, "");      //去除所有空格
+        let patrn = /^\d{16,19}$/;          //验证16-19位数字
+        if (!patrn.exec(str)) {
+            alert("银行账号必须是数字且在16-19位之间！");
+            return;
+        };
+        str = str.substr(0,4) + ' ' + str.substr(4,4) + ' ' + str.substr(8,4) + ' ' + str.substr(12,4) + ' ' + str.substr(16,4);
+        return str;
+    },
     checkBankNum: function(str) {
         str += '';
+        str = str.replace(/\s/g, "");      //去除所有空格
         let patrn = /^\d{16,19}$/;          //验证16-19位数字
         if (!patrn.exec(str)) {
             alert("银行账号必须是数字且在16-19位之间！");
