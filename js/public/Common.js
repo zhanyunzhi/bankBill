@@ -91,5 +91,38 @@ module.exports =  {
         let last = date.getTime().toString().substr(1,10);       //截取时间戳的前11位为流水号的后11位
         return '896789' + year + month + day + last;
     },
+    formatWXMoney: function (str) {     //格式化输入的金额，格式为：1000.00
+        str += '';
+        str = str.replace(/\s/g, "");      //去除所有空格
+        str = str.replace(/,/g, "");
+        let patrn = /^\d+(\.\d+)?$/;
+        if (!patrn.exec(str)) {
+            alert("金额必须为数字！");
+            return;
+        }
+        if (str.indexOf(".") == -1) {
+            str = str + ".00"; //自动补小数点后两位
+        } else {
+            str = str.substr(0,str.indexOf(".")) + (str + "00").substr((str + "00").indexOf("."), 3);
+        }
+        str = str.replace('/./g',' ');
+        return str;
+    },
+    formatWXMinute: function (str) {     //格式化输入的金额，格式为：1000.00
+        str += '';
+        str = str.replace(/\s/g, "");      //去除所有空格
+        let patrn = /^\d+(\d+)?$/;
+        if (!patrn.exec(str)) {
+            alert("时间必须为数字！");
+            return;
+        }
+        str = parseInt(str);
+        if(str >= 60 || str < 0){
+            alert("时间必须在0-59之间！");
+            return;
+        }
+        str < 10 ? str = '0' + str : str = str + '';
+        return str;
+    },
 
 }
