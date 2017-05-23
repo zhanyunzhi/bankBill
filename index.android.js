@@ -10,7 +10,7 @@ import {
     StyleSheet,
     Text,
     View,
-    Navigator
+    Navigator,
     } from 'react-native';
 import MyScene from './js/MyScene';   //导航菜单
 /*import NH from './js/NH';             //农行

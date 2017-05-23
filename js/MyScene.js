@@ -8,15 +8,17 @@ import {
     Text,
     StyleSheet,
     TouchableHighlight,
-    Navigator
+    Navigator,
 } from 'react-native';
 
 import Menu from './Menu';         //菜单
+import Constants from './public/Constants.js';
 
 export default class MyScene extends Component {
     render() {
         let defaultName = '菜单';
         let defaultComponent = Menu;
+
 
         return (
             <Navigator
