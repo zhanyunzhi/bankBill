@@ -36,15 +36,7 @@ export default class NH extends Component {
         minutes < 10 ? minutes = '0' + minutes : minutes;
         let moneyMark = String.fromCharCode(165);
         this.state={
-            wxinje:'1000.00',
-            moneyMark:moneyMark,
-            today:today,
-            hour:hour,
-            minutes1:minutes,
-            minutes2:minutes,
-            isMinuteError:false,
-            popValue: '',                                          //弹出框的输入内容
-            popTitle: '请输入账号格式为：1234****5678',                      //弹出框的title
+            activeNum:'',              //激活码输入提示
         }
     }
     componentDidMount(){
@@ -137,54 +129,20 @@ export default class NH extends Component {
 
     render(){
         return(
-            <View style={[{backgroundColor:'#ffffff',height:height}]}>
+            <View style={styles.wrap}>
                 <TouchableHighlight
-                    onPress={this.clickJump.bind(this)}
-                    >
+                        onPress={this.clickJump.bind(this)}
+                        >
                     <Image style={[styles.image]} source={require('../images/wx-title.png')}></Image>
                 </TouchableHighlight>
-                <View>
-                    <Text style={{textAlign:'center',fontSize:20,color:'#000000',marginTop:20}}>已收钱</Text>
-                </View>
-                <TouchableOpacity onPress={()=>this.openPop('格式：1000.00',this.state.wxinje,'wxinje')} style={styles.money}>
-                    <Text style={[styles.money_text,{position:'absolute',marginLeft:-27}]}>{this.state.moneyMark}</Text>
-                    <Text style={[styles.money_text]}>{this.state.wxinje}</Text>
-                    <Text style={[styles.money_text,{backgroundColor:'#000000',position:'absolute',width:6,height:6,marginTop:47,marginLeft:-65}]}></Text>
-                </TouchableOpacity>
-                <View>
-                    <Text style={{textAlign:'center',fontSize:14,color:'#808080',marginTop:16}}>
-                        已存入你的
-                        <Text style={{color:'#7A93AF'}}>零钱</Text>
-                    </Text>
-                </View>
-                {this.state.isMinuteError == true ? (
-                    <View style={[styles.bottom_time,{bottom:90}]}>
-                        <Text style={{color:'#ff0000'}}>怎么搞的，“收钱时间”怎么可能比“转账时间”早呢！</Text>
-                    </View>
-                ) : (null)}
-                <View style={[styles.bottom_time,{bottom:61}]}>
-                    <Text style={{color:'#808080',marginRight:4}}>转账时间:</Text>
-                    <Text style={{color:'#808080',marginRight:3}}>{this.state.today}</Text>
-                    <TouchableOpacity onPress={()=>this.openPop('格式：数字0-59，只改变分钟数',this.state.minutes1,'minutes1')}>
-                        <Text style={{color:'#808080'}}>{this.state.hour}:{this.state.minutes1}</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={[styles.bottom_time,{bottom:32}]}>
-                    <Text style={{color:'#808080',marginRight:4}}>收钱时间:</Text>
-                    <Text style={{color:'#808080',marginRight:3}}>{this.state.today}</Text>
-                    <TouchableOpacity onPress={()=>this.openPop('格式：数字0-59,只改变分钟数',this.state.minutes2,'minutes2')}>
-                        <Text style={{color:'#808080'}}>
-                            {this.state.hour}:{this.state.minutes2}
-                        </Text>
-                    </TouchableOpacity>
-                </View>
-                <EditView
-                    // 在组件中使用this.editView即可访拿到EditView组件
-                    ref={editView => this.editView = editView}
-                    inputText={this.state.popValue}
-                    titleTxt={this.state.popTitle}
-                    ensureCallback={popValue => this.setPopValue(popValue)}
-                    />
+                <TextInput
+                        style={styles.inputStyle}
+                        placeholder='请输入32位激活码'
+                        value={this.state.activeNum}
+                        autoFocus={true}
+                        underlineColorAndroid="transparent"
+                        onChangeText={text => this.setState({activeNum:text})}
+                        />
             </View>
         )
     }
@@ -198,23 +156,26 @@ const styles = StyleSheet.create({
         width:width,
         height:540*width/baseWidth,
     },
-    money:{
-        flexDirection:'row',
+    wrap:{
+        backgroundColor:'#f4f4f4',
         justifyContent:'center',
-        marginLeft:28,
-        marginTop:4,
+        flexDirection:'column',
+        alignItems:'center',
     },
-    money_text:{
-        textAlign:'center',
-        fontSize:49,
-        color:'#000000',
-        marginTop:0,
-    },
-    bottom_time:{
+    inputStyle:{
+        fontSize:20,
+        height:44,
+        lineHeight:44,
+        color:'#000',
         width:width,
-        flexDirection:'row',
-        justifyContent:'center',
-        position:'absolute',
+        padding:0,
+        paddingBottom:10,
+        paddingTop:10,
+        paddingLeft:10,
+        marginTop:20,
+        borderBottomWidth:1,
+        borderColor:'#d9d9d9',
+        backgroundColor:'#ffffff',
     }
 
 });

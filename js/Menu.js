@@ -27,7 +27,7 @@ import JSOut from './JSOut';             //建行转出
 import GS from './GS';             //工行
 import PA from './PA';             //平安
 import WX from './WX';             //微信
-import Active from './Active';             //激活页面
+import Activate from './Activate';             //激活页面
 
 export default class Menu extends Component {
     constructor(props){
@@ -51,8 +51,7 @@ export default class Menu extends Component {
         BackAndroid.removeEventListener('hardwareBackPress', this.onBackAndroid);
     }
     onBackAndroid = () => {
-        const navigator = this.navigator;
-        //console.log(navigator)
+        const navigator = this.props.navigator;
         if (navigator && navigator.getCurrentRoutes().length > 1) {
             navigator.pop();
             return true;
@@ -68,6 +67,9 @@ export default class Menu extends Component {
             return true;
         }
     };
+    componentDidMount(){
+        this.clickJump('activate');
+    }
     clickJump(index){
         //因为Navigator <Component {...route.params} navigator={navigator} />传入了navigator 所以这里能取到navigator
         const{navigator} = this.props;
@@ -92,8 +94,8 @@ export default class Menu extends Component {
                 case 'wx':
                     jumpComponent = WX;
                     break;
-                case 'active':
-                    jumpComponent = Active;
+                case 'activate':
+                    jumpComponent = Activate;
                     break;
             }
             navigator.push({
@@ -113,7 +115,7 @@ export default class Menu extends Component {
                         <Text style={[styles.title,{color:'#999999',width:50,textAlign:'center'}]}>退出</Text>
                     </TouchableHighlight>
                     <Text style={styles.title}>银行账单生成</Text>
-                    <TouchableHighlight underlayColor="rgb(248, 248, 248)" activeOpacity={1}  onPress={this.clickJump.bind(this,'active')}>
+                    <TouchableHighlight underlayColor="rgb(248, 248, 248)" activeOpacity={1}  onPress={this.clickJump.bind(this,'activate')}>
                         <Text style={[styles.title,{color:'#2C934E',width:50,textAlign:'center'}]}>激活</Text>
                     </TouchableHighlight>
                 </View>
