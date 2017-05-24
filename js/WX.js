@@ -26,7 +26,7 @@ import Common from './public/Common.js';
 import EditView from './public/EditView.js';
 import Constants from './public/Constants.js';
 
-export default class NH extends Component {
+export default class WX extends Component {
     constructor(props) {
         super(props);
         let today = Common.formatDateOne(new Date().getTime());         //获取当天的时间，并格式化为yyyy-mm-dd

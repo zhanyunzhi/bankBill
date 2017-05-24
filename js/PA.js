@@ -26,7 +26,7 @@ import Common from './public/Common.js';
 import EditView from './public/EditView.js';
 import Constants from './public/Constants.js';
 
-export default class JSOut extends Component {
+export default class PA extends Component {
     constructor(props) {
         super(props);
         let today = Common.formatDateOne(new Date().getTime());         //获取当天的时间，并格式化为yyyy-mm-dd
@@ -223,7 +223,7 @@ export default class JSOut extends Component {
                             <Text style={[styles.row_text, styles.row_text_l]}>留        言：</Text>
                             <Text style={[styles.row_text, styles.row_text_r]}>{this.state.painly}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>this.openPop('格式：1234****1234',this.state.jsoutfkzh,'jsoutfkzh')} style={[styles.wrap_row,{borderBottomWidth:0}]}>
+                        <TouchableOpacity style={[styles.wrap_row,{borderBottomWidth:0}]}>
                             <Text style={[styles.row_text, styles.row_text_l]}>流水号：</Text>
                             <Text style={[styles.row_text, styles.row_text_r]}>{this.state.palsh}</Text>
                         </TouchableOpacity>
@@ -284,7 +284,7 @@ export default class JSOut extends Component {
                             <Text style={[styles.row_text, styles.row_text_l]}>留        言：</Text>
                             <Text style={[styles.row_text, styles.row_text_r]}>{this.state.paoutly}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>this.openPop('格式：1234****1234',this.state.jsoutfkzh,'jsoutfkzh')} style={[styles.wrap_row,{borderBottomWidth:0}]}>
+                        <TouchableOpacity style={[styles.wrap_row,{borderBottomWidth:0}]}>
                             <Text style={[styles.row_text, styles.row_text_l]}>流水号：</Text>
                             <Text style={[styles.row_text, styles.row_text_r]}>{this.state.palsh}</Text>
                         </TouchableOpacity>

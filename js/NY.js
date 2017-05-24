@@ -26,7 +26,7 @@ import Common from './public/Common.js';
 import EditView from './public/EditView.js';
 import Constants from './public/Constants.js';
 
-export default class NH extends Component {
+export default class NY extends Component {
     constructor(props) {
         super(props);
         this.state={

@@ -17,6 +17,7 @@ import {
     ListView,
     Image,
     TouchableHighlight,
+    TouchableOpacity,
     BackAndroid,
     ToastAndroid
     } from 'react-native';
@@ -111,13 +112,13 @@ export default class Menu extends Component {
         return(
             <View style={styles.wrap}>
                 <View style={{flexDirection:'row',justifyContent:'space-between',width:width}}>
-                    <TouchableHighlight underlayColor="rgb(238, 238, 238)" activeOpacity={1} onPress={this.onBackAndroid.bind(this,'')}>
+                    <TouchableOpacity onPress={this.onBackAndroid.bind(this,'')}>
                         <Text style={[styles.title,{color:'#999999',width:50,textAlign:'center'}]}>退出</Text>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
                     <Text style={styles.title}>银行账单生成</Text>
-                    <TouchableHighlight underlayColor="rgb(248, 248, 248)" activeOpacity={1}  onPress={this.clickJump.bind(this,'activate')}>
+                    <TouchableOpacity onPress={this.clickJump.bind(this,'activate')}>
                         <Text style={[styles.title,{color:'#2C934E',width:50,textAlign:'center'}]}>激活</Text>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
                 </View>
                 <ListView style={styles.container}
                     dataSource={this.state.dataSource}

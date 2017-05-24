@@ -10,6 +10,7 @@ import {
     StyleSheet,
     Text,
     View,
+    Image,
     Navigator,
     } from 'react-native';
 import MyScene from './js/MyScene';   //导航菜单
@@ -37,7 +38,8 @@ export default class bankBill extends Component {
     )
   }
 }
-
+let Dimensions = require('Dimensions');
+let { width, height } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
