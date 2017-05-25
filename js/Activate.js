@@ -53,45 +53,30 @@ export default class Activate extends Component {
         });            //设置弹出框的内容
     }
     sendMsg(){              //发送激活码
-        let params = {
-            activeNum: this.state.activeNum,
-        }
-        fetch('http://localhost/thinkphp5.0.9/public/index/test/index2', {
-            method: 'POST',
-            mode: "no-cors",            //跨域请求
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                activeNum: 'yourValue',
-                secondParam: 'yourOtherValue',
-            })
-        }).then(res =>{
-                console.log(JSON.stringify(res));
-    /*        if(res.header.statusCode == '00000000'){
-                console.log(res.header.statusCode);
-                //这里设定服务器返回的header中statusCode为success时数据返回成功
-            }else{
-                //服务器返回异常，设定服务器返回的异常信息保存在 header.msgArray[0].desc
-                console.log(res.header.msg);
-            }*/
-        }).catch(err =>{
-            console.log('请求失败'+err)
-        })
-        /*Request.fetchRequest('http://localhost/thinkphp5.0.9/public/index/test/index2','POST',params)
-            .then(res =>{
+        Request.fetchRequest('thinkphp_5.0.9_full/public/index/index/rn?a=info&qq=979137&ticket=test','GET','','',1)
+        .then(res => {
                 console.log(res);
-                if(res.header.statusCode == '00000000'){
-                    console.log(res.header.statusCode);
-                    //这里设定服务器返回的header中statusCode为success时数据返回成功
-                }else{
-                    //服务器返回异常，设定服务器返回的异常信息保存在 header.msgArray[0].desc
-                    console.log(res.header.msg);
-                }
-            }).catch(err =>{
-                console.log('请求失败')
-            })*/
+        })
+        .catch((err) => {
+                console.log(err);
+        });fetch('http://192.168.31.164/thinkphp_5.0.9_full/public/index/index/rn', {
+            method: 'POST',
+            mode:'no-cors',
+            headers: {"Content-Type": "application/json"},
+            body:'a=info&qq=9791372&ticket=test',
+        })
+        /*let params = {
+            a:'info',
+            qq:'9791372',
+            ticket:'test'
+        }
+        Request.fetchRequest('thinkphp_5.0.9_full/public/index/index/rn','POST',params,'',1)
+        .then(res => {
+                console.log(res);
+        })
+        .catch((err) => {
+                console.log(err);
+        });*/
         console.log("用户点击了激活按钮");
     }
     _setContent(t) {             //设置剪贴板的文本内容

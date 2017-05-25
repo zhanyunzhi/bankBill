@@ -1,6 +1,7 @@
 /**
  * Created by Tiny on 2017/5/15.
  */
+import fetch from './fetch-polyfill';
 module.exports =  {
     /**
      * 让fetch也可以timeout
@@ -38,42 +39,38 @@ module.exports =  {
      * @return 返回Promise
      */
     fetchRequest: function(url, method, params='', token='', timeout=10000){
+        let common_url = 'http://192.168.31.164/';
+        let fetch_param = {};
         let header = {
             "Content-Type": "application/json;charset=UTF-8",
-            "accesstoken":token  //用户登陆后返回的token，某些涉及用户数据的接口需要在header中加上token
         };
-        console.log('request url:',url,params);  //打印请求参数
-        if(params == ''){   //如果网络请求中带有参数
-            return new Promise(function (resolve, reject) {
-                this.timeoutFetch(fetch(common_url + url, {
-                    method: method,
-                    headers: header
-                }),timeout).then((response) => response.json())
-                    .then((responseData) => {
-                        console.log('res:',url,responseData);  //网络请求成功返回的数据
-                        resolve(responseData);
-                    })
-                    .catch( (err) => {
-                        console.log('err:',url, err);     //网络请求失败返回的数据
-                        reject(err);
-                    });
-            });
-        }else{   //如果网络请求中没有参数
-            return new Promise(function (resolve, reject) {
-                this.timeoutFetch(fetch(common_url + url, {
-                    method: method,
-                    headers: header,
-                    body:JSON.stringify(params)   //body参数，通常需要转换成字符串后服务器才能解析
-                }),timeout).then((response) => response.json())
-                    .then((responseData) => {
-                        console.log('res:',url, responseData);   //网络请求成功返回的数据
-                        resolve(responseData);
-                    })
-                    .catch( (err) => {
-                        console.log('err:',url, err);   //网络请求失败返回的数据
-                        reject(err);
-                    });
-            });
+        if(params == ''){   //如果网络请求中带没有参数
+            fetch_param = {
+                method: method,
+                headers: method=='GET'?null:header,
+                timeout:timeout
+            }
+        }else {         //如果网络请求中带有参数
+            fetch_param = {
+                method: method,
+                headers: method=='GET'?null:header,
+                body: method=='GET'?null:JSON.stringify(params),   //body参数，通常需要转换成字符串后服务器才能解析
+                timeout:timeout
+            }
         }
+        let promise = new Promise(function(resolve,reject) {            //新建一个promise用于异步返回后的处理
+            fetch(common_url + url, {
+                fetch_param
+            })
+                .then((response) => response && response.json())
+                .then((responseData) => {
+                    console.log(fetch_param)
+                    resolve(responseData);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+        })
+        return promise;
     },
 }
