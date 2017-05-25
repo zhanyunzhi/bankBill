@@ -27,6 +27,7 @@ import {
 import Common from './public/Common.js';
 import ShowView from './public/ShowView.js';
 import Constants from './public/Constants.js';
+import Request from './public/Request.js';
 
 export default class Activate extends Component {
     constructor(props) {
@@ -52,6 +53,45 @@ export default class Activate extends Component {
         });            //设置弹出框的内容
     }
     sendMsg(){              //发送激活码
+        let params = {
+            activeNum: this.state.activeNum,
+        }
+        fetch('http://localhost/thinkphp5.0.9/public/index/test/index2', {
+            method: 'POST',
+            mode: "no-cors",            //跨域请求
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                activeNum: 'yourValue',
+                secondParam: 'yourOtherValue',
+            })
+        }).then(res =>{
+                console.log(JSON.stringify(res));
+    /*        if(res.header.statusCode == '00000000'){
+                console.log(res.header.statusCode);
+                //这里设定服务器返回的header中statusCode为success时数据返回成功
+            }else{
+                //服务器返回异常，设定服务器返回的异常信息保存在 header.msgArray[0].desc
+                console.log(res.header.msg);
+            }*/
+        }).catch(err =>{
+            console.log('请求失败'+err)
+        })
+        /*Request.fetchRequest('http://localhost/thinkphp5.0.9/public/index/test/index2','POST',params)
+            .then(res =>{
+                console.log(res);
+                if(res.header.statusCode == '00000000'){
+                    console.log(res.header.statusCode);
+                    //这里设定服务器返回的header中statusCode为success时数据返回成功
+                }else{
+                    //服务器返回异常，设定服务器返回的异常信息保存在 header.msgArray[0].desc
+                    console.log(res.header.msg);
+                }
+            }).catch(err =>{
+                console.log('请求失败')
+            })*/
         console.log("用户点击了激活按钮");
     }
     _setContent(t) {             //设置剪贴板的文本内容

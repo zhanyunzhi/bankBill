@@ -19,22 +19,17 @@ import JH from './js/JH';             //建行*/
 
 export default class bankBill extends Component {
   render() {
-    //var JHP = JH;
+      if (!__DEV__) {           //非开发环境下，去掉控制台打印，提高性能
+          global.console = {
+              info: () => {},
+              log: () => {},
+              warn: () => {},
+              debug: () => {},
+              error: () => {},
+          };
+      }
     return (
         <MyScene />
-        /*<Navigator
-            initialRoute={{ name: 'My Initial Scene', component: JHP }}
-            configureScene={(route) => {
-              //跳转的动画
-              return Navigator.SceneConfigs.FadeAndroid;
-            }}
-            renderScene={(route, navigator) =>{
-              let Component = route.component;
-              if(route.component){
-                  return <Component navigator={navigator} />
-              }
-            }}
-            />*/
     )
   }
 }

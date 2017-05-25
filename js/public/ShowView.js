@@ -79,10 +79,10 @@ export default class ShowView extends Component {
                             activeOpacity={1}
                             style={styles.promptContainer}
                             >
-                            <Text style={{fontSize: 14, color: '#999'}}>{titleTxt}</Text>
-                            <View style={{flexDirection: 'row', margin: 10}}>
-                                <View style={[styles.center, {width: 230}]}>
-                                    <Text>{this.state.inputText}</Text>
+                            <Text style={{fontSize: 14, color: '#999',marginTop:10}}>{titleTxt}</Text>
+                            <View style={{flexDirection: 'row', margin: 10, marginTop: 6}}>
+                                <View style={[styles.center, {width: 240}]}>
+                                    <Text style={{lineHeight:22,textAlign:'justify'}}>{this.state.inputText}</Text>
                                 </View>
                             </View>
                         </TouchableOpacity>
@@ -128,20 +128,20 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderColor: '#d9d9d9',
         borderWidth: 1,
-        height: 150,
-        width: screenW * 0.75,
+        height: 160,
+        width: screenW * 0.8,
         backgroundColor: 'rgb(234, 234, 235)',
         borderRadius: 5,
     },
     promptContainer: {
-        height: 100,
-        width: screenW * 0.75,
+        height: 110,
+        width: screenW * 0.8,
         alignItems: 'center',
         justifyContent: 'center'
     },
     buttonContainer: {
         height: 50,
-        width: screenW * 0.75,
+        width: screenW * 0.8,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
