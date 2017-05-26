@@ -53,18 +53,18 @@ export default class Activate extends Component {
         });            //设置弹出框的内容
     }
     sendMsg(){              //发送激活码
-        Request.fetchRequest('thinkphp_5.0.9_full/public/index/index/rn?a=info&qq=979137&ticket=test','GET','','',1)
+        Request.fetchRequest('thinkphp_5.0.9_full/public/index/index/rn?id=1','GET','','',1000000)
         .then(res => {
                 console.log(res);
         })
         .catch((err) => {
                 console.log(err);
-        });fetch('http://192.168.31.164/thinkphp_5.0.9_full/public/index/index/rn', {
+        });/*fetch('http://192.168.31.164/thinkphp_5.0.9_full/public/index/index/rn', {
             method: 'POST',
             mode:'no-cors',
             headers: {"Content-Type": "application/json"},
             body:'a=info&qq=9791372&ticket=test',
-        })
+        })*/
         /*let params = {
             a:'info',
             qq:'9791372',

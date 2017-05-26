@@ -39,7 +39,8 @@ module.exports =  {
      * @return 返回Promise
      */
     fetchRequest: function(url, method, params='', token='', timeout=10000){
-        let common_url = 'http://192.168.31.164/';
+        //let common_url = 'http://192.168.31.164/';
+        let common_url = 'http://10.200.2.43/';
         let fetch_param = {};
         let header = {
             "Content-Type": "application/json;charset=UTF-8",
@@ -64,10 +65,11 @@ module.exports =  {
             })
                 .then((response) => response && response.json())
                 .then((responseData) => {
-                    console.log(fetch_param)
+                    console.log('eeee--'+responseData)
                     resolve(responseData);
                 })
                 .catch((err) => {
+                    console.log('ssssss--'+err)
                     reject(err);
                 });
         })
