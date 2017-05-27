@@ -53,30 +53,14 @@ export default class Activate extends Component {
         });            //设置弹出框的内容
     }
     sendMsg(){              //发送激活码
-        Request.fetchRequest('thinkphp_5.0.9_full/public/index/index/rn?id=1','GET','','',1000000)
+        console.log(this.state.activeNum)
+        Request.fetchRequest('thinkphp5.0/public/index/index/rn?id='+this.state.activeNum,'GET','','',10000)
         .then(res => {
                 console.log(res);
         })
         .catch((err) => {
                 console.log(err);
-        });/*fetch('http://192.168.31.164/thinkphp_5.0.9_full/public/index/index/rn', {
-            method: 'POST',
-            mode:'no-cors',
-            headers: {"Content-Type": "application/json"},
-            body:'a=info&qq=9791372&ticket=test',
-        })*/
-        /*let params = {
-            a:'info',
-            qq:'9791372',
-            ticket:'test'
-        }
-        Request.fetchRequest('thinkphp_5.0.9_full/public/index/index/rn','POST',params,'',1)
-        .then(res => {
-                console.log(res);
-        })
-        .catch((err) => {
-                console.log(err);
-        });*/
+        });
         console.log("用户点击了激活按钮");
     }
     _setContent(t) {             //设置剪贴板的文本内容

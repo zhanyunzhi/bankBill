@@ -37,10 +37,27 @@ module.exports =  {
      * @param {string} method 请求方法：GET、POST，只能大写
      * @param {JSON} [params=''] body的请求参数，默认为空
      * @return 返回Promise
+     * 如何调用GET
+     * Request.fetchRequest('thinkphp5.0/public/index/index/rn?id=1','GET','','',10000)
+     *  .then(res => {
+     *      //成功返回
+     *   })
+     *  .catch((err) => {
+     *      //失败返回
+     *   });
+     * 如何调用POST
+     * let params = {id:'1'}
+     * Request.fetchRequest('thinkphp5.0/public/index/index/rn','POST',params,'',10000)
+     *  .then(res => {
+     *      //成功返回
+     *   })
+     *  .catch((err) => {
+     *      //失败返回
+     *   });
      */
     fetchRequest: function(url, method, params='', token='', timeout=10000){
-        //let common_url = 'http://192.168.31.164/';
-        let common_url = 'http://10.200.2.43/';
+        let common_url = 'http://192.168.31.163/';
+        //let common_url = 'http://10.200.2.43/';
         let fetch_param = {};
         let header = {
             "Content-Type": "application/json;charset=UTF-8",
@@ -60,16 +77,12 @@ module.exports =  {
             }
         }
         let promise = new Promise(function(resolve,reject) {            //新建一个promise用于异步返回后的处理
-            fetch(common_url + url, {
-                fetch_param
-            })
+            fetch(common_url + url, fetch_param)
                 .then((response) => response && response.json())
                 .then((responseData) => {
-                    console.log('eeee--'+responseData)
                     resolve(responseData);
                 })
                 .catch((err) => {
-                    console.log('ssssss--'+err)
                     reject(err);
                 });
         })
