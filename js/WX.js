@@ -108,14 +108,14 @@ export default class WX extends Component {
     openPop(title, value, flag){
         this.setState({popTitle:title});            //设置弹出框的title
         this.setState({popValue:value},function(){      //setState是异步的
-            Constants.bankInputTextFlag = flag;
+            Constants.BANK_INPUT_TEXT_FLAG = flag;
             this.editView.show();
         });            //设置弹出框的内容
     }
     setPopValue(v){
         v = v || '您没有输入任何内容';
         this.setState({popValue:v});        //保存输入的内容
-        let flag = Constants.bankInputTextFlag;         //获取修改的是那个输入框
+        let flag = Constants.BANK_INPUT_TEXT_FLAG;         //获取修改的是那个输入框
         let aFormatWXMoney = ['wxinje'];           //需要格式化的微信金额
         let aFormatWXMinute = ['minutes1','minutes2'];           //需要格式化的分钟
         if(aFormatWXMoney.indexOf(flag) > -1){

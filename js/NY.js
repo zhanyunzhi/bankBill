@@ -93,14 +93,14 @@ export default class NY extends Component {
     openPop(title, value, flag){
         this.setState({popTitle:title});            //设置弹出框的title
         this.setState({popValue:value},function(){      //setState是异步的
-            Constants.bankInputTextFlag = flag;
+            Constants.BANK_INPUT_TEXT_FLAG = flag;
             this.editView.show();
         });            //设置弹出框的内容
     }
     setPopValue(v){
         v = v || '您没有输入任何内容';
         this.setState({popValue:v});        //保存输入的内容
-        let flag = Constants.bankInputTextFlag;         //获取修改的是那个输入框
+        let flag = Constants.BANK_INPUT_TEXT_FLAG;         //获取修改的是那个输入框
         let aFormatBankNum = ['nhfkzh','nhskzh'];           //需要格式化银行账号的
         let aFormatBankMoney = ['nhzzje'];           //需要格式化的金额
         if(aFormatBankNum.indexOf(flag) > -1){
@@ -123,40 +123,42 @@ export default class NY extends Component {
                         >
                         <Image style={[styles.image]} source={require('../images/nh-title.png')}></Image>
                     </TouchableHighlight>
-                    <View style={styles.border_b}></View>
-                    <View style={[styles.inputRow,styles.center]}>
-                        <Text style={[styles.text]}>付款账户：</Text>
-                        <TouchableOpacity onPress={()=>this.openPop('格式：1234****1234',this.state.nhfkzh,'nhfkzh')} style={[styles.text_touch]}>
-                            <Text style={[styles.text_touch_text]}>{this.state.nhfkzh}</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={[styles.inputRow,styles.center]}>
-                        <Text style={[styles.text]}>收款账户：</Text>
-                        <TouchableOpacity onPress={()=>this.openPop('格式：1234****5678',this.state.nhskzh,'nhskzh')} style={[styles.text_touch]}>
-                            <Text style={[styles.text_touch_text]}>{this.state.nhskzh}</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={[styles.inputRow,styles.center]}>
-                        <Text style={[styles.text]}>收款人：</Text>
-                        <TouchableOpacity onPress={()=>this.openPop('格式：张三',this.state.nhskr,'nhskr')} style={[styles.text_touch]}>
-                            <Text style={[styles.text_touch_text]}>{this.state.nhskr}</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={[styles.inputRow,styles.center]}>
-                        <Text style={[styles.text]}>收款银行：</Text>
-                        <TouchableOpacity onPress={()=>this.openPop('格式：平安银行',this.state.nhskyh,'nhskyh')} style={[styles.text_touch]}>
-                            <Text style={[styles.text_touch_text]}>{this.state.nhskyh}</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={[styles.inputRow,styles.center,{borderBottomColor:'transparent'}]}>
-                        <Text style={[styles.text]}>转账金额：</Text>
-                        <TouchableOpacity onPress={()=>this.openPop('格式：1,000.00您可直接输入1000',this.state.nhzzje,'nhzzje')} style={[styles.text_touch]}>
-                            <Text style={[styles.text_touch_text,{color:'#ff6549'}]}>{this.state.nhzzje}元</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.border_b}></View>
+                    <Image style={{width:null,height:null}} source={require('../images/watermark_gray1.png')}>
+                        <View style={styles.border_b}></View>
+                        <View style={[styles.inputRow,styles.center]}>
+                            <Text style={[styles.text]}>付款账户：</Text>
+                            <TouchableOpacity onPress={()=>this.openPop('格式：1234****1234',this.state.nhfkzh,'nhfkzh')} style={[styles.text_touch]}>
+                                <Text style={[styles.text_touch_text]}>{this.state.nhfkzh}</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={[styles.inputRow,styles.center]}>
+                            <Text style={[styles.text]}>收款账户：</Text>
+                            <TouchableOpacity onPress={()=>this.openPop('格式：1234****5678',this.state.nhskzh,'nhskzh')} style={[styles.text_touch]}>
+                                <Text style={[styles.text_touch_text]}>{this.state.nhskzh}</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={[styles.inputRow,styles.center]}>
+                            <Text style={[styles.text]}>收款人：</Text>
+                            <TouchableOpacity onPress={()=>this.openPop('格式：张三',this.state.nhskr,'nhskr')} style={[styles.text_touch]}>
+                                <Text style={[styles.text_touch_text]}>{this.state.nhskr}</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={[styles.inputRow,styles.center]}>
+                            <Text style={[styles.text]}>收款银行：</Text>
+                            <TouchableOpacity onPress={()=>this.openPop('格式：平安银行',this.state.nhskyh,'nhskyh')} style={[styles.text_touch]}>
+                                <Text style={[styles.text_touch_text]}>{this.state.nhskyh}</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={[styles.inputRow,styles.center,{borderBottomColor:'transparent'}]}>
+                            <Text style={[styles.text]}>转账金额：</Text>
+                            <TouchableOpacity onPress={()=>this.openPop('格式：1,000.00您可直接输入1000',this.state.nhzzje,'nhzzje')} style={[styles.text_touch]}>
+                                <Text style={[styles.text_touch_text,{color:'#ff6549'}]}>{this.state.nhzzje}元</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.border_b}></View>
+                    </Image>
                 </View>
-                {Constants.platform.OS == 'android' ? (
+                {Constants.PLATFORM.OS == 'android' ? (
                 <TouchableHighlight underlayColor="#ffffff" >
                     <Text style={{color:'#ff6549',marginHorizontal:17,marginTop:13,marginBottom:16,fontSize:13}}>您的资金已汇出，实际到账时间取决于收款行系统</Text>
                 </TouchableHighlight>

@@ -1,6 +1,6 @@
 /**
  * Created by ZYZ on 2017/5/16.
- * 网上找的弹出输入框的组件
+ * 网上找的弹出提示的组件
  */
 import React, {Component} from 'react';
 import {

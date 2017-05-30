@@ -29,6 +29,9 @@ import GS from './GS';             //工行
 import PA from './PA';             //平安
 import WX from './WX';             //微信
 import Activate from './Activate';             //激活页面
+import Loading from './public/Loading';             //loading页
+import Request from './public/Request.js';          //封装过的fetch
+import Constants from './public/Constants.js';
 
 export default class Menu extends Component {
     constructor(props){
@@ -42,7 +45,8 @@ export default class Menu extends Component {
                 {name: '建设银行', shortName: 'jsOut', img: require('../images/js-logo.jpg'), dec: '建设银行转账给他人的页面'},
                 {name: '平安银行', shortName: 'pa', img: require('../images/pa-logo.jpg'), dec: '平安银行交易详情，可以切换转入和转出'},
                 {name: '微信收款', shortName: 'wx', img: require('../images/wx-logo.jpg'), dec: '微信转账收钱页面'},
-            ])
+            ]),
+            visible: false
         }
     }
     componentWillMount(){
@@ -69,7 +73,24 @@ export default class Menu extends Component {
         }
     };
     componentDidMount(){
-        this.clickJump('activate');
+        //执行验证当前设备是否已经激活过
+        let deviceID = Constants.DEVICE_ID;        //设备uniqueId
+        let reqUrl = 'thinkphp5.0/public/index/active/is_active?device_id='+deviceID;
+        Request.fetchRequest(reqUrl,'GET','','',10000)
+            .then(res => {
+                if(res.code == '0000'){
+                    Constants.IS_ACTIVE = true;         //已激活
+                }else if(res.code == '1000'){
+                    Constants.IS_ACTIVE = false;        //未激活
+                }else{
+                    Constants.IS_ACTIVE = false;        //服务器返回错误
+                }
+                this.setState({visible:true});
+            })
+            .catch((err) => {
+                Constants.IS_ACTIVE = false;        //服务器返回错误
+                this.setState({visible:true});
+            });
     }
     clickJump(index){
         //因为Navigator <Component {...route.params} navigator={navigator} />传入了navigator 所以这里能取到navigator
@@ -111,14 +132,23 @@ export default class Menu extends Component {
     render(){
         return(
             <View style={styles.wrap}>
-                <View style={{flexDirection:'row',justifyContent:'space-between',width:width}}>
+                {this.state.visible == false ? (
+                    <Loading text='正在验证权限...'/>
+                ) : (null)}
+                <View style={{flexDirection:'row',justifyContent:'space-between',width:width,borderBottomWidth:1,borderColor:'#dddddd'}}>
                     <TouchableOpacity onPress={this.onBackAndroid.bind(this,'')}>
                         <Text style={[styles.title,{color:'#999999',width:50,textAlign:'center'}]}>退出</Text>
                     </TouchableOpacity>
-                    <Text style={styles.title}>银行账单生成</Text>
+                    <Text style={styles.title}>银行账单{Constants.IS_ACTIVE==true?'(已激活)':'(未激活)'}</Text>
+                    {Constants.IS_ACTIVE == false ? (
                     <TouchableOpacity onPress={this.clickJump.bind(this,'activate')}>
                         <Text style={[styles.title,{color:'#2C934E',width:50,textAlign:'center'}]}>激活</Text>
                     </TouchableOpacity>
+                    ) : (
+                    <TouchableOpacity>
+                        <Text style={[styles.title,{color:'#ff6549',width:50,textAlign:'center'}]}></Text>
+                    </TouchableOpacity>
+                    )}
                 </View>
                 <ListView style={styles.container}
                     dataSource={this.state.dataSource}
@@ -141,19 +171,19 @@ class CELL extends Component{
     render(){
         const {jumpCallback, name, shortName, dec, img} = this.props;
         return(
-                <TouchableHighlight
-                    underlayColor="rgb(238, 238, 238)"
-                    activeOpacity={0.5}
-                    onPress={() => {jumpCallback(shortName)}}
-                    >
-                    <View  style={styles.list}>
-                        <Image style={styles.list_image} source={img}></Image>
-                        <View style={styles.list_view}>
-                            <Text style={styles.list_title}>{name}</Text>
-                            <Text style={styles.list_dec} numberOfLines={2}>{dec}</Text>
-                        </View>
+            <TouchableHighlight
+                underlayColor="rgb(238, 238, 238)"
+                activeOpacity={0.5}
+                onPress={() => {jumpCallback(shortName)}}
+                >
+                <View  style={styles.list}>
+                    <Image style={styles.list_image} source={img}></Image>
+                    <View style={styles.list_view}>
+                        <Text style={styles.list_title}>{name}</Text>
+                        <Text style={styles.list_dec} numberOfLines={2}>{dec}</Text>
                     </View>
-                </TouchableHighlight>
+                </View>
+            </TouchableHighlight>
         );
     }
 }

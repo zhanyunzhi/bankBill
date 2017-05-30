@@ -96,14 +96,14 @@ export default class GF extends Component {
     openPop(title, value, flag){
         this.setState({popTitle:title});            //设置弹出框的title
         this.setState({popValue:value},function(){      //setState是异步的
-            Constants.bankInputTextFlag = flag;
+            Constants.BANK_INPUT_TEXT_FLAG = flag;
             this.editView.show();
         });            //设置弹出框的内容
     }
     setPopValue(v){
         v = v || '您没有输入任何内容';
         this.setState({popValue:v});        //保存输入的内容
-        let flag = Constants.bankInputTextFlag;         //获取修改的是那个输入框
+        let flag = Constants.BANK_INPUT_TEXT_FLAG;         //获取修改的是那个输入框
         let aCheckBankNum = ['jhdfzh'];           //需要验证银行账号位数的
         let aFormatBankNum = ['jhzh'];           //需要格式化银行账号的
         let aFormatBankMoney = ['jhsr','jhzc'];           //需要格式化的金额
@@ -142,10 +142,12 @@ export default class GF extends Component {
                             <Text style={[styles.text_touch_text]}>{this.state.jhzh}</Text>
                         </TouchableOpacity>
                     </View>
+                    <Image style={{width:null,height:null}} source={require('../images/watermark_gray1.png')}>
                     <View style={[styles.inputRow,styles.center,{borderTopLeftRadius:5,borderTopRightRadius:5}]}>
                         <Text style={[styles.text]}>交易日期</Text>
                         <Text style={[styles.text_right]}>{this.state.today}</Text>
                     </View>
+                    </Image>
                     <View style={[styles.inputRow,styles.center]}>
                         <Text style={[styles.text]}>币种</Text>
                         <Text style={[styles.text_right]}>人民币</Text>
