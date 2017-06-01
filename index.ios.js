@@ -6,31 +6,35 @@
 
 import React, { Component } from 'react';
 import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+    AppRegistry,
+    StyleSheet,
+    Text,
+    View,
+    Image,
+    Navigator,
+    } from 'react-native';
+import MyScene from './js/MyScene';   //导航菜单
+/*import NH from './js/NH';             //农行
+import JH from './js/JH';             //建行*/
 
 export default class bankBill extends Component {
   render() {
+      if (!__DEV__) {           //非开发环境下，去掉控制台打印，提高性能
+          global.console = {
+              info: () => {},
+              log: () => {},
+              warn: () => {},
+              debug: () => {},
+              error: () => {},
+          };
+      }
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
-    );
+        <MyScene />
+    )
   }
 }
-
+let Dimensions = require('Dimensions');
+let { width, height } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
