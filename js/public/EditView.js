@@ -83,7 +83,7 @@ export default class EditView extends Component {
                             <View style={{flexDirection: 'row', margin: 10}}>
                                 <View style={[styles.center, {width: 230}]}>
                                     <TextInput
-                                        style={{fontSize:16, color:'#000',width:200,padding:0,borderBottomWidth:1,borderColor:'#d9d9d9'}}
+                                        style={{fontSize:16, height:30,color:'#000',width:200,padding:0,borderBottomWidth:1,borderColor:'#d9d9d9'}}
                                         value={this.state.inputText}
                                         autoFocus={true}
                                         underlineColorAndroid="transparent"
