@@ -37,9 +37,13 @@ export default class NY extends Component {
             nhzzje:'1,000.00元',
             popValue: '',                                          //弹出框的输入内容
             popTitle: '请输入账号格式为：1234****5678',                      //弹出框的title
+            watermark: require('../images/watermark_gray1.png')                       //水印的图片地址
         }
     }
     componentDidMount(){
+        if(Constants.IS_ACTIVE==true){
+            this.setState({watermark:require('../images/nowatermark.png')});
+        }
         let aList = ['nhfkzh','nhskzh','nhskr','nhskyh','nhzzje'];
         for(let i=0; i<aList.length; i++){
             this.getValue(aList[i]);
@@ -123,7 +127,7 @@ export default class NY extends Component {
                         >
                         <Image style={[styles.image]} source={require('../images/nh-title.png')}></Image>
                     </TouchableHighlight>
-                    <Image style={{width:null,height:null}} source={require('../images/watermark_gray1.png')}>
+                    <Image style={{width:null,height:null}} source={this.state.watermark}>
                         <View style={styles.border_b}></View>
                         <View style={[styles.inputRow,styles.center]}>
                             <Text style={[styles.text]}>付款账户：</Text>

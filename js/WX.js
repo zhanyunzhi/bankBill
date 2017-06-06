@@ -45,9 +45,13 @@ export default class WX extends Component {
             isMinuteError:false,
             popValue: '',                                          //弹出框的输入内容
             popTitle: '请输入账号格式为：1234****5678',                      //弹出框的title
+            watermark: require('../images/watermark_gray1.png')                       //水印的图片地址
         }
     }
     componentDidMount(){
+        if(Constants.IS_ACTIVE==true){
+            this.setState({watermark:require('../images/nowatermark.png')});
+        }
         let aList = ['wxinje'];
         for(let i=0; i<aList.length; i++){
             this.getValue(aList[i],function(){
@@ -143,20 +147,22 @@ export default class WX extends Component {
                     >
                     <Image style={[styles.image]} source={require('../images/wx-title.png')}></Image>
                 </TouchableHighlight>
-                <View>
-                    <Text style={{textAlign:'center',fontSize:20,color:'#000000',marginTop:20}}>已收钱</Text>
-                </View>
-                <TouchableOpacity onPress={()=>this.openPop('格式：1000.00',this.state.wxinje,'wxinje')} style={styles.money}>
-                    <Text style={[styles.money_text,{position:'absolute',marginLeft:-27}]}>{this.state.moneyMark}</Text>
-                    <Text style={[styles.money_text]}>{this.state.wxinje}</Text>
-                    <Text style={[styles.money_text,{backgroundColor:'#000000',position:'absolute',width:6,height:6,marginTop:47,marginLeft:-65}]}></Text>
-                </TouchableOpacity>
-                <View>
-                    <Text style={{textAlign:'center',fontSize:14,color:'#808080',marginTop:16}}>
-                        已存入你的
-                        <Text style={{color:'#7A93AF'}}>零钱</Text>
-                    </Text>
-                </View>
+                <Image style={{width:null,height:null}} source={this.state.watermark}>
+                    <View>
+                        <Text style={{textAlign:'center',fontSize:20,color:'#000000',marginTop:20}}>已收钱</Text>
+                    </View>
+                    <TouchableOpacity onPress={()=>this.openPop('格式：1000.00',this.state.wxinje,'wxinje')} style={styles.money}>
+                        <Text style={[styles.money_text,{position:'absolute',marginLeft:-27}]}>{this.state.moneyMark}</Text>
+                        <Text style={[styles.money_text]}>{this.state.wxinje}</Text>
+                        <Text style={[styles.money_text,{backgroundColor:'#000000',position:'absolute',width:6,height:6,marginTop:47,marginLeft:-65}]}></Text>
+                    </TouchableOpacity>
+                    <View>
+                        <Text style={{textAlign:'center',fontSize:14,color:'#808080',marginTop:16}}>
+                            已存入你的
+                            <Text style={{color:'#7A93AF'}}>零钱</Text>
+                        </Text>
+                    </View>
+                </Image>
                 {this.state.isMinuteError == true ? (
                     <View style={[styles.bottom_time,{bottom:90}]}>
                         <Text style={{color:'#ff0000'}}>怎么搞的，“收钱时间”怎么可能比“转账时间”早呢！</Text>

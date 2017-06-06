@@ -136,9 +136,15 @@ export default class Menu extends Component {
                     <Loading text='正在验证权限...'/>
                 ) : (null)}
                 <View style={{flexDirection:'row',justifyContent:'space-between',width:width,borderBottomWidth:1,borderColor:'#dddddd'}}>
+                    {Constants.PLATFORM.OS == 'android' ? (
                     <TouchableOpacity onPress={this.onBackAndroid.bind(this,'')}>
                         <Text style={[styles.title,{color:'#999999',width:50,textAlign:'center'}]}>退出</Text>
                     </TouchableOpacity>
+                    ) : (
+                    <TouchableOpacity onPress={this.onBackAndroid.bind(this,'')}>
+                        <Text style={[styles.title,{color:'#999999',width:50,textAlign:'center'}]}></Text>
+                    </TouchableOpacity>
+                    )}
                     <Text style={styles.title}>银行账单{Constants.IS_ACTIVE==true?'(已激活)':'(未激活)'}</Text>
                     {Constants.IS_ACTIVE == false ? (
                     <TouchableOpacity onPress={this.clickJump.bind(this,'activate')}>
