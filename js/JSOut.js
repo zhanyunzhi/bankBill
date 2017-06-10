@@ -19,6 +19,7 @@ import {
     ScrollView,
     TextInput,
     AsyncStorage,
+    StatusBar,
     TouchableOpacity
     } from 'react-native';
 
@@ -38,10 +39,14 @@ export default class JSOut extends Component {
             jsoutfkzhye:'1,000.00',
             popValue: '',                                          //弹出框的输入内容
             popTitle: '请输入账号格式为：1234****5678',                      //弹出框的title
-            seeMore: true       //查看更多和点击收起切换
+            seeMore: true,       //查看更多和点击收起切换
+            watermark: require('../images/watermark_gray1.png')                       //水印的图片地址
         }
     }
     componentDidMount(){
+        if(Constants.IS_ACTIVE==true){
+            this.setState({watermark:require('../images/nowatermark.png')});
+        }
         let aList = ['jsoutzzje','jsoutskzh','jsoutskzhxm','jsoutskyh','jsoutfkzh','jsoutfkzhye'];
         for(let i=0; i<aList.length; i++){
             this.getValue(aList[i]);
@@ -122,69 +127,75 @@ export default class JSOut extends Component {
     render(){
         return(
             <ScrollView style={[{backgroundColor:'#ffffff'}]}>
+                <StatusBar
+                    backgroundColor="#09b6f2"
+                    barStyle="light-content"
+                    />
                 <TouchableHighlight
                     onPress={this.clickJump.bind(this)}
                     >
                     <Image source={require('../images/js-out-title.png')} style={styles.img_title}/>
                 </TouchableHighlight>
-                <View>
-                    <Text style={styles.account_t}>转账提交成功</Text>
-                    <Text style={styles.account_c}>一般情况下，资金实时转入收款行，实际转入收款账户时间取决于收款行处理情况。如有疑问，请咨询收款行。</Text>
-                </View>
-                <View style={[styles.input_row]}>
-                    <Text style={[styles.input_row_text]}>转账金额</Text>
-                    <TouchableOpacity onPress={()=>this.openPop('格式：1,000.00您可直接输入1000',this.state.jsoutzzje,'jsoutzzje')} style={[styles.input_row_touch]}>
-                        <Text style={[styles.input_row_touch_text]}>{this.state.jsoutzzje}元</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={[styles.input_row]}>
-                    <Text style={[styles.input_row_text]}>收款账户</Text>
-                    <View style={{flexDirection: 'row'}}>
-                        <TouchableOpacity onPress={()=>this.openPop('格式：王老五',this.state.jsoutskzhxm,'jsoutskzhxm')} style={[styles.input_row_touch]}>
-                            <Text style={[styles.input_row_touch_text,{marginRight:8}]}>{this.state.jsoutskzhxm}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>this.openPop('格式：1234****1234',this.state.jsoutskzh,'jsoutskzh')} style={[styles.input_row_touch]}>
-                            <Text style={[styles.input_row_touch_text]}>{this.state.jsoutskzh}</Text>
+                <Image style={{width:null,height:null}} source={this.state.watermark}>
+                    <View>
+                        <Text style={styles.account_t}>转账提交成功</Text>
+                        <Text style={styles.account_c}>一般情况下，资金实时转入收款行，实际转入收款账户时间取决于收款行处理情况。如有疑问，请咨询收款行。</Text>
+                    </View>
+                    <View style={[styles.input_row]}>
+                        <Text style={[styles.input_row_text]}>转账金额</Text>
+                        <TouchableOpacity onPress={()=>this.openPop('格式：1,000.00您可直接输入1000',this.state.jsoutzzje,'jsoutzzje')} style={[styles.input_row_touch]}>
+                            <Text style={[styles.input_row_touch_text]}>{this.state.jsoutzzje}元</Text>
                         </TouchableOpacity>
                     </View>
-                </View>
-                {this.state.seeMore == true ? (
-                <View style={[styles.input_row]}>
-                    <Text style={[styles.input_row_text]}>收款银行</Text>
-                    <TouchableOpacity onPress={()=>this.openPop('格式：农业银行',this.state.jsoutskyh,'jsoutskyh')} style={[styles.input_row_touch]}>
-                        <Text style={[styles.input_row_touch_text]}>{this.state.jsoutskyh}</Text>
-                    </TouchableOpacity>
-                </View>
-                ) : ( null )}
-                {this.state.seeMore == true ? (
-                <View style={[styles.input_row]}>
-                    <Text style={[styles.input_row_text]}>付款账户</Text>
-                    <TouchableOpacity onPress={()=>this.openPop('格式：1234****1234',this.state.jsoutfkzh,'jsoutfkzh')} style={[styles.input_row_touch]}>
-                        <Text style={[styles.input_row_touch_text]}>{this.state.jsoutfkzh}</Text>
-                    </TouchableOpacity>
-                </View>
-                ) : ( null )}
-                {this.state.seeMore == true ? (
-                <View style={[styles.input_row]}>
-                    <Text style={[styles.input_row_text]}>付款账户余额</Text>
-                    <TouchableOpacity onPress={()=>this.openPop('格式：1,000.00您可直接输入1000',this.state.jsoutfkzhye,'jsoutfkzhye')} style={[styles.input_row_touch]}>
-                        <Text style={[styles.input_row_touch_text]}>{this.state.jsoutfkzhye}元</Text>
-                    </TouchableOpacity>
-                </View>
-                ) : ( null )}
-                {this.state.seeMore == true ? (
-                <TouchableHighlight
-                    onPress={this.openMore.bind(this)}
-                    >
-                    <Image source={require('../images/js-out-bottom.png')} style={styles.img_bottom}/>
-                </TouchableHighlight>
-                ) : (
-                <TouchableHighlight
-                    onPress={this.openMore.bind(this)}
-                    >
-                    <Image source={require('../images/js-out-bottom1.png')} style={styles.img_bottom1}/>
-                </TouchableHighlight>
-                )}
+                    <View style={[styles.input_row]}>
+                        <Text style={[styles.input_row_text]}>收款账户</Text>
+                        <View style={{flexDirection: 'row'}}>
+                            <TouchableOpacity onPress={()=>this.openPop('格式：王老五',this.state.jsoutskzhxm,'jsoutskzhxm')} style={[styles.input_row_touch]}>
+                                <Text style={[styles.input_row_touch_text,{marginRight:8}]}>{this.state.jsoutskzhxm}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={()=>this.openPop('格式：1234****1234',this.state.jsoutskzh,'jsoutskzh')} style={[styles.input_row_touch]}>
+                                <Text style={[styles.input_row_touch_text]}>{this.state.jsoutskzh}</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    {this.state.seeMore == true ? (
+                    <View style={[styles.input_row]}>
+                        <Text style={[styles.input_row_text]}>收款银行</Text>
+                        <TouchableOpacity onPress={()=>this.openPop('格式：农业银行',this.state.jsoutskyh,'jsoutskyh')} style={[styles.input_row_touch]}>
+                            <Text style={[styles.input_row_touch_text]}>{this.state.jsoutskyh}</Text>
+                        </TouchableOpacity>
+                    </View>
+                    ) : ( null )}
+                    {this.state.seeMore == true ? (
+                    <View style={[styles.input_row]}>
+                        <Text style={[styles.input_row_text]}>付款账户</Text>
+                        <TouchableOpacity onPress={()=>this.openPop('格式：1234****1234',this.state.jsoutfkzh,'jsoutfkzh')} style={[styles.input_row_touch]}>
+                            <Text style={[styles.input_row_touch_text]}>{this.state.jsoutfkzh}</Text>
+                        </TouchableOpacity>
+                    </View>
+                    ) : ( null )}
+                    {this.state.seeMore == true ? (
+                    <View style={[styles.input_row]}>
+                        <Text style={[styles.input_row_text]}>付款账户余额</Text>
+                        <TouchableOpacity onPress={()=>this.openPop('格式：1,000.00您可直接输入1000',this.state.jsoutfkzhye,'jsoutfkzhye')} style={[styles.input_row_touch]}>
+                            <Text style={[styles.input_row_touch_text]}>{this.state.jsoutfkzhye}元</Text>
+                        </TouchableOpacity>
+                    </View>
+                    ) : ( null )}
+                    {this.state.seeMore == true ? (
+                    <TouchableHighlight
+                        onPress={this.openMore.bind(this)}
+                        >
+                        <Image source={require('../images/js-out-bottom.png')} style={styles.img_bottom}/>
+                    </TouchableHighlight>
+                    ) : (
+                    <TouchableHighlight
+                        onPress={this.openMore.bind(this)}
+                        >
+                        <Image source={require('../images/js-out-bottom1.png')} style={styles.img_bottom1}/>
+                    </TouchableHighlight>
+                    )}
+                </Image>
                 <EditView
                     // 在组件中使用this.editView即可访拿到EditView组件
                     ref={editView => this.editView = editView}

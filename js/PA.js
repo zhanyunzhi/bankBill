@@ -19,6 +19,7 @@ import {
     ScrollView,
     TextInput,
     AsyncStorage,
+    StatusBar,
     TouchableOpacity
     } from 'react-native';
 
@@ -61,9 +62,13 @@ export default class PA extends Component {
             popTitle: '请输入账号格式为：1234****5678',                      //弹出框的title
             isIncome: true,       //转出和转入切换开关
             isJEBigYE: false,       //转入的时候金额是否大于余额
+            watermark: require('../images/watermark_gray1.png')                       //水印的图片地址
         }
     }
     componentDidMount(){
+        if(Constants.IS_ACTIVE==true){
+            this.setState({watermark:require('../images/nowatermark.png')});
+        }
         let aList = ['painfkr','painfkzh','painfkh','painskr','painskzh','painskh','painje','painzhye','painzy','painly',           //平安转入
             'paoutfkr', 'paoutfkzh','paoutfkh','paoutskr','paoutskzh','paoutskh','paoutje','paoutzhye','paoutzy','paoutly'];        //平安转出
         for(let i=0; i<aList.length; i++){
@@ -162,135 +167,159 @@ export default class PA extends Component {
     render(){
         return(
             <View style={[{backgroundColor:'#ffffff'}]}>
-                <TouchableHighlight
-                    onPress={this.clickJump.bind(this)}
-                    >
-                    <Image source={require('../images/pa-title.png')} style={styles.img_title}/>
-                </TouchableHighlight>
-                {this.state.isIncome == true ? (                //转入开始
-                <ScrollView>
-                    <View style={styles.wrap}>
-                        <View style={[styles.wrap_row]}>
-                            <Text style={[styles.row_text, styles.row_text_l]}>交易时间：</Text>
-                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.today}</Text>
+                <StatusBar
+                    backgroundColor={"#757575"}
+                    barStyle={"dark-content"}
+                    />
+                <Image style={{width:null,height:null}} source={this.state.watermark}>
+                    <TouchableHighlight
+                        onPress={this.clickJump.bind(this)}
+                        >
+                        <Image source={require('../images/pa-title.png')} style={styles.img_title}/>
+                    </TouchableHighlight>
+                    {this.state.isIncome == true ? (                //转入开始
+                    <ScrollView>
+                        <View style={styles.wrap}>
+                            {Constants.IS_ACTIVE==false?(
+                            <View>
+                                <Text style={[styles.water_mark,{top:50,right:20}]}>我是水印，激活后消失</Text>
+                                <Text style={[styles.water_mark,{top:150,right:20}]}>我是水印，激活后消失</Text>
+                                <Text style={[styles.water_mark,{top:250,right:20}]}>我是水印，激活后消失</Text>
+                                <Text style={[styles.water_mark,{top:350,right:20}]}>我是水印，激活后消失</Text>
+                                <Text style={[styles.water_mark,{top:450,right:20}]}>我是水印，激活后消失</Text>
+                            </View>
+                            ):(null)}
+                            <View style={[styles.wrap_row]}>
+                                <Text style={[styles.row_text, styles.row_text_l]}>交易时间：</Text>
+                                <Text style={[styles.row_text, styles.row_text_r]}>{this.state.today}</Text>
+                            </View>
+                            <TouchableOpacity onPress={this.switch.bind(this)} style={[styles.wrap_row]}>
+                                <Text style={[styles.row_text, styles.row_text_l]}>交易类型：</Text>
+                                <Text style={[styles.row_text, styles.row_text_r, {color:'#DD5522'}]}>转入</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={()=>this.openPop('格式：王老五',this.state.painfkr,'painfkr')} style={[styles.wrap_row]}>
+                                <Text style={[styles.row_text, styles.row_text_l]}>付  款  人：</Text>
+                                <Text style={[styles.row_text, styles.row_text_r]}>{this.state.painfkr}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={()=>this.openPop('格式：6214850285268888',this.state.painfkzh,'painfkzh')} style={[styles.wrap_row]}>
+                                <Text style={[styles.row_text, styles.row_text_l]}>付款账号：</Text>
+                                <Text style={[styles.row_text, styles.row_text_r]}>{this.state.painfkzh}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={()=>this.openPop('格式：中国农业银行股份有限公司',this.state.painfkh,'painfkh')} style={[styles.wrap_row]}>
+                                <Text style={[styles.row_text, styles.row_text_l]}>付  款  行：</Text>
+                                <Text style={[styles.row_text, styles.row_text_r, styles.add_ellipsis]} numberOfLines={1}>{this.state.painfkh}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={()=>this.openPop('格式：张三',this.state.painskr,'painskr')} style={[styles.wrap_row]}>
+                                <Text style={[styles.row_text, styles.row_text_l]}>收  款  人：</Text>
+                                <Text style={[styles.row_text, styles.row_text_r]}>{this.state.painskr}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={()=>this.openPop('格式：6222****1234',this.state.painskzh,'painskzh')} style={[styles.wrap_row]}>
+                                <Text style={[styles.row_text, styles.row_text_l]}>收款账号：</Text>
+                                <Text style={[styles.row_text, styles.row_text_r]}>{this.state.painskzh}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={()=>this.openPop('格式：平安银行深圳布吉支行',this.state.painskh,'painskh')} style={[styles.wrap_row]}>
+                                <Text style={[styles.row_text, styles.row_text_l]}>收  款  行：</Text>
+                                <Text style={[styles.row_text, styles.row_text_r, styles.add_ellipsis]} numberOfLines={1}>{this.state.painskh}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={()=>this.openPop('格式：1,000.00',this.state.painje,'painje')} style={[styles.wrap_row]}>
+                                <Text style={[styles.row_text, styles.row_text_l]}>金        额：</Text>
+                                <Text style={[styles.row_text, styles.row_text_r, {color:'#DD5522'}]}>{this.state.painje}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={()=>this.openPop('格式：10,000.00',this.state.painzhye,'painzhye')} style={[styles.wrap_row]}>
+                                <Text style={[styles.row_text, styles.row_text_l]}>账户余额：</Text>
+                                <Text style={[styles.row_text, styles.row_text_r]}>
+                                    {this.state.painzhye}
+                                    {this.state.isJEBigYE == true ? (
+                                        <Text style={[{color:'red'}]}>“账户余额”必须大于“金额”，请修改“账户余额”！</Text>
+                                    ) : (null)}
+                                </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={()=>this.openPop('格式：跨行转账',this.state.painzy,'painzy')} style={[styles.wrap_row]}>
+                                <Text style={[styles.row_text, styles.row_text_l]}>摘        要：</Text>
+                                <Text style={[styles.row_text, styles.row_text_r]}>{this.state.painzy}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={()=>this.openPop('格式：跨行转出',this.state.painly,'painly')} style={[styles.wrap_row]}>
+                                <Text style={[styles.row_text, styles.row_text_l]}>留        言：</Text>
+                                <Text style={[styles.row_text, styles.row_text_r]}>{this.state.painly}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[styles.wrap_row,{borderBottomWidth:0}]}>
+                                <Text style={[styles.row_text, styles.row_text_l]}>流水号：</Text>
+                                <Text style={[styles.row_text, styles.row_text_r]}>{this.state.palsh}</Text>
+                            </TouchableOpacity>
                         </View>
-                        <TouchableOpacity onPress={this.switch.bind(this)} style={[styles.wrap_row]}>
-                            <Text style={[styles.row_text, styles.row_text_l]}>交易类型：</Text>
-                            <Text style={[styles.row_text, styles.row_text_r, {color:'#DD5522'}]}>转入</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>this.openPop('格式：王老五',this.state.painfkr,'painfkr')} style={[styles.wrap_row]}>
-                            <Text style={[styles.row_text, styles.row_text_l]}>付  款  人：</Text>
-                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.painfkr}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>this.openPop('格式：6214850285268888',this.state.painfkzh,'painfkzh')} style={[styles.wrap_row]}>
-                            <Text style={[styles.row_text, styles.row_text_l]}>付款账号：</Text>
-                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.painfkzh}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>this.openPop('格式：中国农业银行股份有限公司',this.state.painfkh,'painfkh')} style={[styles.wrap_row]}>
-                            <Text style={[styles.row_text, styles.row_text_l]}>付  款  行：</Text>
-                            <Text style={[styles.row_text, styles.row_text_r, styles.add_ellipsis]} numberOfLines={1}>{this.state.painfkh}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>this.openPop('格式：张三',this.state.painskr,'painskr')} style={[styles.wrap_row]}>
-                            <Text style={[styles.row_text, styles.row_text_l]}>收  款  人：</Text>
-                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.painskr}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>this.openPop('格式：6222****1234',this.state.painskzh,'painskzh')} style={[styles.wrap_row]}>
-                            <Text style={[styles.row_text, styles.row_text_l]}>收款账号：</Text>
-                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.painskzh}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>this.openPop('格式：平安银行深圳布吉支行',this.state.painskh,'painskh')} style={[styles.wrap_row]}>
-                            <Text style={[styles.row_text, styles.row_text_l]}>收  款  行：</Text>
-                            <Text style={[styles.row_text, styles.row_text_r, styles.add_ellipsis]} numberOfLines={1}>{this.state.painskh}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>this.openPop('格式：1,000.00',this.state.painje,'painje')} style={[styles.wrap_row]}>
-                            <Text style={[styles.row_text, styles.row_text_l]}>金        额：</Text>
-                            <Text style={[styles.row_text, styles.row_text_r, {color:'#DD5522'}]}>{this.state.painje}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>this.openPop('格式：10,000.00',this.state.painzhye,'painzhye')} style={[styles.wrap_row]}>
-                            <Text style={[styles.row_text, styles.row_text_l]}>账户余额：</Text>
-                            <Text style={[styles.row_text, styles.row_text_r]}>
-                                {this.state.painzhye}
-                                {this.state.isJEBigYE == true ? (
-                                    <Text style={[{color:'red'}]}>“账户余额”必须大于“金额”，请修改“账户余额”！</Text>
-                                ) : (null)}
-                            </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>this.openPop('格式：跨行转账',this.state.painzy,'painzy')} style={[styles.wrap_row]}>
-                            <Text style={[styles.row_text, styles.row_text_l]}>摘        要：</Text>
-                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.painzy}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>this.openPop('格式：跨行转出',this.state.painly,'painly')} style={[styles.wrap_row]}>
-                            <Text style={[styles.row_text, styles.row_text_l]}>留        言：</Text>
-                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.painly}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={[styles.wrap_row,{borderBottomWidth:0}]}>
-                            <Text style={[styles.row_text, styles.row_text_l]}>流水号：</Text>
-                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.palsh}</Text>
-                        </TouchableOpacity>
-                    </View>
-                </ScrollView>
-                ) : (               //转出开始
-                <ScrollView>
-                    <View style={styles.wrap}>
-                        <View style={[styles.wrap_row]}>
-                            <Text style={[styles.row_text, styles.row_text_l]}>交易时间：</Text>
-                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.today}</Text>
+                    </ScrollView>
+                    ) : (               //转出开始
+                    <ScrollView>
+                        <View style={styles.wrap}>
+                            {Constants.IS_ACTIVE==false?(
+                                <View>
+                                    <Text style={[styles.water_mark,{top:50,right:20}]}>我是水印，激活后消失</Text>
+                                    <Text style={[styles.water_mark,{top:150,right:20}]}>我是水印，激活后消失</Text>
+                                    <Text style={[styles.water_mark,{top:250,right:20}]}>我是水印，激活后消失</Text>
+                                    <Text style={[styles.water_mark,{top:350,right:20}]}>我是水印，激活后消失</Text>
+                                    <Text style={[styles.water_mark,{top:450,right:20}]}>我是水印，激活后消失</Text>
+                                </View>
+                            ):(null)}
+                            <View style={[styles.wrap_row]}>
+                                <Text style={[styles.row_text, styles.row_text_l]}>交易时间：</Text>
+                                <Text style={[styles.row_text, styles.row_text_r]}>{this.state.today}</Text>
+                            </View>
+                            <TouchableOpacity onPress={this.switch.bind(this)} style={[styles.wrap_row]}>
+                                <Text style={[styles.row_text, styles.row_text_l]}>交易类型：</Text>
+                                <Text style={[styles.row_text, styles.row_text_r, {color:'#2C934E'}]}>转出</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={()=>this.openPop('格式：张三',this.state.paoutfkr,'paoutfkr')} style={[styles.wrap_row]}>
+                                <Text style={[styles.row_text, styles.row_text_l]}>付  款  人：</Text>
+                                <Text style={[styles.row_text, styles.row_text_r]}>{this.state.paoutfkr}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={()=>this.openPop('格式：6222****1234',this.state.paoutfkzh,'paoutfkzh')} style={[styles.wrap_row]}>
+                                <Text style={[styles.row_text, styles.row_text_l]}>付款账号：</Text>
+                                <Text style={[styles.row_text, styles.row_text_r]}>{this.state.paoutfkzh}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={()=>this.openPop('格式：平安银行深圳布吉支行',this.state.paoutfkh,'paoutfkh')} style={[styles.wrap_row]}>
+                                <Text style={[styles.row_text, styles.row_text_l]}>付  款  行：</Text>
+                                <Text style={[styles.row_text, styles.row_text_r, styles.add_ellipsis]} numberOfLines={1}>{this.state.paoutfkh}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={()=>this.openPop('格式：王老五',this.state.paoutskr,'paoutskr')} style={[styles.wrap_row]}>
+                                <Text style={[styles.row_text, styles.row_text_l]}>收  款  人：</Text>
+                                <Text style={[styles.row_text, styles.row_text_r]}>{this.state.paoutskr}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={()=>this.openPop('格式：6214850285268888',this.state.paoutskzh,'paoutskzh')} style={[styles.wrap_row]}>
+                                <Text style={[styles.row_text, styles.row_text_l]}>收款账号：</Text>
+                                <Text style={[styles.row_text, styles.row_text_r]}>{this.state.paoutskzh}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={()=>this.openPop('格式：中国农业银行股份有限公司',this.state.paoutskh,'paoutskh')} style={[styles.wrap_row]}>
+                                <Text style={[styles.row_text, styles.row_text_l]}>收  款  行：</Text>
+                                <Text style={[styles.row_text, styles.row_text_r, styles.add_ellipsis]} numberOfLines={1}>{this.state.paoutskh}</Text>
+                            </TouchableOpacity>
+                            <View style={[styles.wrap_row]}>
+                                <Text style={[styles.row_text, styles.row_text_l]}>币        种：</Text>
+                                <Text style={[styles.row_text, styles.row_text_r]}>人民币</Text>
+                            </View>
+                            <TouchableOpacity onPress={()=>this.openPop('格式：1,000.00',this.state.paoutje,'paoutje')} style={[styles.wrap_row]}>
+                                <Text style={[styles.row_text, styles.row_text_l]}>金        额：</Text>
+                                <Text style={[styles.row_text, styles.row_text_r, {color:'#DD5522'}]}>{this.state.paoutje}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={()=>this.openPop('格式：10,000.00',this.state.paoutzhye,'paoutzhye')} style={[styles.wrap_row]}>
+                                <Text style={[styles.row_text, styles.row_text_l]}>账户余额：</Text>
+                                <Text style={[styles.row_text, styles.row_text_r]}>{this.state.paoutzhye}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={()=>this.openPop('格式：跨行转账',this.state.paoutzy,'paoutzy')} style={[styles.wrap_row]}>
+                                <Text style={[styles.row_text, styles.row_text_l]}>摘        要：</Text>
+                                <Text style={[styles.row_text, styles.row_text_r]}>{this.state.paoutzy}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={()=>this.openPop('格式：跨行转出',this.state.paoutly,'paoutly')} style={[styles.wrap_row]}>
+                                <Text style={[styles.row_text, styles.row_text_l]}>留        言：</Text>
+                                <Text style={[styles.row_text, styles.row_text_r]}>{this.state.paoutly}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[styles.wrap_row,{borderBottomWidth:0}]}>
+                                <Text style={[styles.row_text, styles.row_text_l]}>流水号：</Text>
+                                <Text style={[styles.row_text, styles.row_text_r]}>{this.state.palsh}</Text>
+                            </TouchableOpacity>
                         </View>
-                        <TouchableOpacity onPress={this.switch.bind(this)} style={[styles.wrap_row]}>
-                            <Text style={[styles.row_text, styles.row_text_l]}>交易类型：</Text>
-                            <Text style={[styles.row_text, styles.row_text_r, {color:'#2C934E'}]}>转出</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>this.openPop('格式：张三',this.state.paoutfkr,'paoutfkr')} style={[styles.wrap_row]}>
-                            <Text style={[styles.row_text, styles.row_text_l]}>付  款  人：</Text>
-                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.paoutfkr}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>this.openPop('格式：6222****1234',this.state.paoutfkzh,'paoutfkzh')} style={[styles.wrap_row]}>
-                            <Text style={[styles.row_text, styles.row_text_l]}>付款账号：</Text>
-                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.paoutfkzh}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>this.openPop('格式：平安银行深圳布吉支行',this.state.paoutfkh,'paoutfkh')} style={[styles.wrap_row]}>
-                            <Text style={[styles.row_text, styles.row_text_l]}>付  款  行：</Text>
-                            <Text style={[styles.row_text, styles.row_text_r, styles.add_ellipsis]} numberOfLines={1}>{this.state.paoutfkh}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>this.openPop('格式：王老五',this.state.paoutskr,'paoutskr')} style={[styles.wrap_row]}>
-                            <Text style={[styles.row_text, styles.row_text_l]}>收  款  人：</Text>
-                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.paoutskr}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>this.openPop('格式：6214850285268888',this.state.paoutskzh,'paoutskzh')} style={[styles.wrap_row]}>
-                            <Text style={[styles.row_text, styles.row_text_l]}>收款账号：</Text>
-                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.paoutskzh}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>this.openPop('格式：中国农业银行股份有限公司',this.state.paoutskh,'paoutskh')} style={[styles.wrap_row]}>
-                            <Text style={[styles.row_text, styles.row_text_l]}>收  款  行：</Text>
-                            <Text style={[styles.row_text, styles.row_text_r, styles.add_ellipsis]} numberOfLines={1}>{this.state.paoutskh}</Text>
-                        </TouchableOpacity>
-                        <View style={[styles.wrap_row]}>
-                            <Text style={[styles.row_text, styles.row_text_l]}>币        种：</Text>
-                            <Text style={[styles.row_text, styles.row_text_r]}>人民币</Text>
-                        </View>
-                        <TouchableOpacity onPress={()=>this.openPop('格式：1,000.00',this.state.paoutje,'paoutje')} style={[styles.wrap_row]}>
-                            <Text style={[styles.row_text, styles.row_text_l]}>金        额：</Text>
-                            <Text style={[styles.row_text, styles.row_text_r, {color:'#DD5522'}]}>{this.state.paoutje}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>this.openPop('格式：10,000.00',this.state.paoutzhye,'paoutzhye')} style={[styles.wrap_row]}>
-                            <Text style={[styles.row_text, styles.row_text_l]}>账户余额：</Text>
-                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.paoutzhye}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>this.openPop('格式：跨行转账',this.state.paoutzy,'paoutzy')} style={[styles.wrap_row]}>
-                            <Text style={[styles.row_text, styles.row_text_l]}>摘        要：</Text>
-                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.paoutzy}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>this.openPop('格式：跨行转出',this.state.paoutly,'paoutly')} style={[styles.wrap_row]}>
-                            <Text style={[styles.row_text, styles.row_text_l]}>留        言：</Text>
-                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.paoutly}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={[styles.wrap_row,{borderBottomWidth:0}]}>
-                            <Text style={[styles.row_text, styles.row_text_l]}>流水号：</Text>
-                            <Text style={[styles.row_text, styles.row_text_r]}>{this.state.palsh}</Text>
-                        </TouchableOpacity>
-                    </View>
-                </ScrollView>
-                )}
+                    </ScrollView>
+                    )}
+                </Image>
                 <EditView
                     // 在组件中使用this.editView即可访拿到EditView组件
                     ref={editView => this.editView = editView}
@@ -341,6 +370,13 @@ const styles = StyleSheet.create({
     },
     add_ellipsis: {
         width:width - 140,
+    },
+    water_mark:{
+        color:'#cacaca',
+        position:'absolute',
+        right:0,
+        transform:[{rotate:'-45deg'}],
+        zIndex:0
     }
 
 });

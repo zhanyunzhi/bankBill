@@ -19,6 +19,7 @@ import {
     ScrollView,
     TextInput,
     AsyncStorage,
+    StatusBar,
     TouchableOpacity
     } from 'react-native';
 
@@ -44,10 +45,14 @@ export default class GS extends Component {
             popTitle: '请输入账号格式为：6222 9800 2267 1234',                      //弹出框的title
             isIncome: true,       //转出和转入切换开关
             isJEBigYE: false,       //转入的时候金额是否大于余额
+            watermark: require('../images/watermark_gray1.png')                       //水印的图片地址
 
         }
     }
     componentDidMount(){
+        if(Constants.IS_ACTIVE==true){
+            this.setState({watermark:require('../images/nowatermark.png')});
+        }
         let aList = ['gsyezy','gsinjyje','gsoutjyje','gsoutye','gsinye','gsdfjyzh','gsdfhm'];
         for(let i=0; i<aList.length; i++){
             this.getValue(aList[i],function(){
@@ -148,103 +153,105 @@ export default class GS extends Component {
                         <Image style={[styles.image]} source={require('../images/gs-title.jpg')}></Image>
                     </TouchableHighlight>
                     <View style={[styles.wrap]}>
-                        <TouchableOpacity style={[styles.row]}>
-                            <Text style={[styles.row_l]}>交易日期</Text>
-                            <Text style={[styles.row_m]}>：</Text>
-                            <Text style={[styles.row_r]}>{this.state.today}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>this.openPop('格式：跨行汇款',this.state.gsywzy,'gsywzy')} style={[styles.row]}>
-                            <Text style={[styles.row_l]}>业务摘要</Text>
-                            <Text style={[styles.row_m]}>：</Text>
-                            <Text style={[styles.row_r]}>{this.state.gsyezy}</Text>
-                        </TouchableOpacity>
-                        {this.state.isIncome == true ? (
-                        <TouchableOpacity style={[styles.row]} onPress={this.switch.bind(this)} >
-                            <Text style={[styles.row_l]}>收支标志</Text>
-                            <Text style={[styles.row_m]}>：</Text>
-                            <Text style={[styles.row_r]}>收入</Text>
-                        </TouchableOpacity>
-                        ) : (
-                        <TouchableOpacity style={[styles.row]} onPress={this.switch.bind(this)} >
-                            <Text style={[styles.row_l]}>收支标志</Text>
-                            <Text style={[styles.row_m]}>：</Text>
-                            <Text style={[styles.row_r]}>支出</Text>
-                        </TouchableOpacity>
-                        )}
-                        <TouchableOpacity style={[styles.row]}>
-                            <Text style={[styles.row_l]}>交易国家或地区简称</Text>
-                            <Text style={[styles.row_m,{marginTop:8}]}>：</Text>
-                            <Text style={[styles.row_r,{marginTop:8}]}>CHN</Text>
-                        </TouchableOpacity>
-                        {this.state.isIncome == true ? (
-                        <TouchableOpacity style={[styles.row]}>
-                            <Text style={[styles.row_l]}>交易场所</Text>
-                            <Text style={[styles.row_m]}>：</Text>
-                            <Text style={[styles.row_r]}>--</Text>
-                        </TouchableOpacity>
-                        ) : (
-                        <TouchableOpacity style={[styles.row]}>
-                            <Text style={[styles.row_l]}>交易场所</Text>
-                            <Text style={[styles.row_m]}>：</Text>
-                            <Text style={[styles.row_r]}>手机银行</Text>
-                        </TouchableOpacity>
-                        )}
-                        {this.state.isIncome == true ? (
-                        <TouchableOpacity onPress={()=>this.openPop('格式：1,000.00',this.state.gsinjyje,'gsinjyje')} style={[styles.row]}>
-                            <Text style={[styles.row_l]}>交易金额</Text>
-                            <Text style={[styles.row_m]}>：</Text>
-                            <Text style={[styles.row_r]}>{this.state.gsinjyje}</Text>
-                        </TouchableOpacity>
-                        ) : (
-                        <TouchableOpacity onPress={()=>this.openPop('格式：1,000.00',this.state.gsoutjyje,'gsoutjyje')} style={[styles.row]}>
-                            <Text style={[styles.row_l]}>交易金额</Text>
-                            <Text style={[styles.row_m]}>：</Text>
-                            <Text style={[styles.row_r]}>{this.state.gsoutjyje}</Text>
-                        </TouchableOpacity>
-                        )}
-                        <TouchableOpacity style={[styles.row]}>
-                            <Text style={[styles.row_l]}>交易币种</Text>
-                            <Text style={[styles.row_m]}>：</Text>
-                            <Text style={[styles.row_r]}>人民币</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={[styles.row]}>
-                            <Text style={[styles.row_l]}>记账金额</Text>
-                            <Text style={[styles.row_m]}>：</Text>
-                            <Text style={[styles.row_r]}>--</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={[styles.row]}>
-                            <Text style={[styles.row_l]}>记账币种</Text>
-                            <Text style={[styles.row_m]}>：</Text>
-                            <Text style={[styles.row_r]}>--</Text>
-                        </TouchableOpacity>
-                        {this.state.isIncome == true ? (
-                        <TouchableOpacity onPress={()=>this.openPop('格式：10,000.00',this.state.gsinye,'gsinye')} style={[styles.row]}>
-                            <Text style={[styles.row_l]}>余额</Text>
-                            <Text style={[styles.row_m]}>：</Text>
-                            <Text style={[styles.row_r]}>
-                                {this.state.gsinye}
-                                {this.state.isJEBigYE == true ? (
-                                <Text style={[{color:'red'}]}>“余额”必须大于“交易金额”，请修改“余额”！</Text>
-                                ) : (null)}
-                            </Text>
-                        </TouchableOpacity>
-                        ) : (
-                        <TouchableOpacity onPress={()=>this.openPop('格式：10,000.00',this.state.gsoutye,'gsoutye')} style={[styles.row]}>
-                            <Text style={[styles.row_l]}>余额</Text>
-                            <Text style={[styles.row_m]}>：</Text>
-                            <Text style={[styles.row_r]}>{this.state.gsoutye}</Text>
-                        </TouchableOpacity>
-                        )}
-                        <TouchableOpacity onPress={()=>this.openPop('格式：6222980022671234',this.state.gsdfjyzh,'gsdfjyzh')} style={[styles.row]}>
-                            <Text style={[styles.row_l]}>对方交易账户</Text>
-                            <Text style={[styles.row_m]}>：</Text>
-                            <Text style={[styles.row_r]}>{this.state.gsdfjyzh}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>this.openPop('格式：王老五',this.state.gsdfhm,'gsdfhm')} style={[styles.row]}>
-                            <Text style={[styles.row_l]}>对方户名</Text>
-                            <Text style={[styles.row_m]}>：</Text>
-                            <Text style={[styles.row_r]}>{this.state.gsdfhm}</Text>
-                        </TouchableOpacity>
+                        <Image style={{width:null,height:null}} source={this.state.watermark}>
+                            <TouchableOpacity style={[styles.row]}>
+                                <Text style={[styles.row_l]}>交易日期</Text>
+                                <Text style={[styles.row_m]}>：</Text>
+                                <Text style={[styles.row_r]}>{this.state.today}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={()=>this.openPop('格式：跨行汇款',this.state.gsywzy,'gsywzy')} style={[styles.row]}>
+                                <Text style={[styles.row_l]}>业务摘要</Text>
+                                <Text style={[styles.row_m]}>：</Text>
+                                <Text style={[styles.row_r]}>{this.state.gsyezy}</Text>
+                            </TouchableOpacity>
+                            {this.state.isIncome == true ? (
+                            <TouchableOpacity style={[styles.row]} onPress={this.switch.bind(this)} >
+                                <Text style={[styles.row_l]}>收支标志</Text>
+                                <Text style={[styles.row_m]}>：</Text>
+                                <Text style={[styles.row_r]}>收入</Text>
+                            </TouchableOpacity>
+                            ) : (
+                            <TouchableOpacity style={[styles.row]} onPress={this.switch.bind(this)} >
+                                <Text style={[styles.row_l]}>收支标志</Text>
+                                <Text style={[styles.row_m]}>：</Text>
+                                <Text style={[styles.row_r]}>支出</Text>
+                            </TouchableOpacity>
+                            )}
+                            <TouchableOpacity style={[styles.row]}>
+                                <Text style={[styles.row_l]}>交易国家或地区简称</Text>
+                                <Text style={[styles.row_m,{marginTop:8}]}>：</Text>
+                                <Text style={[styles.row_r,{marginTop:8}]}>CHN</Text>
+                            </TouchableOpacity>
+                            {this.state.isIncome == true ? (
+                            <TouchableOpacity style={[styles.row]}>
+                                <Text style={[styles.row_l]}>交易场所</Text>
+                                <Text style={[styles.row_m]}>：</Text>
+                                <Text style={[styles.row_r]}>--</Text>
+                            </TouchableOpacity>
+                            ) : (
+                            <TouchableOpacity style={[styles.row]}>
+                                <Text style={[styles.row_l]}>交易场所</Text>
+                                <Text style={[styles.row_m]}>：</Text>
+                                <Text style={[styles.row_r]}>手机银行</Text>
+                            </TouchableOpacity>
+                            )}
+                            {this.state.isIncome == true ? (
+                            <TouchableOpacity onPress={()=>this.openPop('格式：1,000.00',this.state.gsinjyje,'gsinjyje')} style={[styles.row]}>
+                                <Text style={[styles.row_l]}>交易金额</Text>
+                                <Text style={[styles.row_m]}>：</Text>
+                                <Text style={[styles.row_r]}>{this.state.gsinjyje}</Text>
+                            </TouchableOpacity>
+                            ) : (
+                            <TouchableOpacity onPress={()=>this.openPop('格式：1,000.00',this.state.gsoutjyje,'gsoutjyje')} style={[styles.row]}>
+                                <Text style={[styles.row_l]}>交易金额</Text>
+                                <Text style={[styles.row_m]}>：</Text>
+                                <Text style={[styles.row_r]}>{this.state.gsoutjyje}</Text>
+                            </TouchableOpacity>
+                            )}
+                            <TouchableOpacity style={[styles.row]}>
+                                <Text style={[styles.row_l]}>交易币种</Text>
+                                <Text style={[styles.row_m]}>：</Text>
+                                <Text style={[styles.row_r]}>人民币</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[styles.row]}>
+                                <Text style={[styles.row_l]}>记账金额</Text>
+                                <Text style={[styles.row_m]}>：</Text>
+                                <Text style={[styles.row_r]}>--</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[styles.row]}>
+                                <Text style={[styles.row_l]}>记账币种</Text>
+                                <Text style={[styles.row_m]}>：</Text>
+                                <Text style={[styles.row_r]}>--</Text>
+                            </TouchableOpacity>
+                            {this.state.isIncome == true ? (
+                            <TouchableOpacity onPress={()=>this.openPop('格式：10,000.00',this.state.gsinye,'gsinye')} style={[styles.row]}>
+                                <Text style={[styles.row_l]}>余额</Text>
+                                <Text style={[styles.row_m]}>：</Text>
+                                <Text style={[styles.row_r]}>
+                                    {this.state.gsinye}
+                                    {this.state.isJEBigYE == true ? (
+                                    <Text style={[{color:'red'}]}>“余额”必须大于“交易金额”，请修改“余额”！</Text>
+                                    ) : (null)}
+                                </Text>
+                            </TouchableOpacity>
+                            ) : (
+                            <TouchableOpacity onPress={()=>this.openPop('格式：10,000.00',this.state.gsoutye,'gsoutye')} style={[styles.row]}>
+                                <Text style={[styles.row_l]}>余额</Text>
+                                <Text style={[styles.row_m]}>：</Text>
+                                <Text style={[styles.row_r]}>{this.state.gsoutye}</Text>
+                            </TouchableOpacity>
+                            )}
+                            <TouchableOpacity onPress={()=>this.openPop('格式：6222980022671234',this.state.gsdfjyzh,'gsdfjyzh')} style={[styles.row]}>
+                                <Text style={[styles.row_l]}>对方交易账户</Text>
+                                <Text style={[styles.row_m]}>：</Text>
+                                <Text style={[styles.row_r]}>{this.state.gsdfjyzh}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={()=>this.openPop('格式：王老五',this.state.gsdfhm,'gsdfhm')} style={[styles.row]}>
+                                <Text style={[styles.row_l]}>对方户名</Text>
+                                <Text style={[styles.row_m]}>：</Text>
+                                <Text style={[styles.row_r]}>{this.state.gsdfhm}</Text>
+                            </TouchableOpacity>
+                        </Image>
                     </View>
                 </View>
                 <EditView
