@@ -32,7 +32,7 @@ export default class PA extends Component {
         let today = Common.formatDateOne(new Date().getTime());         //获取当天的时间，并格式化为yyyy-mm-dd
         let palsh = Common.getPAFlowNum();
         this.state={
-            painfkr:'王老五',               //平安转入开始
+            painfkr:'王老五',               //平安转入开始.....
             painfkzh:'6214850285268888',
             painfkh:'中国农业银行股份有限公司',
             painskr:'张三',
