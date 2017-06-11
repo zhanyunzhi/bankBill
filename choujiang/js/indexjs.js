@@ -39,7 +39,7 @@
 		}
 		//新建数字及其DIV
 		//class='"+objName+"Class'
-		$("#"+objName+"sy").append("<div  id='"+objName+num+"-"+num1+"' style='top:"+tops+"px;position:absolute;line-height:"+parseInt(obj.height())+"px;left:"+lefts+"px;width:"+parseInt(obj.width())+"px;border: 1px solid #999;height:"+parseInt(obj.height())+"px;'>"+val+"</div>");
+		$("#"+objName+"sy").append("<div class='"+objName+"Class' id='"+objName+num+"-"+num1+"' style='top:"+tops+"px;position:absolute;line-height:"+parseInt(obj.height())+"px;left:"+lefts+"px;width:"+parseInt(obj.width())+"px;border: 1px solid #999;height:"+parseInt(obj.height())+"px;'>"+val+"</div>");
 		//数字进行移动
 	 	$("#"+objName+num+"-"+num1).animate({ 
 					top:'10px'
@@ -52,14 +52,14 @@
 				//判断是开还是关 假如是开则速度继续增加 每替换一个数字速度+100 直到原始速度的5倍
 				_ZN=$("#"+objName).attr("ZN");
 			 	if(_ZN==1){
-					ZN-=100;
+					ZN-=20;
 					if(ZN<YSZN/5){
 						ZN=YSZN/5;
 					}
 				}else{
 					//假如是关则速度减少，直到1500然后退出。
-					ZN+=100;
-					if(ZN>1500){
+					ZN+=20;
+					if(ZN>120){
 						
 						return;
 					}	
@@ -125,12 +125,11 @@
 			if(isOpen==false){
 				isOpen=true;
 				obj.attr("ZN",1);
-			 
 				$(this).html("停");
 				$("."+obj.attr('id')+"Class").each(function(i){
 					//对每位数字进行随机速度生成
 					//alert($(this).html());
-					var _ZNY=GetRandomNum(500,2000);
+					var _ZNY=GetRandomNum(101,300);
 					LuckUp1($(this),_ZNY,obj.attr('id'),i,0,_ZNY);
 					//本数字的划出行为。
 					LuckUp($(this),_ZNY);
