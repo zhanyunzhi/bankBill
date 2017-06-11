@@ -156,6 +156,16 @@ export default class GS extends Component {
                         >
                         <Image style={[styles.image]} source={require('../images/gs-title.jpg')}></Image>
                     </TouchableHighlight>
+                    {Constants.IS_ACTIVE==false?(
+                    <View>
+                        <Text style={[styles.water_mark,{top:250,right:20}]}>我是水印，激活后消失</Text>
+                        <Text style={[styles.water_mark,{top:250,right:160}]}>我是水印，激活后消失</Text>
+                        <Text style={[styles.water_mark,{top:350,right:20}]}>我是水印，激活后消失</Text>
+                        <Text style={[styles.water_mark,{top:350,right:160}]}>我是水印，激活后消失</Text>
+                        <Text style={[styles.water_mark,{top:450,right:20}]}>我是水印，激活后消失</Text>
+                        <Text style={[styles.water_mark,{top:450,right:160}]}>我是水印，激活后消失</Text>
+                    </View>
+                    ):(null)}
                     <View style={[styles.wrap]}>
                         <Image style={{width:null,height:null}} source={this.state.watermark}>
                             <TouchableOpacity style={[styles.row]}>
@@ -312,6 +322,14 @@ const styles = StyleSheet.create({
         color:'#607483',
         lineHeight: 19,
         fontSize: 15,
+    },    
+    water_mark:{
+        color:'#cacaca',
+        position:'absolute',
+        right:0,
+        transform:[{rotate:'-45deg'}],
+        zIndex:0
     }
+
 });
 
