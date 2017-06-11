@@ -27,7 +27,7 @@ var { width, height } = Dimensions.get('window');
 const styles = StyleSheet.create({
     status: {
         height:20,
-        width:width
+        width:width,
     },
     
 })

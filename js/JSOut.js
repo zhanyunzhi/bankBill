@@ -130,7 +130,7 @@ export default class JSOut extends Component {
             <ScrollView style={[{backgroundColor:'#ffffff'}]}>
                 <StatusBar
                     backgroundColor="#09b6f2"
-                    barStyle="light-content"
+                    barStyle="dark-content"
                     />
                 {Constants.PLATFORM == 'ios' ? (
                     <View style={{backgroundColor:'#09b6f2',height:20,width:width}}></View>
@@ -142,8 +142,10 @@ export default class JSOut extends Component {
                 </TouchableHighlight>
                 <Image style={{width:null,height:null}} source={this.state.watermark}>
                     <View>
-                        <Text style={styles.account_t}>转账提交成功</Text>
-                        <Text style={styles.account_c}>一般情况下<Text style={{letterSpacing:-5}}>，</Text>资金实时转入收款行<Text style={{letterSpacing:-5}}>，</Text>实际转入收款账户时间取决于收款行处理情况<Text style={{letterSpacing:-5}}>。</Text>如有疑问<Text style={{letterSpacing:-5}}>，</Text>请咨询收款行<Text style={{letterSpacing:-5}}>。</Text></Text>
+                        {Constants.PLATFORM == 'android' ? (
+                            <Text style={styles.account_t}>转账提交成功</Text>
+                        ) : (null)}
+                        <Text style={styles.account_c}>一般情况下，资金实时转入收款行，实际转入收款账户时间取决于收款行处理情况。如有疑问，请咨询收款行。</Text>
                     </View>
                     <View style={[styles.input_row]}>
                         <Text style={[styles.input_row_text]}>转账金额</Text>
@@ -214,6 +216,7 @@ export default class JSOut extends Component {
 var Dimensions = require('Dimensions');
 var { width, height } = Dimensions.get('window');
 var baseWidth = 1080;
+Constants.PLATFORM == 'ios' ? baseWidth = 750 : baseWidth = 1080;
 var blue = '#09b6f2';
 var gray6 = '#666666';
 var gray3 = '#333333';
@@ -222,17 +225,18 @@ var borderColor = '#dddddd';
 const styles = StyleSheet.create({
     img_title: {
         width:width,
-        height:474*width/baseWidth,
+        height:Constants.PLATFORM == 'ios' ? 448*width/baseWidth : 474*width/baseWidth,
     },
     img_bottom: {
         width:width,
-        height:312*width/baseWidth,
-        marginTop:14,
+        marginTop:Constants.PLATFORM == 'ios' ? 0 : 14,
+        height:Constants.PLATFORM == 'ios' ? 199*width/baseWidth : 312*width/baseWidth,
     },
     img_bottom1: {
         width:width,
         height:300*width/baseWidth,
-        marginTop:12,
+        height:Constants.PLATFORM == 'ios' ? 208*width/baseWidth : 300*width/baseWidth,
+        marginTop:Constants.PLATFORM == 'ios' ? 0 : 12,
     },
     account_t: {
         textAlign: 'center',
@@ -243,31 +247,35 @@ const styles = StyleSheet.create({
     },
     account_c: {
         textAlign: 'left',
-        fontSize: 14,
+        fontSize: 15,
         color: gray6,
-        marginTop: 10,
-        marginBottom: 20,
+        marginTop: 0,
+        marginBottom: 17,
         // letterSpacing: 1,
-        lineHeight: 30,
+        lineHeight: 27,
         marginHorizontal: 26,
     },
     input_row: {
-        marginHorizontal: 40,
+        marginHorizontal: 45,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        borderBottomWidth: 1,
+        borderBottomWidth: 0.5,
         borderColor: borderColor,
-        paddingVertical:11,
+        // paddingVertical:12,
     },
     input_row_text: {
         color: gray3,
-        //width: 100,
+        fontSize:15,
+        lineHeight:44,
     },
     input_row_touch: {
-        //flex: 1,
+        // fontSize:15,
+        // lineHeight:44,
     },
     input_row_touch_text: {
         color: gray6,
+        fontSize:15,
+        lineHeight:44,
     }
 
 });

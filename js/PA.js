@@ -175,7 +175,7 @@ export default class PA extends Component {
                     barStyle={"dark-content"}
                     />
                     {Constants.PLATFORM == 'ios' ? (
-                        <IosStatusHeight></IosStatusHeight>
+                        <IosStatusHeight bgColor='#ffffff'></IosStatusHeight>
                     ) : (null)}
                 
                     <TouchableHighlight
