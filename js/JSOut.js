@@ -112,7 +112,11 @@ export default class JSOut extends Component {
         let aFormatBankNum = ['jsoutskzh','jsoutfkzh'];           //需要格式化银行账号的
         let aFormatBankMoney = ['jsoutzzje','jsoutfkzhye'];           //需要格式化的金额
         if(aFormatBankNum.indexOf(flag) > -1){
-            v = Common.formatBankNum(v) || this.state[flag];
+            if(Constants.PLATFORM == 'android'){
+                v = Common.formatBankNum(v) || this.state[flag];
+            }else{          //ios下是1234***1234，中间三个*，瞎逼
+                v = Common.formatBankNumIos(v) || this.state[flag];
+            }
         }
         if(aFormatBankMoney.indexOf(flag) > -1){
             v = Common.formatBankMoney(v) || this.state[flag];
@@ -159,7 +163,7 @@ export default class JSOut extends Component {
                             <TouchableOpacity onPress={()=>this.openPop('格式：王老五',this.state.jsoutskzhxm,'jsoutskzhxm')} style={[styles.input_row_touch]}>
                                 <Text style={[styles.input_row_touch_text,{marginRight:8}]}>{this.state.jsoutskzhxm}</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={()=>this.openPop('格式：1234****1234',this.state.jsoutskzh,'jsoutskzh')} style={[styles.input_row_touch]}>
+                            <TouchableOpacity onPress={()=>this.openPop('格式：1234****1234,ios系统中间三个*',this.state.jsoutskzh,'jsoutskzh')} style={[styles.input_row_touch]}>
                                 <Text style={[styles.input_row_touch_text]}>{this.state.jsoutskzh}</Text>
                             </TouchableOpacity>
                         </View>
@@ -175,7 +179,7 @@ export default class JSOut extends Component {
                     {this.state.seeMore == true ? (
                     <View style={[styles.input_row]}>
                         <Text style={[styles.input_row_text]}>付款账户</Text>
-                        <TouchableOpacity onPress={()=>this.openPop('格式：1234****1234',this.state.jsoutfkzh,'jsoutfkzh')} style={[styles.input_row_touch]}>
+                        <TouchableOpacity onPress={()=>this.openPop('格式：1234****1234,ios系统中间三个*',this.state.jsoutfkzh,'jsoutfkzh')} style={[styles.input_row_touch]}>
                             <Text style={[styles.input_row_touch_text]}>{this.state.jsoutfkzh}</Text>
                         </TouchableOpacity>
                     </View>
