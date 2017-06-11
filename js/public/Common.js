@@ -89,7 +89,7 @@ module.exports =  {
         let month = date.getMonth()+1 >= 10 ? date.getMonth()+1 : '0'+(date.getMonth()+1);
         let day = date.getDate();
         let last = date.getTime().toString().substr(1,10);       //截取时间戳的前11位为流水号的后11位
-        return '896789' + year + month + day + last;
+        return '218540' + year + month + day + last;
     },
     formatWXMoney: function (str) {     //格式化输入的金额，格式为：1000.00
         str += '';

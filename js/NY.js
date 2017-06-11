@@ -25,6 +25,7 @@ import {
 import Common from './public/Common.js';
 import EditView from './public/EditView.js';
 import Constants from './public/Constants.js';
+import IosStatusHeight from './public/IosStatusHeight.js';      //ios status高度
 
 export default class NY extends Component {
     constructor(props) {
@@ -122,6 +123,9 @@ export default class NY extends Component {
         return(
             <ScrollView style={[{backgroundColor:'#f7f3f7'}]}>
                 <View style={[{backgroundColor:'#ffffff'}]}>
+                    {Constants.PLATFORM == 'ios' ? (
+                        <IosStatusHeight></IosStatusHeight>
+                    ) : (null)}
                     <TouchableHighlight
                         onPress={this.clickJump.bind(this)}
                         >
@@ -162,7 +166,7 @@ export default class NY extends Component {
                         <View style={styles.border_b}></View>
                     </Image>
                 </View>
-                {Constants.PLATFORM.OS == 'android' ? (
+                {Constants.PLATFORM == 'android' ? (
                 <TouchableHighlight underlayColor="#ffffff" >
                     <Text style={{color:'#ff6549',marginHorizontal:17,marginTop:13,marginBottom:16,fontSize:13}}>您的资金已汇出，实际到账时间取决于收款行系统</Text>
                 </TouchableHighlight>
@@ -216,7 +220,7 @@ const styles = StyleSheet.create({
         //backgroundColor: '#ffffff'
     },
     text:{
-        width:80,
+        width:84,
         textAlign:'left',
         color: '#535353',
         fontSize:16

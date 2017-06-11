@@ -25,6 +25,7 @@ import {
 import Common from './public/Common.js';
 import EditView from './public/EditView.js';
 import Constants from './public/Constants.js';
+import IosStatusHeight from './public/IosStatusHeight.js';      //ios status高度
 
 export default class GF extends Component {
     constructor(props) {
@@ -132,6 +133,9 @@ export default class GF extends Component {
         return(
             <ScrollView style={[{backgroundColor:'#f1f1f1'}]}>
                 <View style={[{backgroundColor:'#f1f1f1'}]}>
+                    {Constants.PLATFORM == 'ios' ? (
+                        <IosStatusHeight bgColor='#ffffff'></IosStatusHeight>
+                    ) : (null)}
                     <TouchableHighlight
                         onPress={this.clickJump.bind(this)}
                         >

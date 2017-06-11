@@ -26,6 +26,7 @@ import {
 import Common from './public/Common.js';
 import EditView from './public/EditView.js';
 import Constants from './public/Constants.js';
+import IosStatusHeight from './public/IosStatusHeight.js';      //ios status高度
 
 export default class GS extends Component {
     constructor(props) {
@@ -147,6 +148,9 @@ export default class GS extends Component {
         return(
             <ScrollView style={[{backgroundColor:'#F3F3F3'}]}>
                 <View>
+                    {Constants.PLATFORM == 'ios' ? (
+                        <IosStatusHeight bgColor='#ffffff'></IosStatusHeight>
+                    ) : (null)}
                     <TouchableHighlight
                         onPress={this.clickJump.bind(this)}
                         >
@@ -275,12 +279,13 @@ const styles = StyleSheet.create({
         height:106*width/baseWidth,
     },
     wrap:{
-        marginTop:  5,
+        marginTop:  1,
         borderTopWidth: 1,
         borderBottomWidth: 1,
         borderColor: '#E3E3E5',
         paddingHorizontal: 22,
-        paddingVertical: 11,
+        paddingBottom: 11,
+        paddingTop: 11,
         backgroundColor:'#ffffff',
     },
     row:{
@@ -288,22 +293,25 @@ const styles = StyleSheet.create({
     },
     row_l:{
         //marginLeft: 22,
-        width: 103,
+        width: 108,
         //backgroundColor: 'red',
         textAlign: 'right',
         color: '#95ADB7',
-        lineHeight: 21,
+        lineHeight: 19,
+        fontSize: 15,
     },
     row_m:{
         color: '#95ADB7',
-        lineHeight: 21,
+        lineHeight: 19,
+        fontSize: 15,
         //backgroundColor: 'green',
     },
     row_r:{
         flex: 1,
         textAlign: 'left',
         color:'#607483',
-        lineHeight: 21,
+        lineHeight: 19,
+        fontSize: 15,
     }
 });
 

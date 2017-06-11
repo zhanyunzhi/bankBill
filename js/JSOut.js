@@ -26,6 +26,7 @@ import {
 import Common from './public/Common.js';
 import EditView from './public/EditView.js';
 import Constants from './public/Constants.js';
+import IosStatusHeight from './public/IosStatusHeight.js';      //ios status高度
 
 export default class JSOut extends Component {
     constructor(props) {
@@ -131,6 +132,9 @@ export default class JSOut extends Component {
                     backgroundColor="#09b6f2"
                     barStyle="light-content"
                     />
+                {Constants.PLATFORM == 'ios' ? (
+                    <View style={{backgroundColor:'#09b6f2',height:20,width:width}}></View>
+                ) : (null)}
                 <TouchableHighlight
                     onPress={this.clickJump.bind(this)}
                     >
@@ -139,7 +143,7 @@ export default class JSOut extends Component {
                 <Image style={{width:null,height:null}} source={this.state.watermark}>
                     <View>
                         <Text style={styles.account_t}>转账提交成功</Text>
-                        <Text style={styles.account_c}>一般情况下，资金实时转入收款行，实际转入收款账户时间取决于收款行处理情况。如有疑问，请咨询收款行。</Text>
+                        <Text style={styles.account_c}>一般情况下<Text style={{letterSpacing:-5}}>，</Text>资金实时转入收款行<Text style={{letterSpacing:-5}}>，</Text>实际转入收款账户时间取决于收款行处理情况<Text style={{letterSpacing:-5}}>。</Text>如有疑问<Text style={{letterSpacing:-5}}>，</Text>请咨询收款行<Text style={{letterSpacing:-5}}>。</Text></Text>
                     </View>
                     <View style={[styles.input_row]}>
                         <Text style={[styles.input_row_text]}>转账金额</Text>
@@ -235,7 +239,7 @@ const styles = StyleSheet.create({
         fontSize: 22,
         color: blue,
         marginTop: 22,
-        letterSpacing: 5,
+        letterSpacing: 1,
     },
     account_c: {
         textAlign: 'left',
@@ -243,7 +247,7 @@ const styles = StyleSheet.create({
         color: gray6,
         marginTop: 10,
         marginBottom: 20,
-        letterSpacing: 5,
+        // letterSpacing: 1,
         lineHeight: 30,
         marginHorizontal: 26,
     },

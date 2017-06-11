@@ -143,6 +143,9 @@ export default class WX extends Component {
     render(){
         return(
             <View style={[{backgroundColor:'#ffffff',height:height}]}>
+                {Constants.PLATFORM == 'ios' ? (
+                    <IosStatusHeight bgColor='#000000pa-title.png'></IosStatusHeight>
+                ) : (null)}
                 <TouchableHighlight
                     onPress={this.clickJump.bind(this)}
                     >

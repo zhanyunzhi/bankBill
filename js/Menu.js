@@ -19,6 +19,7 @@ import {
     TouchableHighlight,
     TouchableOpacity,
     BackAndroid,
+    StatusBar,
     ToastAndroid
     } from 'react-native';
 
@@ -32,6 +33,7 @@ import Activate from './Activate';             //激活页面
 import Loading from './public/Loading';             //loading页
 import Request from './public/Request.js';          //封装过的fetch
 import Constants from './public/Constants.js';
+import IosStatusHeight from './public/IosStatusHeight.js';      //ios status高度
 
 export default class Menu extends Component {
     constructor(props){
@@ -46,7 +48,7 @@ export default class Menu extends Component {
                 {name: '平安银行', shortName: 'pa', img: require('../images/pa-logo.jpg'), dec: '平安银行交易详情，可以切换转入和转出'},
                 {name: '微信收款', shortName: 'wx', img: require('../images/wx-logo.jpg'), dec: '微信转账收钱页面'},
             ]),
-            visible: false
+            visible: true
         }
     }
     componentWillMount(){
@@ -91,6 +93,7 @@ export default class Menu extends Component {
                 Constants.IS_ACTIVE = false;        //服务器返回错误
                 this.setState({visible:true});
             });
+            Constants.IS_ACTIVE = true;         //已激活
     }
     clickJump(index){
         //因为Navigator <Component {...route.params} navigator={navigator} />传入了navigator 所以这里能取到navigator
@@ -135,8 +138,11 @@ export default class Menu extends Component {
                 {this.state.visible == false ? (
                     <Loading text='正在验证权限...'/>
                 ) : (null)}
-                <View style={{flexDirection:'row',justifyContent:'space-between',width:width,borderBottomWidth:1,borderColor:'#dddddd'}}>
-                    {Constants.PLATFORM.OS == 'android' ? (
+                {Constants.PLATFORM == 'ios' ? (
+                    <IosStatusHeight></IosStatusHeight>
+                ) : (null)}
+                <View style={{flexDirection:'row',justifyContent:'space-between',width:width,borderBottomWidth:1,borderColor:'#dddddd'}}>  
+                    {Constants.PLATFORM == 'android' ? (
                     <TouchableOpacity onPress={this.onBackAndroid.bind(this,'')}>
                         <Text style={[styles.title,{color:'#999999',width:50,textAlign:'center'}]}>退出</Text>
                     </TouchableOpacity>
@@ -204,9 +210,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffffff',
     },
     title: {
-        height: 30,
+        height: 32,
         color: '#ff6549',
-        marginTop: 14,
+        marginTop: 12,
         fontSize: 16,
     },
     container: {
