@@ -19,6 +19,7 @@ import {
     ScrollView,
     TextInput,
     AsyncStorage,
+    StatusBar,
     TouchableOpacity
     } from 'react-native';
 
@@ -143,8 +144,11 @@ export default class WX extends Component {
     render(){
         return(
             <View style={[{backgroundColor:'#ffffff',height:height}]}>
+            <StatusBar
+                    barStyle={"light-content"}
+                    />
                 {Constants.PLATFORM == 'ios' ? (
-                    <IosStatusHeight bgColor='#000000pa-title.png'></IosStatusHeight>
+                    <IosStatusHeight bgColor='#000000'></IosStatusHeight>
                 ) : (null)}
                 <TouchableHighlight
                     onPress={this.clickJump.bind(this)}

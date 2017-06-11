@@ -93,7 +93,7 @@ export default class Menu extends Component {
                 Constants.IS_ACTIVE = false;        //服务器返回错误
                 this.setState({visible:true});
             });
-            Constants.IS_ACTIVE = true;         //已激活
+            // Constants.IS_ACTIVE = true;         //已激活
     }
     clickJump(index){
         //因为Navigator <Component {...route.params} navigator={navigator} />传入了navigator 所以这里能取到navigator
