@@ -39,7 +39,9 @@
 		}
 		//新建数字及其DIV
 		//class='"+objName+"Class'
-		$("#"+objName+"sy").append("<div class='"+objName+"Class' id='"+objName+num+"-"+num1+"' style='top:"+tops+"px;position:absolute;line-height:"+parseInt(obj.height())+"px;left:"+lefts+"px;width:"+parseInt(obj.width())+"px;border: 1px solid #999;height:"+parseInt(obj.height())+"px;'>"+val+"</div>");
+		$("#"+objName+"sy").append("<div class='"+objName+"Class' id='"+objName+num+"-"+num1+"' style='top:"+tops+"px;position:absolute;line-height:"+parseInt(obj.height())+"px;left:"+lefts+"px;width:"+parseInt(obj.width())+"px;height:"+parseInt(obj.height())+"px;'>"+val+"</div>");
+		//console.log($("."+objName+"Class").length)
+		console.log(lefts)
 		//数字进行移动
 	 	$("#"+objName+num+"-"+num1).animate({ 
 					top:'10px'
@@ -60,7 +62,12 @@
 					//假如是关则速度减少，直到1500然后退出。
 					ZN+=20;
 					if(ZN>120){
-						
+						//$(this).top = '10px';
+						//$(this).css('top','10px');
+						//$("."+objName+"Class").remove();
+						//$("#"+objName+"sy").append("<div class='"+objName+"Class' id='"+objName+0+"-"+1+"' style='top:"+10+"px;position:absolute;line-height:"+parseInt(obj.height())+"px;left:"+0+"px;width:"+parseInt(obj.width())+"px;height:"+parseInt(obj.height())+"px;'>"+1+"</div>");
+						//$("#"+objName+"sy").append("<div class='"+objName+"Class' id='"+objName+1+"-"+1+"' style='top:"+10+"px;position:absolute;line-height:"+parseInt(obj.height())+"px;left:"+116+"px;width:"+parseInt(obj.width())+"px;height:"+parseInt(obj.height())+"px;'>"+2+"</div>");
+						//$("#"+objName+"sy").append("<div class='"+objName+"Class' id='"+objName+2+"-"+1+"' style='top:"+10+"px;position:absolute;line-height:"+parseInt(obj.height())+"px;left:"+232+"px;width:"+parseInt(obj.width())+"px;height:"+parseInt(obj.height())+"px;'>"+3+"</div>");
 						return;
 					}	
 				}
@@ -94,7 +101,8 @@
 		//获取按钮的高度。
 		var heightZ1=heightZ-2;
 		//获取显示数字的宽度
-		var widthH=widthZ-heightZ;
+		var widthH=widthZ;
+		//var widthH=widthZ-heightZ;
 		//是否关闭
 		var isOpen=false;
 		obj.attr("ZN",0);
@@ -107,25 +115,28 @@
 		for(var i=0;i<num;i++){
 			//循环建立多少位数，初始化并添加相关事件。
 			//初始化生成随机数字
-			var sj=GetRandomNum(0,9);
+			var sj=GetRandomNum(0,0);
 			//生成数字并进行相关div的生成排列位置。
-			htmlStr+="<div class='"+obj.attr('id')+"Class' style='top:10px;position:absolute;line-height:"+heightZ+"px;left:"+offLeft+"px;width:"+parseInt(widthH / num)+"px;border: 1px solid #999;height:"+heightZ1+"px;'>"+sj+"</div>";
+			htmlStr+="<div class='"+obj.attr('id')+"Class' style='top:10px;position:absolute;line-height:"+heightZ+"px;left:"+offLeft+"px;width:"+parseInt(widthH / num)+"px;height:"+heightZ1+"px;'>"+sj+"</div>";
 			offLeft+=parseInt(widthH/num);
 		}
 		//添加开始事件
-	 	htmlStr+="<div id='"+obj.attr('id')+"Click' style='top:10px;position:absolute;cursor:pointer;line-height:"+heightZ+"px;left:"+offLeft+"px;width:"+parseInt(widthH/num)+"px;border: 1px solid #999;height:"+heightZ1+"px;'>开</div>";
-		htmlStr+="<div style='top:0px;position:absolute;width:"+widthH+"px;height:"+heightZ1/2+"px;filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=\"#22000000\", EndColorStr=\"#33FFFFFF\"); background-image: linear-gradient(to top, rgba(255, 255, 255, 0.1) 0%, rgba(0, 0, 0, 0.2) 80%, rgba(0, 0, 0, 0.4) 100%, #FFFFFF 100%);' >&nbsp;</div>"
-		var top1=25+heightZ1/2;
-		htmlStr+="<div style='top:"+top1+"px;position:absolute;width:"+widthH+"px;height:"+heightZ1/2+"px;filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=\"#22FFFFFF\", EndColorStr=\"#33000000\");background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 0%, rgba(0, 0, 0, 0.2) 80%, rgba(0, 0, 0, 0.4) 100%, #FFFFFF 100%);'>&nbsp;</div>"
+	 	var btn="<div id='"+obj.attr('id')+"Click'" + " class='btn' hidden>开始</div>";
+		htmlStr+="<div style='top:0px;position:absolute;width:"+widthH+"px;height:"+(heightZ1/2+10)+"px;filter:" +
+		" progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=\"#22000000\", EndColorStr=\"#33FFFFFF\"); background-image: linear-gradient(to top, rgba(255, 255, 255, 0.1) 0%, rgba(0, 0, 0, 0.2) 80%, rgba(0, 0, 0, 0.4) 100%, #FFFFFF 100%);' >&nbsp;</div>"
+		var top1=10+heightZ1/2;
+		htmlStr+="<div style='top:"+top1+"px;position:absolute;width:"+widthH+"px;height:"+(heightZ1/2+10)+"px;filter:" +
+		" progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=\"#22FFFFFF\", EndColorStr=\"#33000000\");background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 0%, rgba(0, 0, 0, 0.2) 80%, rgba(0, 0, 0, 0.4) 100%, #FFFFFF 100%);'>&nbsp;</div>"
 		htmlStr+="</div>"; 
 		obj.append(htmlStr);
-		
+		obj.after(btn);
+
 		 
 		$("#"+obj.attr('id')+"Click").bind("click",function(){
 			if(isOpen==false){
 				isOpen=true;
 				obj.attr("ZN",1);
-				$(this).html("停");
+				$(this).html("停止");
 				$("."+obj.attr('id')+"Class").each(function(i){
 					//对每位数字进行随机速度生成
 					//alert($(this).html());
@@ -135,7 +146,7 @@
 					LuckUp($(this),_ZNY);
 				});	
 			}else{
-				$(this).html("开");
+				$(this).html("开始");
 				isOpen=false;
 				obj.attr("ZN",0);
 				

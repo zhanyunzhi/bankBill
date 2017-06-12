@@ -1,80 +1,100 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<script src="js/jquery.min.js"></script>
-<script src="js/indexjs.js"></script>
-<style>
- 
-.sdddq {
-	font-family: "宋体";
-	font-size: 20px;
-	height: 30px;
-	width: 150px;
-	
-	 
-}
-.lhj {
-	font-family: "宋体";
-	font-size: 60px;
-	height: 100px;
-	width: 350px;
-	line-height: 100px;
-	text-align: center;
-	margin:0 auto;
-	/*float:left;*/
-}
-
-.sssd {
-	border-left-width: 1px;
-	border-left-style: solid;
-	border-left-color: #999;
-	text-align: center;
-}
-.bgColor{
- 	filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#22000000', EndColorStr='#33FFFFFF');
-	background-image: linear-gradient(to top, rgba(255, 255, 255, 0.1) 0%, rgba(0, 0, 0, 0.2) 80%, rgba(0, 0, 0, 0.4) 100%, #FFFFFF 100%); 
-}
-.bgColor1{
- 	filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#22FFFFFF', EndColorStr='#33000000'); 
-	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 0%, rgba(0, 0, 0, 0.2) 80%, rgba(0, 0, 0, 0.4) 100%, #FFFFFF 100%); 
-}
-
-
-</style>  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/indexjs.js"></script>
+    <style>
+        html,body{
+            width:100%;
+            height:100%;
+            padding:0;
+            margin:0;
+        }
+        body{
+            background: url(images/cjbg.jpg) no-repeat;
+            background-size: 100% 100%;
+            height:auto;
+            /*padding-top:50%;*/
+        }
+        .lhj {
+            font-family: "宋体";
+            font-size: 100px;
+            height: 100px;
+            width: 350px;
+            line-height: 100px;
+            text-align: center;
+           /* position: absolute;
+            left:50%;
+            top:50%;
+            margin-top:-60px;
+            margin-left:-175px;*/
+            color:#FFFF00;
+            margin: 0 auto 20px;
+            /*float:left;*/
+        }
+        .btn{
+            /*top:50%;*/
+            /*left:50%;*/
+            height:80px;
+            width:160px;
+            /*margin-top:50px;*/
+            /*margin-left:-80px;*/
+            /*position:absolute;*/
+            cursor:pointer;
+            line-height:80px;
+            /*border: 1px solid #999;*/
+            font-size: 60px;
+            font-family: "宋体";
+            text-align: center;
+            color:#FFFF00;
+            margin: 0 auto;
+        }
+        .wrap{
+            margin-top:30%;
+        }
+    </style>
 </head>
-<title>111档</title>
+<title>抽奖</title>
 <body>
-
-<div id="laohuji" class="lhj"></div>
- 
+    <!--<div id="laohuji" class="lhj"></div>-->
+    <div id="wrap" class="wrap"></div>
+    <div id='btn' class='btn'>开始</div>
 </body>
 </html>
 <script>
-	var laohuji;
-	$(function() {
-		// for(i=1;i<2;i++){
-		// 	$("body").append("<div id='laohuji"+i+"' class='lhj'></div>");
-		// 	laohuji = $("#laohuji"+i).luckDraw(3);
-		// }
-		laohuji = $("#laohuji").luckDraw(3);//以div的扩展.的形式进行插件的展示和制作。
-		//$("#laohuji"+"Click").trigger("click"); 
-	 	 
-		// for(i=1;i<2;i++){
-		// 	$("#laohuji"+i+"Click").trigger("click"); 
-		// }
-		
-		 
-		
-		//{
+    var laohuji;
+    $(function () {
+         for(var i=0;i<3;i++){
+         	$("#wrap").prepend("<div id='laohuji"+i+"' class='lhj'></div>");
+         	laohuji = $("#laohuji"+i).luckDraw(3);
+         }
+//        laohuji = $("#laohuji").luckDraw(3);//以div的扩展.的形式进行插件的展示和制作。
+        //$("#laohuji"+"Click").trigger("click");
+        $('#btn').click(function(){
+            if($(this).html() == '开始'){
+                $(this).html('结束');
+            }else{
+                $(this).html('开始');
+            }
+            for(var i=0;i<3;i++){
+                $("#laohuji"+i+"Click").trigger("click");
+            }
+        });
+        // for(i=1;i<2;i++){
+        // 	$("#laohuji"+i+"Click").trigger("click");
+        // }
+
+
+        //{
 //			dragSelector : "#sort",
 //			placeHolderTemplate : "<tr>aaaa</tr>",
 //			dragEnd : function() {
 //				$("#doSort").css("display", "");
 //			}
 //		} 
-	});
-	function doSort() {
-		Duang.getService("shopSettingService").changeCyclingImgSort(dragTable.getOrders());
-	}
+    });
+    /*function doSort() {
+        Duang.getService("shopSettingService").changeCyclingImgSort(dragTable.getOrders());
+    }*/
 </script>
