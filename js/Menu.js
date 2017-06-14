@@ -76,9 +76,10 @@ export default class Menu extends Component {
     };
     componentDidMount(){
         //执行验证当前设备是否已经激活过
-        let deviceID = Constants.DEVICE_ID;        //设备uniqueId
-        let reqUrl = 'thinkphp5.0/public/index/active/is_active?device_id='+deviceID;
-        Request.fetchRequest(reqUrl,'GET','','',10000)
+        if(Constants.PLATFORM == 'android'){
+            let deviceID = Constants.DEVICE_ID;        //设备uniqueId
+            let reqUrl = 'thinkphp5.0/public/index/active/is_active?device_id='+deviceID;
+            Request.fetchRequest(reqUrl,'GET','','',10000)
             .then(res => {
                 if(res.code == '0000'){
                     Constants.IS_ACTIVE = true;         //已激活
@@ -93,7 +94,10 @@ export default class Menu extends Component {
                 Constants.IS_ACTIVE = false;        //服务器返回错误
                 this.setState({visible:true});
             });
-            // Constants.IS_ACTIVE = true;         //已激活
+        } else {
+            Constants.IS_ACTIVE = true;         //ios默认全部已激活
+        }
+        
     }
     clickJump(index){
         //因为Navigator <Component {...route.params} navigator={navigator} />传入了navigator 所以这里能取到navigator

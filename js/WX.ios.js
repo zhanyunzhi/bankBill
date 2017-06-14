@@ -36,6 +36,15 @@ export default class WX extends Component {
         hour < 10 ? hour = '0' + hour : hour;
         let minutes = new Date().getMinutes();
         minutes < 10 ? minutes = '0' + minutes : minutes;
+        let second1 = Common.getRandomNum(1,59);
+        let second2 = Common.getRandomNum(1,59);
+        let gap = Common.getRandomNum(1,24);
+        if(second2 < second1){
+            second1 = second2 - gap;
+        }
+        second1 < 0 ? second1 = 0 : second1;
+        second1 < 10 ? second1 = '0' + second1 : second1;
+        second2 < 10 ? second2 = '0' + second2 : second2;
         let moneyMark = String.fromCharCode(165);
         this.state={
             wxinje:'1000.00',
@@ -44,6 +53,8 @@ export default class WX extends Component {
             hour:hour,
             minutes1:minutes,
             minutes2:minutes,
+            second1:second1,
+            second2:second2,
             isMinuteError:false,
             popValue: '',                                          //弹出框的输入内容
             popTitle: '请输入账号格式为：1234****5678',                      //弹出框的title
@@ -147,27 +158,31 @@ export default class WX extends Component {
             <StatusBar
                     barStyle={"light-content"}
                     />
-                {Constants.PLATFORM == 'ios' ? (
-                    <IosStatusHeight bgColor='#000000'></IosStatusHeight>
-                ) : (null)}
+                <View style={[styles.status,{height:3,backgroundColor:'#2e2d33'}]}></View>
+                <View style={[styles.status,{height:3.5,backgroundColor:'#2f2e33'}]}></View>
+                <View style={[styles.status,{height:0.5,backgroundColor:'#302e33'}]}></View>
+                <View style={[styles.status,{height:1,backgroundColor:'#302e34'}]}></View>
+                <View style={[styles.status,{height:3,backgroundColor:'#302f34'}]}></View>
+                <View style={[styles.status,{height:0.5,backgroundColor:'#303034'}]}></View>
+                <View style={[styles.status,{height:0.5,backgroundColor:'#303035'}]}></View>
+                <View style={[styles.status,{height:3,backgroundColor:'#313035'}]}></View>
+                <View style={[styles.status,{height:0.5,backgroundColor:'#323035'}]}></View>
+                <View style={[styles.status,{height:0.5,backgroundColor:'#323036'}]}></View>
+                <View style={[styles.status,{height:2,backgroundColor:'#323136'}]}></View>
                 <TouchableHighlight
                     onPress={this.clickJump.bind(this)}
                     >
                     <Image style={[styles.image]} source={require('../images/wx-title.png')}></Image>
                 </TouchableHighlight>
                 <Image style={{width:null,height:null}} source={this.state.watermark}>
-                    <View>
-                        <Text style={{textAlign:'center',fontSize:20,color:'#000000',marginTop:20}}>已收钱</Text>
-                    </View>
                     <TouchableOpacity onPress={()=>this.openPop('格式：1000.00',this.state.wxinje,'wxinje')} style={styles.money}>
-                        <Text style={[styles.money_text,{position:'absolute',marginLeft:-27}]}>{this.state.moneyMark}</Text>
+                        <Text style={[styles.money_text,{position:'absolute',marginLeft:-30,marginTop:6,}]}>￥</Text>
                         <Text style={[styles.money_text]}>{this.state.wxinje}</Text>
-                        <Text style={[styles.money_text,{backgroundColor:'#000000',position:'absolute',width:6,height:6,marginTop:47,marginLeft:-65}]}></Text>
+                        <Text style={[styles.money_text,{backgroundColor:'#000000',position:'absolute',width:0,height:0,marginTop:44.5,marginLeft:-57}]}></Text>
                     </TouchableOpacity>
                     <View>
                         <Text style={{textAlign:'center',fontSize:14,color:'#808080',marginTop:16}}>
-                            已存入你的
-                            <Text style={{color:'#7A93AF'}}>零钱</Text>
+                            <Text style={{color:'#576b95'}}>查看零钱</Text>
                         </Text>
                     </View>
                 </Image>
@@ -176,19 +191,19 @@ export default class WX extends Component {
                         <Text style={{color:'#ff0000'}}>怎么搞的，“收钱时间”怎么可能比“转账时间”早呢！</Text>
                     </View>
                 ) : (null)}
-                <View style={[styles.bottom_time,{bottom:61}]}>
-                    <Text style={{color:'#808080',marginRight:4}}>转账时间:</Text>
+                <View style={[styles.bottom_time,{bottom:38}]}>
+                    <Text style={{color:'#808080',marginRight:8}}>转账时间:</Text>
                     <Text style={{color:'#808080',marginRight:3}}>{this.state.today}</Text>
                     <TouchableOpacity onPress={()=>this.openPop('格式：数字0-59，只改变分钟数',this.state.minutes1,'minutes1')}>
-                        <Text style={{color:'#808080'}}>{this.state.hour}:{this.state.minutes1}</Text>
+                        <Text style={{color:'#808080'}}>{this.state.hour}:{this.state.minutes1}:{this.state.second1}</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={[styles.bottom_time,{bottom:32}]}>
-                    <Text style={{color:'#808080',marginRight:4}}>收钱时间:</Text>
+                <View style={[styles.bottom_time,{bottom:18}]}>
+                    <Text style={{color:'#808080',marginRight:8}}>收钱时间:</Text>
                     <Text style={{color:'#808080',marginRight:3}}>{this.state.today}</Text>
                     <TouchableOpacity onPress={()=>this.openPop('格式：数字0-59,只改变分钟数',this.state.minutes2,'minutes2')}>
                         <Text style={{color:'#808080'}}>
-                            {this.state.hour}:{this.state.minutes2}
+                            {this.state.hour}:{this.state.minutes2}:{this.state.second2}
                         </Text>
                     </TouchableOpacity>
                 </View>
@@ -205,12 +220,15 @@ export default class WX extends Component {
 }
 var Dimensions = require('Dimensions');
 var { width, height } = Dimensions.get('window');
-var baseWidth = 1080;
+var baseWidth = 750;
 
 const styles = StyleSheet.create({
     image:{
         width:width,
-        height:540*width/baseWidth,
+        height:450*width/baseWidth,
+    },
+    status: {
+        width:width,
     },
     money:{
         flexDirection:'row',
@@ -220,9 +238,11 @@ const styles = StyleSheet.create({
     },
     money_text:{
         textAlign:'center',
-        fontSize:49,
+        fontSize:40,
         color:'#000000',
-        marginTop:0,
+        marginTop:11,
+        fontWeight:'300',
+        fontFamily:'Helvetica',
     },
     bottom_time:{
         width:width,

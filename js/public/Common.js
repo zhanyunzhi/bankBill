@@ -2,6 +2,11 @@
  * Created by Tiny on 2017/5/15.
  */
 module.exports =  {
+    getRandomNum: function(Min, Max){   //返回指定范围的随机整数
+        let Range = Max - Min;   
+        let Rand = Math.random();   
+        return (Min + Math.floor(Rand * Range))
+    },  
     formatDateOne: function(strTime){               //格式化时间为yyyy-mm-dd，传入一个时间戳参数
         let date = new Date(strTime);
         let year = date.getFullYear();
@@ -11,8 +16,10 @@ module.exports =  {
     },
     formatBankMoney: function (str) {     //格式化输入的金额，格式为：100,000.00
         str += '';
-        str = str.replace(/\s/g, "");      //去除所有空格
+        str = str.replace(/\s/g, "");      //去除所有空格,，
         str = str.replace(/,/g, "");
+        str = str.replace(/，/g, "");
+        str = str.replace(/元/g, "");
         let patrn = /^\d+(\.\d+)?$/;
         if (!patrn.exec(str)) {
             alert("金额必须为数字！");

@@ -35,7 +35,7 @@ export default class NY extends Component {
             nhskzh:'6222****5678',
             nhskr:'张三',
             nhskyh:'平安银行',
-            nhzzje:'1,000.00元',
+            nhzzje:'1,000.00',
             popValue: '',                                          //弹出框的输入内容
             popTitle: '请输入账号格式为：1234****5678',                      //弹出框的title
             watermark: require('../images/watermark_gray1.png')                       //水印的图片地址
