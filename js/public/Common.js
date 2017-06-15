@@ -69,6 +69,23 @@ module.exports =  {
         str = str.substr(0,4) + "****" + str.substr(len-4,len-1);
         return str;
     },
+    formatBankNumEight: function (str){          //格式化银行账号：1234****6789
+        str += '';
+        str = str.replace(/\s/g, "");      //去除所有空格
+        str = str.replace(/\*/g, "");
+        let patrn = /^\d+(\d+)?$/;
+        let len = str.length;
+        if (!patrn.exec(str)) {
+            alert("银行账号必须为数字！");
+            return;
+        }
+        if(len<8){
+            alert("银行账号必须大于8位数！");
+            return;
+        }
+        str = str.substr(0,4) + "********" + str.substr(len-4,len-1);
+        return str;
+    },
     formatBankNumIos: function (str){          //格式化银行账号：1234***6789
         str += '';
         str = str.replace(/\s/g, "");      //去除所有空格

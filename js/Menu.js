@@ -28,6 +28,7 @@ import GF from './GF';             //广发
 import JSOut from './JSOut';             //建行转出
 import GS from './GS';             //工行
 import PA from './PA';             //平安
+import ZS from './ZS';             //招商
 import WX from './WX';             //微信
 import Activate from './Activate';             //激活页面
 import Loading from './public/Loading';             //loading页
@@ -46,6 +47,7 @@ export default class Menu extends Component {
                 {name: '工商银行', shortName: 'gs', img: require('../images/gs-logo.jpg'), dec: '工商银行的转账结果页，可以切换收入和支出'},
                 {name: '建设银行', shortName: 'jsOut', img: require('../images/js-logo.jpg'), dec: '建设银行转账给他人的页面'},
                 {name: '平安银行', shortName: 'pa', img: require('../images/pa-logo.jpg'), dec: '平安银行交易详情，可以切换转入和转出'},
+                {name: '招商银行', shortName: 'zs', img: require('../images/zs-logo.jpg'), dec: '招商银行交易详情，可以切换转入和转出'},
                 {name: '微信收款', shortName: 'wx', img: require('../images/wx-logo.jpg'), dec: '微信转账收钱页面'},
             ]),
             visible: true
@@ -119,6 +121,9 @@ export default class Menu extends Component {
                     break;
                 case 'pa':
                     jumpComponent = PA;
+                    break;
+                case 'zs':
+                    jumpComponent = ZS;
                     break;
                 case 'wx':
                     jumpComponent = WX;
