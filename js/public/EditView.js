@@ -111,14 +111,14 @@ export default class EditView extends Component {
                             <View style={[styles.line]}/>
                             <TouchableOpacity
                                 activeOpacity={0.75}
-                                style={[styles.center, {flex: 4.5}]}
+                                style={[styles.center, {flex: 4.5,height:50}]}
                                 onPress={() => {
-                                    this._close();
                                     // 子组件传递数据到父组件
                                     ensureCallback(this.state.inputText);
+                                    this._close();
                                 }}
                                 >
-                                <Text style={{fontSize: 16, color: 'black'}}>确定</Text>
+                                <Text style={{fontSize: 16, color: '#000'}}>确定</Text>
                             </TouchableOpacity>
                         </View>
                     </Animated.View>
@@ -143,19 +143,19 @@ const styles = StyleSheet.create({
         borderColor: '#d9d9d9',
         borderWidth: 1,
         height: 150,
-        width: screenW * 0.75,
+        width: screenW * 0.85,
         backgroundColor: 'rgb(234, 234, 235)',
         borderRadius: 5,
     },
     promptContainer: {
         height: 100,
-        width: screenW * 0.75,
+        width: screenW * 0.85,
         alignItems: 'center',
         justifyContent: 'center'
     },
     buttonContainer: {
         height: 50,
-        width: screenW * 0.75,
+        width: screenW * 0.85,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
