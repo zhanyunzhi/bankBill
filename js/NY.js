@@ -121,7 +121,7 @@ export default class NY extends Component {
 
     render(){
         return(
-            <ScrollView style={[{backgroundColor:'#f7f3f7'}]}>
+            <ScrollView style={[{backgroundColor:'#f2f2f2'}]}>
                 <View style={[{backgroundColor:'#ffffff'}]}>
                     {Constants.PLATFORM == 'ios' ? (
                         <IosStatusHeight></IosStatusHeight>
@@ -163,7 +163,7 @@ export default class NY extends Component {
                                 <Text style={[styles.text_touch_text,{color:'#ff6549'}]}>{this.state.nhzzje}元</Text>
                             </TouchableOpacity>
                         </View>
-                        <View style={styles.border_b}></View>
+                        <View style={[styles.border_b,{borderBottomWidth:1.5}]}></View>
                     </Image>
                 </View>
                 {Constants.PLATFORM == 'android' ? (
@@ -176,12 +176,12 @@ export default class NY extends Component {
                 <View style={{flex:1,flexDirection:'row',marginHorizontal:17}}>
                     <TouchableHighlight underlayColor="#38adff" style={{flex:1}}>
                         <View style={[styles.btn,styles.center,{backgroundColor: '#dddddd'}]}>
-                            <Text style={{color:'#fff',fontSize:16}}>继续转账</Text>
+                            <Text style={{color:'#fff',fontSize:18}}>继续转账</Text>
                         </View>
                     </TouchableHighlight>
                     <TouchableHighlight underlayColor="#38adff"  style={{flex:1,marginLeft:12}}>
                         <View style={[styles.btn,styles.center]}>
-                            <Text style={{color:'#fff',fontSize:16}}>完成</Text>
+                            <Text style={{color:'#fff',fontSize:18}}>完成</Text>
                         </View>
                     </TouchableHighlight>
                 </View>
@@ -200,6 +200,7 @@ export default class NY extends Component {
 var Dimensions = require('Dimensions');
 var { width, height } = Dimensions.get('window');
 var baseWidth = 1080;
+Constants.PLATFORM == 'ios' ? baseWidth = 750 : baseWidth = 1080;
 
 const styles = StyleSheet.create({
     center:{
@@ -208,10 +209,10 @@ const styles = StyleSheet.create({
     },
     image:{
         width:width,
-        height:586*width/baseWidth,
+        height:Constants.PLATFORM == 'ios' ? 416*width/baseWidth : 586*width/baseWidth,
     },
     inputRow:{
-        height:51,
+        height:52.5,
         flexDirection:'row',
         borderWidth:1,
         borderColor: 'transparent',
@@ -240,7 +241,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1
     },
     btn:{
-        height:45,
+        height:47,
         justifyContent:'center',
         alignItems:'center',
         backgroundColor: '#ffa900',

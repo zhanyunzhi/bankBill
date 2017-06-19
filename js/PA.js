@@ -35,7 +35,7 @@ export default class PA extends Component {
         let palsh = Common.getPAFlowNum();
         this.state={
             painfkr:'王老五',               //平安转入开始
-            painfkzh:'6214****8888',
+            painfkzh:'6228****8888',
             painfkh:'中国农业银行股份有限公司',
             painskr:'张三',
             painskzh:'6222****1234',
@@ -49,7 +49,7 @@ export default class PA extends Component {
             paoutfkzh:'6222****1234',
             paoutfkh:'平安银行深圳布吉支行',
             paoutskr:'王老五',
-            paoutskzh:'6214****8888',
+            paoutskzh:'6228****8888',
             paoutskh:'中国农业银行股份有限公司',
             paoutje:'1,000.00',
             paoutzhye:'10,000.00',
@@ -216,7 +216,7 @@ export default class PA extends Component {
                                 <Text style={[styles.row_text, styles.row_text_l]}>付款人</Text>
                                 <Text style={[styles.row_text, styles.row_text_r]}>{this.state.painfkr}</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={()=>this.openPop('格式：6214****8888',this.state.painfkzh,'painfkzh')} style={[styles.wrap_row]}>
+                            <TouchableOpacity onPress={()=>this.openPop('格式：6228****8888',this.state.painfkzh,'painfkzh')} style={[styles.wrap_row]}>
                                 <Text style={[styles.row_text, styles.row_text_l]}>付款账号</Text>
                                 <Text style={[styles.row_text, styles.row_text_r]}>{this.state.painfkzh}</Text>
                             </TouchableOpacity>
@@ -305,7 +305,7 @@ export default class PA extends Component {
                                 <Text style={[styles.row_text, styles.row_text_l]}>收款人</Text>
                                 <Text style={[styles.row_text, styles.row_text_r]}>{this.state.paoutskr}</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={()=>this.openPop('格式：6214850285268888',this.state.paoutskzh,'paoutskzh')} style={[styles.wrap_row]}>
+                            <TouchableOpacity onPress={()=>this.openPop('格式：6228****8888',this.state.paoutskzh,'paoutskzh')} style={[styles.wrap_row]}>
                                 <Text style={[styles.row_text, styles.row_text_l]}>收款账号</Text>
                                 <Text style={[styles.row_text, styles.row_text_r]}>{this.state.paoutskzh}</Text>
                             </TouchableOpacity>

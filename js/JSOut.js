@@ -36,7 +36,7 @@ export default class JSOut extends Component {
             jsoutskzh:'6222****5678',
             jsoutskzhxm:'王老五',
             jsoutskyh:'平安银行',
-            jsoutfkzh:'6222****1234',
+            jsoutfkzh:'6210****1234',
             jsoutfkzhye:'1,000.00',
             popValue: '',                                          //弹出框的输入内容
             popTitle: '请输入账号格式为：1234****5678',                      //弹出框的title
