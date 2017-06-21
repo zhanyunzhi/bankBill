@@ -19,6 +19,7 @@ import {
     ScrollView,
     TextInput,
     AsyncStorage,
+    StatusBar,
     TouchableOpacity
     } from 'react-native';
 
@@ -135,7 +136,11 @@ export default class GF extends Component {
                 <View style={[{backgroundColor:'#f1f1f1'}]}>
                     {Constants.PLATFORM == 'ios' ? (
                         <IosStatusHeight bgColor='#ffffff'></IosStatusHeight>
-                    ) : (null)}
+                    ) : (
+                        <StatusBar
+                        backgroundColor={'black'}
+                        />
+                    )}
                     <TouchableHighlight
                         onPress={this.clickJump.bind(this)}
                         >

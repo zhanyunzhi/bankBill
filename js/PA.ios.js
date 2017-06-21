@@ -186,19 +186,19 @@ export default class PA extends Component {
                     {this.state.isIncome == true ? (               
                     <View style={styles.in_out}>
                         <TouchableOpacity onPress={this.switch.bind(this)} activeOpacity={1}>
-                            <Text style={{color:'#1ab55b',height:54,fontSize:15,paddingTop:16}}>转入</Text>
+                            <Text style={{color:'#1ab55b',lineHeight:54,fontSize:15}}>转入</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={()=>this.openPop('格式：1,000.00',this.state.painje,'painje')}>
-                            <Text style={{color:'#1ab55b',height:54,fontSize:15,paddingTop:16}}>+{this.state.painje}</Text>
+                            <Text style={{color:'#1ab55b',lineHeight:54,fontSize:15}}>+{this.state.painje}</Text>
                         </TouchableOpacity>
                     </View>
                     ) : (               
                     <View style={styles.in_out}>
                         <TouchableOpacity onPress={this.switch.bind(this)} activeOpacity={1}>
-                            <Text style={{color:'#f37938',height:54,fontSize:15,paddingTop:16}}>转出</Text>
+                            <Text style={{color:'#f37938',lineHeight:54,fontSize:15}}>转出</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={()=>this.openPop('格式：1,000.00',this.state.paoutje,'paoutje')}>
-                            <Text style={{color:'#f37938',height:54,fontSize:15,paddingTop:16}}>-{this.state.paoutje}</Text>
+                            <Text style={{color:'#f37938',lineHeight:54,fontSize:15}}>-{this.state.paoutje}</Text>
                         </TouchableOpacity>
                     </View>
                     )}
