@@ -134,31 +134,31 @@ export default class NY extends Component {
                     <Image style={{width:null,height:null}} source={this.state.watermark}>
                         <View style={styles.border_b}></View>
                         <View style={[styles.inputRow,styles.center]}>
-                            <Text style={[styles.text]}>付款账户：</Text>
+                            <Text style={[styles.text]}>付款账户:</Text>
                             <TouchableOpacity onPress={()=>this.openPop('格式：1234****1234',this.state.nhfkzh,'nhfkzh')} style={[styles.text_touch]}>
                                 <Text style={[styles.text_touch_text]}>{this.state.nhfkzh}</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={[styles.inputRow,styles.center]}>
-                            <Text style={[styles.text]}>收款账户：</Text>
+                            <Text style={[styles.text]}>收款账户:</Text>
                             <TouchableOpacity onPress={()=>this.openPop('格式：1234****5678',this.state.nhskzh,'nhskzh')} style={[styles.text_touch]}>
                                 <Text style={[styles.text_touch_text]}>{this.state.nhskzh}</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={[styles.inputRow,styles.center]}>
-                            <Text style={[styles.text]}>收款人：</Text>
+                            <Text style={[styles.text]}>收款人:</Text>
                             <TouchableOpacity onPress={()=>this.openPop('格式：张三',this.state.nhskr,'nhskr')} style={[styles.text_touch]}>
                                 <Text style={[styles.text_touch_text]}>{this.state.nhskr}</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={[styles.inputRow,styles.center]}>
-                            <Text style={[styles.text]}>收款银行：</Text>
+                            <Text style={[styles.text]}>收款银行:</Text>
                             <TouchableOpacity onPress={()=>this.openPop('格式：平安银行',this.state.nhskyh,'nhskyh')} style={[styles.text_touch]}>
                                 <Text style={[styles.text_touch_text]}>{this.state.nhskyh}</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={[styles.inputRow,styles.center,{borderBottomColor:'transparent'}]}>
-                            <Text style={[styles.text]}>转账金额：</Text>
+                            <Text style={[styles.text]}>转账金额:</Text>
                             <TouchableOpacity onPress={()=>this.openPop('格式：1,000.00您可直接输入1000',this.state.nhzzje,'nhzzje')} style={[styles.text_touch]}>
                                 <Text style={[styles.text_touch_text,{color:'#ff6549'}]}>{this.state.nhzzje}元</Text>
                             </TouchableOpacity>
@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
         //backgroundColor: '#ffffff'
     },
     text:{
-        width:84,
+        width:80,
         textAlign:'left',
         color: '#535353',
         fontSize:16
@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
         flex:1,
         alignItems:'flex-start',
         marginRight: 17,
-        marginLeft: 4,
+        marginLeft: 0,
     },
     text_touch_text:{
         fontSize:16,
