@@ -161,8 +161,8 @@ export default class Menu extends Component {
                         <Text style={[styles.title,{color:'#999999',width:50,textAlign:'center'}]}></Text>
                     </TouchableOpacity>
                     )}
-                    <Text style={styles.title}>银行账单{Constants.IS_ACTIVE==true?'(已激活)':'(未激活)'}</Text>
-                    {Constants.IS_ACTIVE == false ? (
+                    <Text style={styles.title}>银行账单{Constants.IS_ACTIVE==true||Constants.PLATFORM=='ios' ? '(已激活)':'(未激活)'}</Text>
+                    {Constants.IS_ACTIVE == false && Constants.PLATFORM == 'android' ? (
                     <TouchableOpacity onPress={this.clickJump.bind(this,'activate')}>
                         <Text style={[styles.title,{color:'#2C934E',width:50,textAlign:'center'}]}>激活</Text>
                     </TouchableOpacity>
