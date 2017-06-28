@@ -96,7 +96,7 @@ export default class Menu extends Component {
                 Constants.IS_ACTIVE = false;        //服务器返回错误
                 this.setState({visible:true});
             });
-            Constants.IS_ACTIVE = true;         //已激活
+            //Constants.IS_ACTIVE = true;         //已激活
         } else {
             Constants.IS_ACTIVE = true;         //ios默认全部已激活
         }
