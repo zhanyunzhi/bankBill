@@ -56,8 +56,9 @@ module.exports =  {
      *   });
      */
     fetchRequest: function(url, method, params='', token='', timeout=10000){
-        let common_url = 'http://192.168.31.163/';
-        //let common_url = 'http://10.200.2.43/';
+        let common_url = 'http://192.168.31.163/';          //家里
+        //let common_url = 'http://192.168.31.163/';        //公司
+        //let common_url = 'http://120.25.58.101:8088/';         //线上
         let fetch_param = {};
         let header = {
             "Content-Type": "application/json;charset=UTF-8",

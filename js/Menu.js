@@ -50,7 +50,7 @@ export default class Menu extends Component {
                 {name: '招商银行', shortName: 'zs', img: require('../images/zs-logo.jpg'), dec: '招商银行交易详情，可以切换转入和转出'},
                 {name: '微信收款', shortName: 'wx', img: require('../images/wx-logo.jpg'), dec: '微信转账收钱页面'},
             ]),
-            visible: true
+            visible: false
         }
     }
     componentWillMount(){
@@ -145,7 +145,7 @@ export default class Menu extends Component {
     render(){
         return(
             <View style={styles.wrap}>
-                {this.state.visible == false ? (
+                {this.state.visible == false && Constants.PLATFORM == 'android' ? (
                     <Loading text='正在验证权限...'/>
                 ) : (null)}
                 {Constants.PLATFORM == 'ios' ? (
