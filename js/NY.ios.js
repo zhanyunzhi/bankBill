@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
         //backgroundColor: '#ffffff'
     },
     text:{
-        width:84,
+        width:88,
         textAlign:'left',
         color: '#535353',
         fontSize:16
@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
         flex:1,
         alignItems:'flex-start',
         marginRight: 17,
-        marginLeft: 4,
+        marginLeft: 0,
     },
     text_touch_text:{
         fontSize:16,
