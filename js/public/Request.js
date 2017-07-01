@@ -2,6 +2,7 @@
  * Created by Tiny on 2017/5/15.
  */
 import fetch from './fetch-polyfill';
+import Constants from './Constants.js';
 module.exports =  {
     /**
      * 让fetch也可以timeout
@@ -56,9 +57,7 @@ module.exports =  {
      *   });
      */
     fetchRequest: function(url, method, params='', token='', timeout=10000){
-        let common_url = 'http://192.168.31.163/';          //家里
-        //let common_url = 'http://192.168.31.163/';        //公司
-        //let common_url = 'http://120.25.58.101:8088/';         //线上
+        let common_url = Constants.API_URL;         //接口地址前缀
         let fetch_param = {};
         let header = {
             "Content-Type": "application/json;charset=UTF-8",

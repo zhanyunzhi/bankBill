@@ -11,6 +11,7 @@ import {
     Navigator,
 } from 'react-native';
 
+import launchImage from './public/launchImage';         //模拟启动页
 import Menu from './Menu';         //菜单
 import Constants from './public/Constants.js';
 
@@ -18,6 +19,9 @@ export default class MyScene extends Component {
     render() {
         let defaultName = '菜单';
         let defaultComponent = Menu;
+        if(Constants.PLATFORM == 'android'){
+            defaultComponent = launchImage;
+        }
 
 
         return (

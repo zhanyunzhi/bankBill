@@ -209,7 +209,7 @@ export default class PA extends Component {
                                 <Text style={[styles.row_text, styles.row_text_l]}>交易时间</Text>
                                 <Text style={[styles.row_text, styles.row_text_r]}>{this.state.today}</Text>
                                 <TouchableOpacity onPress={()=>this.openPop('格式：13:14:20',this.state.time,'time')} >
-                                    <Text style={{marginLeft:4}}>{this.state.time}</Text>
+                                    <Text style={{marginLeft:4,color:'#1e1e1e'}}>{this.state.time}</Text>
                                 </TouchableOpacity>
                             </View>     
                             <TouchableOpacity onPress={()=>this.openPop('格式：王老五',this.state.painfkr,'painfkr')} style={[styles.wrap_row]}>
@@ -274,7 +274,7 @@ export default class PA extends Component {
                                 <Text style={[styles.row_text, styles.row_text_l]}>交易时间</Text>
                                 <Text style={[styles.row_text, styles.row_text_r]}>{this.state.today}</Text>
                                 <TouchableOpacity onPress={()=>this.openPop('格式：13:14:20',this.state.time,'time')} >
-                                    <Text style={{marginLeft:4}}>{this.state.time}</Text>
+                                    <Text style={{marginLeft:4,color:'#1e1e1e'}}>{this.state.time}</Text>
                                 </TouchableOpacity>
                             </View>
                             <TouchableOpacity onPress={()=>this.openPop('格式：张三',this.state.paoutfkr,'paoutfkr')} style={[styles.wrap_row]}>

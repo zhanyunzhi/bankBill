@@ -12,10 +12,21 @@ const Constants = {
     //USER_AGENT: DeviceInfo.getUserAgent(),       //设备user-agent
     //DEVICE_ID: DeviceInfo.getUniqueID(),     //设备uniqueId
     IS_ACTIVE: false,                       //是否已经激活
+    API_URL: 'http://192.168.31.163/',          //后台接口地址前缀
 }
 if (Constants.PLATFORM == 'android'){
 	Constants.USER_AGENT = DeviceInfo.getUserAgent();
 	Constants.DEVICE_ID = DeviceInfo.getUniqueID();
+}
+if (!__DEV__) {           //非开发环境下，去掉控制台打印，提高性能
+    Constants.API_URL = 'http://120.25.58.101:8088/';           //线上接口地址前缀
+    global.console = {
+        info: () => {},
+        log: () => {},
+        warn: () => {},
+        debug: () => {},
+        error: () => {},
+    };
 }
 
 export default Constants;

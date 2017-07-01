@@ -59,16 +59,26 @@ export default class Activate extends Component {
         let reqUrl =  'thinkphp5.0/public/index/active/check_active_num?num='+num+'&device_id='+deviceID+'&user_agent='+userAgent;
         Request.fetchRequest(reqUrl,'GET','','',10000)
         .then(res => {
+                if(res.code == '0000'){
+                    Constants.IS_ACTIVE = true;         //激活成功
+                    this.clickJump();
+                }else if(res.code == '1000'){
+                            //激活失败
+                }else{
+                            //激活失败
+                }
                 console.log(res);
+                ToastAndroid.show(res.data.msg, ToastAndroid.LONG);
         })
         .catch((err) => {
                 console.log(err);
+                ToastAndroid.show('服务器错误，请联系客服', ToastAndroid.LONG);
         });
         console.log("用户点击了激活按钮");
     }
     _setContent(t) {             //设置剪贴板的文本内容
         Clipboard.setString(t);
-        ToastAndroid.show('已复制到剪贴板', ToastAndroid.SHORT);
+        ToastAndroid.show('已复制到剪贴板', ToastAndroid.LONG);
         Clipboard.getString().then(function(msg){
             console.log(msg)
         });
@@ -79,7 +89,10 @@ export default class Activate extends Component {
                 <TouchableHighlight
                         onPress={this.clickJump.bind(this)}
                         >
-                    <Image style={[styles.image]} source={require('../images/wx-title.png')}></Image>
+                    <View style={styles.title}>
+                        <Text style={styles.title_text}>当然是选择原谅她(他它)</Text>
+                        <Text style={styles.title_text}>赶紧激活，去掉水印！</Text>
+                    </View>
                 </TouchableHighlight>
                 <TextInput
                         style={styles.inputStyle}
@@ -92,7 +105,7 @@ export default class Activate extends Component {
                 <TouchableOpacity
                     onPress={()=>this.sendMsg()}
                     >
-                    <Text style={styles.btnBig}>激活</Text>
+                    <Text style={styles.btnBig}>激活&&原谅她(他它)</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={()=>this.openPop('关于激活码','购买激活码请加微信客服：clicli168_kf，点击“确定”可复制微信号')}
@@ -127,6 +140,19 @@ const styles = StyleSheet.create({
         flexDirection:'column',
         alignItems:'center',
         minHeight:height,
+    },
+    title:{
+        paddingTop:5,
+        height:100,
+        width:width,
+        backgroundColor:'#ffffff',
+    },
+    title_text:{
+        color:'#2C934E',
+        width:width,
+        textAlign:'center',
+        marginTop:10,
+        fontSize:20,
     },
     inputStyle:{
         fontSize:16,
