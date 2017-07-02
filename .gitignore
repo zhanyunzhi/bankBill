@@ -41,3 +41,4 @@ android/app/libs
 *.keystore
 
 bankPic/launch-image/ios/*.png
+android_active/
